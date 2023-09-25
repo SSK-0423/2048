@@ -26,6 +26,8 @@
   <ItemGroup>
     <ClInclude Include="Source\Framework\Component.h" />
     <ClInclude Include="Source\Framework\Game.h" />
+    <ClInclude Include="Source\Framework\Object.h" />
+    <ClInclude Include="Source\Framework\Transform.h" />
     <ClInclude Include="Source\Framework\Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

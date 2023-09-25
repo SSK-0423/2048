@@ -35,5 +35,11 @@
     <ClInclude Include="Source\Framework\Component.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Framework\Transform.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Object.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
