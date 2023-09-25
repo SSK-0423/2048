@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 
-namespace GameFramework
+namespace Framework
 {
 	/// <summary>
 	/// ゲーム全体を管理するクラス

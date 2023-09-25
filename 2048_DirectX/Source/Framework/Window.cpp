@@ -1,8 +1,8 @@
 #include "Window.h"
 
-HWND GameFramework::Window::m_hwnd;
+HWND Framework::Window::m_hwnd;
 
-namespace GameFramework
+namespace Framework
 {
 	LRESULT WindowProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	{

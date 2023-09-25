@@ -4,7 +4,7 @@ static const TCHAR* NAME = L"2048_DirectX";
 static const LONG WIDTH = 1024;
 static const LONG HEIGHT = 768;
 
-namespace GameFramework
+namespace Framework
 {
 	void Game::Init()
 	{
