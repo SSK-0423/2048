@@ -1,6 +1,6 @@
 #pragma once
+#include <chrono>
 #include "Window.h"
-
 namespace Framework
 {
 	/// <summary>
@@ -10,9 +10,9 @@ namespace Framework
 	{
 	private:
 		Game() = default;
+		~Game() = default;
 
 	public:
-		~Game() = default;
 
 		void Init();
 
@@ -26,5 +26,6 @@ namespace Framework
 		}
 	private:
 		Window m_window;
+		std::chrono::system_clock::time_point m_prevFrameTime;
 	};
 }

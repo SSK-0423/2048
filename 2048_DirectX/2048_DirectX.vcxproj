@@ -20,13 +20,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Framework\Game.cpp" />
+    <ClCompile Include="Source\Framework\GameObject.cpp" />
+    <ClCompile Include="Source\Framework\InputSystem.cpp" />
+    <ClCompile Include="Source\Framework\Scene.cpp" />
+    <ClCompile Include="Source\Framework\SceneManager.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Component.h" />
     <ClInclude Include="Source\Framework\Game.h" />
+    <ClInclude Include="Source\Framework\GameObject.h" />
+    <ClInclude Include="Source\Framework\GUIObject.h" />
+    <ClInclude Include="Source\Framework\InputSystem.h" />
     <ClInclude Include="Source\Framework\Object.h" />
+    <ClInclude Include="Source\Framework\Scene.h" />
+    <ClInclude Include="Source\Framework\SceneManager.h" />
     <ClInclude Include="Source\Framework\Transform.h" />
     <ClInclude Include="Source\Framework\Window.h" />
   </ItemGroup>

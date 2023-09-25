@@ -13,5 +13,8 @@ namespace Framework
 
 	private:
 		Object& owner;
+
+	public:
+		virtual void Update(float deltaTime) = 0;
 	};
 }

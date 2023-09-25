@@ -1,11 +1,10 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "Component.h"
 
 namespace Framework
 {
-	class Component;
-
 	class Object
 	{
 	public:
