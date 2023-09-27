@@ -15,21 +15,28 @@ namespace Framework
 
 	void Game::Run()
 	{
-		std::chrono::duration<float> deltaTime = std::chrono::system_clock::now() - m_prevFrameTime;
-
-		m_prevFrameTime = std::chrono::system_clock::now();
-
 		bool isPlaying = m_window.DispatchWindowMessage();
+
 		while (isPlaying)
 		{
+			auto currentFrameTime = std::chrono::system_clock::now();
+			auto deltaTime
+				= std::chrono::duration_cast<std::chrono::milliseconds>(currentFrameTime - m_prevFrameTime).count();
+
+			m_prevFrameTime = std::chrono::system_clock::now();
+
 			// キー入力
 			InputSystem::Instance().Update();
 
 			// 更新
-			SceneManager::Instance().NowSceneUpdate(deltaTime.count());
+			SceneManager::Instance().NowSceneUpdate(deltaTime);
 
 			// 描画
 			SceneManager::Instance().NowSceneDraw();
+
+			char buffer[256];
+			sprintf_s(buffer, "%lld (ms)\n", deltaTime);
+			OutputDebugStringA(buffer);
 		}
 
 		return;

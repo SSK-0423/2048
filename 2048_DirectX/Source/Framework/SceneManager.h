@@ -7,7 +7,7 @@ namespace Framework
 	class SceneManager
 	{
 	private:
-		SceneManager() = default;
+		SceneManager() : m_nowSceneName("") {};
 		~SceneManager() = default;
 	public:
 
