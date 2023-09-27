@@ -36,6 +36,12 @@
     <ClCompile Include="Source\Framework\SceneManager.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\SoundClip.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\SoundManager.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Game.h">
@@ -66,6 +72,12 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Scene.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\SoundManager.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\SoundClip.h">
       <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
