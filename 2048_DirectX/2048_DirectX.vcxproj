@@ -20,11 +20,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Framework\Game.cpp" />
+    <ClCompile Include="Source\Framework\GameObject.cpp" />
+    <ClCompile Include="Source\Framework\InputSystem.cpp" />
+    <ClCompile Include="Source\Framework\Scene.cpp" />
+    <ClCompile Include="Source\Framework\SceneManager.cpp" />
+    <ClCompile Include="Source\Framework\SoundClip.cpp" />
+    <ClCompile Include="Source\Framework\SoundManager.cpp" />
+    <ClCompile Include="Source\Framework\Sprite.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Framework\Component.h" />
     <ClInclude Include="Source\Framework\Game.h" />
+    <ClInclude Include="Source\Framework\GameObject.h" />
+    <ClInclude Include="Source\Framework\GUIObject.h" />
+    <ClInclude Include="Source\Framework\InputSystem.h" />
+    <ClInclude Include="Source\Framework\Object.h" />
+    <ClInclude Include="Source\Framework\Scene.h" />
+    <ClInclude Include="Source\Framework\SceneManager.h" />
+    <ClInclude Include="Source\Framework\SoundClip.h" />
+    <ClInclude Include="Source\Framework\SoundManager.h" />
+    <ClInclude Include="Source\Framework\Sprite.h" />
+    <ClInclude Include="Source\Framework\Transform.h" />
     <ClInclude Include="Source\Framework\Window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -98,6 +116,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,6 +132,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,6 +148,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -143,6 +164,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

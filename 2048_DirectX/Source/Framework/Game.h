@@ -1,7 +1,7 @@
 #pragma once
+#include <chrono>
 #include "Window.h"
-
-namespace GameFramework
+namespace Framework
 {
 	/// <summary>
 	/// ゲーム全体を管理するクラス
@@ -10,9 +10,9 @@ namespace GameFramework
 	{
 	private:
 		Game() = default;
+		~Game() = default;
 
 	public:
-		~Game() = default;
 
 		void Init();
 
@@ -26,5 +26,6 @@ namespace GameFramework
 		}
 	private:
 		Window m_window;
+		std::chrono::system_clock::time_point m_prevFrameTime;
 	};
 }

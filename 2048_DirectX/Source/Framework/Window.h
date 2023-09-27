@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <tchar.h>
 
-namespace GameFramework
+namespace Framework
 {
 	class Window
 	{

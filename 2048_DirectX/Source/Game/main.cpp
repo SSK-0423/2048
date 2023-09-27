@@ -3,7 +3,7 @@
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	GameFramework::Game& game = GameFramework::Game::Instance();
+	Framework::Game& game = Framework::Game::Instance();
 	// 初期化
 	game.Init();
 	// 実行が終わるまでループ
