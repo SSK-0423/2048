@@ -27,5 +27,9 @@ namespace Framework
 	private:
 		Window m_window;
 		std::chrono::system_clock::time_point m_prevFrameTime;
+
+		// レンダラー
+		
+		// シーン
 	};
 }

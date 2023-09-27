@@ -1,12 +1,12 @@
 #pragma once
-#include "Component.h"
+#include "IComponent.h"
 
 namespace Framework
 {
-	class Transform : public Component
+	class Transform : public IComponent
 	{
 	public:
-		Transform(Object& owner) : Component(owner)
+		Transform(Object& owner) : IComponent(owner)
 		{
 
 		}
