@@ -5,11 +5,11 @@ namespace Framework
 {
 	class Object;
 
-	class Component
+	class IComponent
 	{
 	public:
-		Component(Object& owner) : owner(owner) {};
-		~Component() = default;
+		IComponent(Object& owner) : owner(owner) {};
+		virtual ~IComponent() = default;
 
 	private:
 		Object& owner;

@@ -1,8 +1,9 @@
 #pragma once
+#include "IComponent.h"
 
 namespace Framework
 {
-	class Sprite
+	class Sprite : public IComponent
 	{
 	public:
 		Sprite() = default;

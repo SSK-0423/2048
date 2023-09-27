@@ -31,7 +31,7 @@
     <ClCompile Include="Source\Game\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Framework\Component.h" />
+    <ClInclude Include="Source\Framework\IComponent.h" />
     <ClInclude Include="Source\Framework\Game.h" />
     <ClInclude Include="Source\Framework\GameObject.h" />
     <ClInclude Include="Source\Framework\GUIObject.h" />
@@ -44,6 +44,7 @@
     <ClInclude Include="Source\Framework\Sprite.h" />
     <ClInclude Include="Source\Framework\Transform.h" />
     <ClInclude Include="Source\Framework\Window.h" />
+    <ClInclude Include="Source\Renderer\IRenderer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
