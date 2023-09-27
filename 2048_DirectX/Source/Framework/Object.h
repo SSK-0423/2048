@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Component.h"
+#include "IComponent.h"
 
 namespace Framework
 {
@@ -16,7 +16,7 @@ namespace Framework
 		}
 
 	private:
-		std::vector<std::unique_ptr<Component>> m_components;
+		std::vector<std::unique_ptr<IComponent>> m_components;
 
 	public:
 		template<class T>

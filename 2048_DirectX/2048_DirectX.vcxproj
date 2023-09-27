@@ -19,6 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\DX12Wrapper\ConstantBuffer.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\CubeRenderTarget.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\DepthStencilBuffer.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\DescriptorHeapCBV_SRV_UAV.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\DescriptorHeapDSV.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\DescriptorHeapRTV.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\Dx12GraphicsEngine.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\GraphicsPipelineState.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\IndexBuffer.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\RenderingContext.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\RenderTarget.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\RenderTargetBuffer.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\RootSignature.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\Shader.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\ShaderLibrary.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\ShaderResourceViewDesc.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\Texture.cpp" />
+    <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
     <ClCompile Include="Source\Framework\Game.cpp" />
     <ClCompile Include="Source\Framework\GameObject.cpp" />
     <ClCompile Include="Source\Framework\InputSystem.cpp" />
@@ -29,8 +47,28 @@
     <ClCompile Include="Source\Framework\Sprite.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
+    <ClCompile Include="Source\Utility\EngineUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\DX12Wrapper\ConstantBuffer.h" />
+    <ClInclude Include="Source\DX12Wrapper\CubeRenderTarget.h" />
+    <ClInclude Include="Source\DX12Wrapper\DepthStencilBuffer.h" />
+    <ClInclude Include="Source\DX12Wrapper\DescriptorHeapCBV_SRV_UAV.h" />
+    <ClInclude Include="Source\DX12Wrapper\DescriptorHeapDSV.h" />
+    <ClInclude Include="Source\DX12Wrapper\DescriptorHeapRTV.h" />
+    <ClInclude Include="Source\DX12Wrapper\Dx12GraphicsEngine.h" />
+    <ClInclude Include="Source\DX12Wrapper\GraphicsPipelineState.h" />
+    <ClInclude Include="Source\DX12Wrapper\IndexBuffer.h" />
+    <ClInclude Include="Source\DX12Wrapper\InputLayout.h" />
+    <ClInclude Include="Source\DX12Wrapper\RenderingContext.h" />
+    <ClInclude Include="Source\DX12Wrapper\RenderTarget.h" />
+    <ClInclude Include="Source\DX12Wrapper\RenderTargetBuffer.h" />
+    <ClInclude Include="Source\DX12Wrapper\RootSignature.h" />
+    <ClInclude Include="Source\DX12Wrapper\Shader.h" />
+    <ClInclude Include="Source\DX12Wrapper\ShaderLibrary.h" />
+    <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h" />
+    <ClInclude Include="Source\DX12Wrapper\Texture.h" />
+    <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h" />
     <ClInclude Include="Source\Framework\IComponent.h" />
     <ClInclude Include="Source\Framework\Game.h" />
     <ClInclude Include="Source\Framework\GameObject.h" />
@@ -45,6 +83,7 @@
     <ClInclude Include="Source\Framework\Transform.h" />
     <ClInclude Include="Source\Framework\Window.h" />
     <ClInclude Include="Source\Renderer\IRenderer.h" />
+    <ClInclude Include="Source\Utility\EngineUtility.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -116,12 +155,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,7 +172,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -140,6 +180,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,12 +189,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,7 +206,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -172,6 +214,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

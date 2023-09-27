@@ -16,6 +16,9 @@
     <Filter Include="DX12Wrapper">
       <UniqueIdentifier>{431c8bb5-bf07-41a3-b62a-b9870e4fc9be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{9c4e3451-bb57-48b0-8286-1ca5978e772f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
@@ -47,6 +50,63 @@
     </ClCompile>
     <ClCompile Include="Source\Framework\Sprite.cpp">
       <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\ConstantBuffer.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\CubeRenderTarget.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\DepthStencilBuffer.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\DescriptorHeapCBV_SRV_UAV.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\DescriptorHeapDSV.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\DescriptorHeapRTV.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\GraphicsPipelineState.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\IndexBuffer.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\RenderingContext.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\RenderTarget.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\RenderTargetBuffer.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\RootSignature.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\Shader.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\ShaderLibrary.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\ShaderResourceViewDesc.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\Texture.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp">
+      <Filter>DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility\EngineUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DX12Wrapper\Dx12GraphicsEngine.cpp">
+      <Filter>DX12Wrapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +151,66 @@
     </ClInclude>
     <ClInclude Include="Source\Renderer\IRenderer.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\ConstantBuffer.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\CubeRenderTarget.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\DepthStencilBuffer.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\DescriptorHeapCBV_SRV_UAV.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\DescriptorHeapDSV.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\DescriptorHeapRTV.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\GraphicsPipelineState.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\IndexBuffer.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\InputLayout.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\RenderingContext.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\RenderTarget.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\RenderTargetBuffer.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\RootSignature.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\Shader.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\ShaderLibrary.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\Texture.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h">
+      <Filter>DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility\EngineUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DX12Wrapper\Dx12GraphicsEngine.h">
+      <Filter>DX12Wrapper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
