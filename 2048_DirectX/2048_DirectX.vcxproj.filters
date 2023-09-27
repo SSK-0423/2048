@@ -42,6 +42,9 @@
     <ClCompile Include="Source\Framework\SoundManager.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\Sprite.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Game.h">
@@ -78,6 +81,9 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\SoundClip.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Sprite.h">
       <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>

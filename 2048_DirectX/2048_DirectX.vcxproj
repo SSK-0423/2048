@@ -26,6 +26,7 @@
     <ClCompile Include="Source\Framework\SceneManager.cpp" />
     <ClCompile Include="Source\Framework\SoundClip.cpp" />
     <ClCompile Include="Source\Framework\SoundManager.cpp" />
+    <ClCompile Include="Source\Framework\Sprite.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
   </ItemGroup>
@@ -40,6 +41,7 @@
     <ClInclude Include="Source\Framework\SceneManager.h" />
     <ClInclude Include="Source\Framework\SoundClip.h" />
     <ClInclude Include="Source\Framework\SoundManager.h" />
+    <ClInclude Include="Source\Framework\Sprite.h" />
     <ClInclude Include="Source\Framework\Transform.h" />
     <ClInclude Include="Source\Framework\Window.h" />
   </ItemGroup>
