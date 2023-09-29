@@ -1,6 +1,6 @@
 #pragma once
-#include <chrono>
 #include "Window.h"
+
 namespace Framework
 {
 	/// <summary>
