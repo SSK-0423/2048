@@ -1,8 +1,11 @@
 #include "Framework/Game.h"
+#include "Game/Game2048.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-	Framework::Game& game = Framework::Game::Instance();
+	Game2048::Game2048 game2048;
+
+	Framework::Game& game = Framework::Game::Instance(game2048);
 	// 初期化
 	game.Init();
 	// 実行が終わるまでループ

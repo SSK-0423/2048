@@ -16,7 +16,7 @@ namespace Framework
 
 	public:
 		virtual void Init() = 0;
-		void Update();
+		void Update(float deltaTime);
 		void Draw();
 		virtual void Final() = 0;
 	};

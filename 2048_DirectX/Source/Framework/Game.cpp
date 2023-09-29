@@ -11,6 +11,8 @@ namespace Framework
 	void Game::Init()
 	{
 		m_window.Create(NAME, WIDTH, HEIGHT);
+
+		m_gameImpl.Init();
 	}
 
 	void Game::Run()
@@ -46,6 +48,8 @@ namespace Framework
 	{
 		// èIóπèàóù
 		SceneManager::Instance().NowSceneFinal();
+
+		m_gameImpl.Final();
 	}
 }
 

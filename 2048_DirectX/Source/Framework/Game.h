@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "GameImpl.h"
 
 namespace Framework
 {
@@ -9,7 +10,7 @@ namespace Framework
 	class Game
 	{
 	private:
-		Game() = default;
+		Game(GameImpl& gameImpl) : m_gameImpl(gameImpl) {};
 		~Game() = default;
 
 	public:
@@ -20,16 +21,13 @@ namespace Framework
 
 		void Final();
 
-		static Game& Instance() {
-			static Game inst;
+		static Game& Instance(GameImpl& gameImpl) {
+			static Game inst(gameImpl);
 			return inst;
 		}
 	private:
 		Window m_window;
 		std::chrono::system_clock::time_point m_prevFrameTime;
-
-		// レンダラー
-		
-		// シーン
+		GameImpl& m_gameImpl;
 	};
 }

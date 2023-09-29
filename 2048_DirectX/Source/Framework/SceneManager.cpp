@@ -13,5 +13,6 @@ namespace Framework
 	}
 	void SceneManager::LoadScene(const char* name)
 	{
+		m_scenes[name]->Init();
 	}
 }

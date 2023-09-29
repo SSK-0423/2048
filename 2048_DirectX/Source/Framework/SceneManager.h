@@ -24,9 +24,15 @@ namespace Framework
 
 		void LoadScene(const char* name);
 
+		template<class T>
+		void AddScene(const char* name)
+		{
+			m_scenes.insert(std::make_pair(name, std::make_unique<T>()));
+		}
+
 	private:
 		const char* m_nowSceneName;
 
-		std::map<const char*, std::unique_ptr<Scene>> m_scenes;
+		std::unordered_map<const char*, std::unique_ptr<Scene>> m_scenes;
 	};
 }

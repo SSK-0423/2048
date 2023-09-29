@@ -7,13 +7,14 @@ namespace Framework
 	class IComponent
 	{
 	public:
-		IComponent(Object& owner) : owner(owner) {};
+		IComponent(Object* owner) : owner(owner) {};
 		virtual ~IComponent() = default;
 
 	private:
-		Object& owner;
+		Object* owner;
 
 	public:
 		virtual void Update(float deltaTime) = 0;
+		virtual void Draw() = 0;
 	};
 }
