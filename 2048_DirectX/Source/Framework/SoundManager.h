@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "SoundClip.h"
 
 namespace Framework
 {
@@ -21,6 +22,6 @@ namespace Framework
 		void PlayLoop(const char* name);
 
 	private:
-		std::vector<class SoundClip> m_soundClips;
+		std::vector<SoundClip> m_soundClips;
 	};
 }
