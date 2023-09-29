@@ -1,5 +1,4 @@
 #include <d3dx12.h>
-#include <vector>
 
 #include "RootSignature.h"
 

@@ -1,6 +1,5 @@
 #include "Shader.h"
 #include <d3dcompiler.h>
-#include <string>
 
 #pragma comment(lib,"d3dcompiler.lib")
 

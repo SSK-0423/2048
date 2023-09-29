@@ -1,5 +1,4 @@
 #pragma once
-#include <map>
 #include "Scene.h"
 
 namespace Framework

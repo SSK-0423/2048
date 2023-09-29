@@ -1,6 +1,4 @@
 #pragma once
-#include <memory>
-#include <vector>
 #include "GameObject.h"
 #include "GUIObject.h"
 

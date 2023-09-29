@@ -1,5 +1,3 @@
-#include <cassert>
-
 #include "DescriptorHeapRTV.h"
 #include "RenderTargetBuffer.h"
 

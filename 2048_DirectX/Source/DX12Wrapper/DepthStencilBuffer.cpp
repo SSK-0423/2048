@@ -1,6 +1,5 @@
 #include "DepthStencilBuffer.h"
 #include "d3dx12.h"
-#include <stdio.h>
 
 using namespace Utility;
 

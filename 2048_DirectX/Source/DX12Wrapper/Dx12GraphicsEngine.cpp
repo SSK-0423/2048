@@ -6,10 +6,7 @@
 
 #include <DirectXMath.h>
 
-#include <vector>
 #include <wrl.h>
-#include <string>
-#include <cassert>
 #include <dshow.h>
 
 using namespace Microsoft::WRL;

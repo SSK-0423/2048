@@ -3,7 +3,6 @@
 #include <d3d12.h>
 #include <DirectXTex.h>
 #include <wrl.h>
-#include <string>
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"DirectXTex.lib")

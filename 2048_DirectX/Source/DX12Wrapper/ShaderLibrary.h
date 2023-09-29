@@ -1,7 +1,5 @@
 #pragma once
 
-#include <unordered_map>
-
 #include "Shader.h"
 #include "../Utility/EngineUtility.h"
 

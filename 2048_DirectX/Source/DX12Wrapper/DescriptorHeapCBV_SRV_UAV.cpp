@@ -1,5 +1,4 @@
 #include <d3dx12.h>
-#include <cassert>
 #include "DescriptorHeapCBV_SRV_UAV.h"
 
 #include "Texture.h"

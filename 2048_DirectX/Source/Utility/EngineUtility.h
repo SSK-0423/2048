@@ -1,8 +1,4 @@
 #pragma once
-#include <Windows.h>
-#include <wrl.h>
-#include <vector>
-#include <string>
 
 namespace Utility
 {

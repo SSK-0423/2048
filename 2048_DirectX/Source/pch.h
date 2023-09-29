@@ -4,6 +4,7 @@
 
 #include <Windows.h>
 #include <cassert>
+#include <tchar.h>
 
 #include <vector>
 #include <map>
