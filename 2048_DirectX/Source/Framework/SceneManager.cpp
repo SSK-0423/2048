@@ -1,17 +1,30 @@
 #include "SceneManager.h"
+#include "IRenderer.h"
 
 namespace Framework
 {
-	void SceneManager::NowSceneUpdate(float deltaTime)
+	void SceneManager::CurrentSceneUpdate(float deltaTime)
 	{
+		m_scenes[m_currentSceneName]->Update(deltaTime);
 	}
-	void SceneManager::NowSceneDraw()
+	void SceneManager::CurrentSceneDraw(IRenderer& renderer)
 	{
+		renderer.Render(m_scenes[m_currentSceneName].get());
 	}
-	void SceneManager::NowSceneFinal()
+	void SceneManager::CurrentSceneFinal()
 	{
+		if (m_scenes[m_currentSceneName] != nullptr)
+		{
+			m_scenes[m_currentSceneName]->Final();
+		}
 	}
 	void SceneManager::LoadScene(const char* name)
 	{
+		if (m_scenes[m_currentSceneName] != nullptr)
+		{
+			m_scenes[m_currentSceneName]->Final();
+		}
+		m_currentSceneName = name;
+		m_scenes[m_currentSceneName]->Init();
 	}
 }

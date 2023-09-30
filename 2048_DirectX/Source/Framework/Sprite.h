@@ -6,12 +6,16 @@ namespace Framework
 	class Sprite : public IComponent
 	{
 	public:
-		Sprite() = default;
+		Sprite(Object* owner) : IComponent(owner) {};
 		~Sprite() = default;
 	private:
 		// テクスチャ
 
 		// Render
 		void Render();
+
+	public:
+		void Update(float deltaTime) override;
+		void Draw() override;
 	};
 }

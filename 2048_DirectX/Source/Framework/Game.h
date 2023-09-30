@@ -3,13 +3,17 @@
 
 namespace Framework
 {
+	class GameImpl;
+	class IRenderer;
+
 	/// <summary>
 	/// ゲーム全体を管理するクラス
 	/// </summary>
 	class Game
 	{
-	private:
-		Game() = default;
+	public:
+		Game(GameImpl& gameImpl, IRenderer& renderer)
+			: m_gameImpl(gameImpl), m_renderer(renderer), m_window(Window()) {};
 		~Game() = default;
 
 	public:
@@ -20,16 +24,10 @@ namespace Framework
 
 		void Final();
 
-		static Game& Instance() {
-			static Game inst;
-			return inst;
-		}
 	private:
 		Window m_window;
 		std::chrono::system_clock::time_point m_prevFrameTime;
-
-		// レンダラー
-		
-		// シーン
+		GameImpl& m_gameImpl;
+		IRenderer& m_renderer;
 	};
 }
