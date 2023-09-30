@@ -18,6 +18,12 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source\Game\Graphics">
+      <UniqueIdentifier>{20a108ae-5500-4b9c-b686-51e808ea3511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{e947e5a3-a3af-4b0f-9d38-69dc8eac1a91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
@@ -89,9 +95,6 @@
     <ClCompile Include="Source\DX12Wrapper\Shader.cpp">
       <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DX12Wrapper\ShaderLibrary.cpp">
-      <Filter>Source\DX12Wrapper</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\ShaderResourceViewDesc.cpp">
       <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
@@ -120,7 +123,10 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Renderer.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Game\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\ShaderLibrary.cpp">
+      <Filter>Source\Game\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,9 +211,6 @@
     <ClInclude Include="Source\DX12Wrapper\Shader.h">
       <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DX12Wrapper\ShaderLibrary.h">
-      <Filter>Source\DX12Wrapper</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h">
       <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
@@ -242,7 +245,15 @@
       <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Renderer.h">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Game\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Game\ShaderLibrary.h">
+      <Filter>Source\Game\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shaders\Sprite.hlsl">
+      <Filter>shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

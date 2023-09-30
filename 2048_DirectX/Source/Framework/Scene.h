@@ -17,7 +17,11 @@ namespace Framework
 	public:
 		virtual void Init() = 0;
 		void Update(float deltaTime);
-		void Draw();
 		virtual void Final() = 0;
+
+		std::vector<std::unique_ptr<GameObject>>& GetGameObjects()
+		{
+			return m_gameObjects;
+		}
 	};
 }

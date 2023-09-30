@@ -137,9 +137,8 @@ namespace DX12Wrapper
 		/// </summary>
 		void SetFrameRenderTarget(const CD3DX12_VIEWPORT& viewport, const CD3DX12_RECT& scissorRect);
 
-		// 開発用
 	private:
-		DX12Wrapper::RenderingContext _renderContext;	            // レンダリングコンテキスト
+		DX12Wrapper::RenderingContext m_renderContext;	            // レンダリングコンテキスト
 		DX12Wrapper::RenderTargetBuffer _frameBuffers[2];	        // フレームバッファ
 		DX12Wrapper::DescriptorHeapRTV _frameHeap;	                // フレームバッファ用ディスクリプタヒープ	
 
@@ -148,6 +147,9 @@ namespace DX12Wrapper
 		DX12Wrapper::DescriptorHeapDSV _dsvHeap;					    // デプスステンシル用ヒープ
 
 		DX12Wrapper::DescriptorHeapCBV_SRV_UAV _imguiHeap;
+
+		CD3DX12_VIEWPORT m_viewport;
+		CD3DX12_RECT m_scissorRect;
 
 		/// <summary>
 		/// フレームバッファ用のレンダーターゲット生成
@@ -165,8 +167,3 @@ namespace DX12Wrapper
 		DX12Wrapper::DescriptorHeapRTV& GetFrameBufferDescriptorHeap() { return _frameHeap; }
 	};
 }
-
-/// メモ
-/// MiniEngineはグローバル変数でポインタを持っていたのでよろしくない
-/// 同様のことをするならシングルトンの方が安全→デストラクタがprivateになっているのでどこかでdeleteされる心配がない
-/// メンバ関数の引数にメンバ変数を指定する→関数の処理内容、意図が明確に伝わる、影響範囲が明確になる

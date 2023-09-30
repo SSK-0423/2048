@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Shader.h"
-#include "../Utility/EngineUtility.h"
+#include "DX12Wrapper/Shader.h"
+#include "Utility/EngineUtility.h"
 
-namespace DX12Wrapper {
+namespace Game2048 {
 	enum class SHADERTYPE {
 		VERTEX,
 		PIXEL
@@ -16,7 +16,7 @@ namespace DX12Wrapper {
 		ShaderLibrary(const ShaderLibrary& inst) = delete;
 		void operator=(const ShaderLibrary& inst) = delete;
 
-		std::unordered_map<std::string, Shader> _shaderMap;
+		std::unordered_map<std::string, DX12Wrapper::Shader> _shaderMap;
 		std::unordered_map<SHADERTYPE, const char*> _shaderTypeMap;
 
 	public:
@@ -26,6 +26,6 @@ namespace DX12Wrapper {
 			const TCHAR* shaderFileName, const std::string& shaderTag,
 			SHADERTYPE shaderType, const char* entryPointName = "main");
 
-		Shader* GetShader(const std::string& shaderTag);
+		DX12Wrapper::Shader* GetShader(const std::string& shaderTag);
 	};
 }

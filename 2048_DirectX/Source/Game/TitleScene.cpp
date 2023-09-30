@@ -14,8 +14,6 @@ namespace Game2048
 		titleSprite->GetComponent<Sprite>()->LoadTexture(std::wstring(L"res/Title.png"));
 
 		m_gameObjects.push_back(std::move(titleSprite));
-
-		//MessageBoxA(NULL, "TitleScene", "Debug", MB_OK);
 	}
 	void TitleScene::Final()
 	{

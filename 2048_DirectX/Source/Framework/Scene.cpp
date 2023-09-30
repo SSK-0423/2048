@@ -13,15 +13,4 @@ namespace Framework
 			obj->Update();
 		}
 	}
-	void Scene::Draw()
-	{
-		for (auto& obj : m_gameObjects)
-		{
-			obj->Draw();
-		}
-		for (auto& obj : m_guiObjects)
-		{
-			obj->Draw();
-		}
-	}
 }

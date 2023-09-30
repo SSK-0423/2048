@@ -55,7 +55,11 @@ namespace DX12Wrapper
 		if (CreateFrameRenderTarget() == Utility::RESULT::FAILED) { return Utility::RESULT::FAILED; }
 
 		// レンダリングコンテキストの初期化
-		_renderContext.Init(*_cmdList.Get());
+		m_renderContext.Init(*_cmdList.Get());
+
+		m_viewport = CD3DX12_VIEWPORT(
+			0.f, 0.f, static_cast<float>(windowWidth), static_cast<float>(windowHeight));
+		m_scissorRect = CD3DX12_RECT(0, 0, windowWidth, windowHeight);
 
 		return Utility::RESULT::SUCCESS;
 	}
@@ -238,22 +242,26 @@ namespace DX12Wrapper
 		auto dsvHandle = _dsvHeap.GetCPUDescriptorHandleForHeapStart();
 
 		// バリア処理
-		_renderContext.TransitionResourceState(
+		m_renderContext.TransitionResourceState(
 			_frameBuffers[bbIdx].GetBuffer(),
 			D3D12_RESOURCE_STATE_PRESENT,
 			D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 		// レンダーターゲットセット
-		_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
+		m_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
 
 		// 画面を指定色でクリア
 		DirectX::XMFLOAT4 color(0.f, 1.f, 1.f, 1.f);
-		_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
+		m_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
 
 		// デプスステンシルバッファをクリア
-		_renderContext.ClearDepthStencilView(
+		m_renderContext.ClearDepthStencilView(
 			dsvHandle, D3D12_CLEAR_FLAG_DEPTH,
 			depthStencilBufferData.clearDepth, depthStencilBufferData.clearStencil, 0, nullptr);
+
+		// ビューポートとシザー矩形セット
+		m_renderContext.SetViewport(m_viewport);
+		m_renderContext.SetScissorRect(m_scissorRect);
 	}
 
 	void Dx12GraphicsEngine::EndDraw()
@@ -262,13 +270,13 @@ namespace DX12Wrapper
 		auto bbIdx = _swapchain->GetCurrentBackBufferIndex();
 
 		// バリア処理
-		_renderContext.TransitionResourceState(
+		m_renderContext.TransitionResourceState(
 			_frameBuffers[bbIdx].GetBuffer(),
 			D3D12_RESOURCE_STATE_RENDER_TARGET,
 			D3D12_RESOURCE_STATE_PRESENT);
 
 		// 命令の受付終了
-		_renderContext.Close();
+		m_renderContext.Close();
 
 		// コマンドリストの実行
 		ID3D12CommandList* cmdlists[] = { _cmdList.Get() };
@@ -290,7 +298,7 @@ namespace DX12Wrapper
 		}
 
 		_cmdAllocator->Reset();	                        // キューをクリア
-		_renderContext.Reset(*_cmdAllocator.Get());	    // コマンドを受け付けられる状態にする
+		m_renderContext.Reset(*_cmdAllocator.Get());	    // コマンドを受け付けられる状態にする
 
 		// フリップ
 		_swapchain->Present(1, 0);
@@ -309,20 +317,20 @@ namespace DX12Wrapper
 		auto dsvHandle = _dsvHeap.GetCPUDescriptorHandleForHeapStart();
 
 		// レンダーターゲットセット
-		_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
+		m_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
 
 		// 画面を指定色でクリア
 		DirectX::XMFLOAT4 color(0.f, 1.f, 1.f, 1.f);
-		_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
+		m_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
 
 		// デプスステンシルバッファをクリア
-		_renderContext.ClearDepthStencilView(
+		m_renderContext.ClearDepthStencilView(
 			dsvHandle, D3D12_CLEAR_FLAG_DEPTH,
 			depthStencilBufferData.clearDepth, depthStencilBufferData.clearStencil, 0, nullptr);
 
 		// ビューポートとシザー矩形セット
-		_renderContext.SetViewport(viewport);
-		_renderContext.SetScissorRect(scissorRect);
+		m_renderContext.SetViewport(viewport);
+		m_renderContext.SetScissorRect(scissorRect);
 	}
 
 	Utility::RESULT Dx12GraphicsEngine::CreateFrameRenderTarget()
@@ -359,6 +367,6 @@ namespace DX12Wrapper
 
 	DX12Wrapper::RenderingContext& Dx12GraphicsEngine::GetRenderingContext()
 	{
-		return _renderContext;
+		return m_renderContext;
 	}
 }

@@ -29,16 +29,20 @@ namespace Framework
 			MessageBoxA(NULL, "Dx12GraphicsEngineの初期化に失敗", "エラー", MB_OK);
 		}
 
+		result = m_renderer.Init();
+		if (result == RESULT::FAILED)
+		{
+			MessageBoxA(NULL, "Rendererの初期化に失敗", "エラー", MB_OK);
+		}
+		
 		m_gameImpl.Init();
 	}
 
 	void Game::Run()
 	{
-		bool isPlaying = m_window.DispatchWindowMessage();
-
 		auto& sceneManager = SceneManager::Instance();
 
-		while (isPlaying)
+		while (bool isPlaying = m_window.DispatchWindowMessage())
 		{
 			auto currentFrameTime = std::chrono::system_clock::now();
 			auto deltaTime

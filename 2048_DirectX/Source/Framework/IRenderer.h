@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Utility/EngineUtility.h"
+
 namespace Framework
 {
 	class IRenderer
@@ -7,6 +9,7 @@ namespace Framework
 	public:
 		IRenderer() = default;
 		virtual ~IRenderer() = default;
+		virtual Utility::RESULT Init() = 0;
 		virtual void Render(class Scene* scene) = 0;
 	};
 }

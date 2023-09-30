@@ -33,7 +33,6 @@
     <ClCompile Include="Source\DX12Wrapper\RenderTargetBuffer.cpp" />
     <ClCompile Include="Source\DX12Wrapper\RootSignature.cpp" />
     <ClCompile Include="Source\DX12Wrapper\Shader.cpp" />
-    <ClCompile Include="Source\DX12Wrapper\ShaderLibrary.cpp" />
     <ClCompile Include="Source\DX12Wrapper\ShaderResourceViewDesc.cpp" />
     <ClCompile Include="Source\DX12Wrapper\Texture.cpp" />
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
@@ -50,6 +49,7 @@
     <ClCompile Include="Source\Game\GameScene.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
     <ClCompile Include="Source\Game\Renderer.cpp" />
+    <ClCompile Include="source\Game\ShaderLibrary.cpp" />
     <ClCompile Include="Source\Game\TitleScene.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -73,7 +73,6 @@
     <ClInclude Include="Source\DX12Wrapper\RenderTargetBuffer.h" />
     <ClInclude Include="Source\DX12Wrapper\RootSignature.h" />
     <ClInclude Include="Source\DX12Wrapper\Shader.h" />
-    <ClInclude Include="Source\DX12Wrapper\ShaderLibrary.h" />
     <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h" />
     <ClInclude Include="Source\DX12Wrapper\Texture.h" />
     <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h" />
@@ -95,9 +94,22 @@
     <ClInclude Include="Source\Game\Game2048.h" />
     <ClInclude Include="Source\Game\Renderer.h" />
     <ClInclude Include="Source\Game\GameScene.h" />
+    <ClInclude Include="source\Game\ShaderLibrary.h" />
     <ClInclude Include="Source\Game\TitleScene.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Utility\EngineUtility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shaders\Sprite.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VSMain</EntryPointName>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
