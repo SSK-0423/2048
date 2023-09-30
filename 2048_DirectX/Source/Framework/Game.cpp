@@ -12,6 +12,8 @@ namespace Framework
 	{
 		m_window.Create(NAME, WIDTH, HEIGHT);
 
+		InputSystem::Instance().Init(m_window.GetHwnd());
+
 		m_gameImpl.Init();
 	}
 
@@ -31,14 +33,23 @@ namespace Framework
 			InputSystem::Instance().Update();
 
 			// çXêV
-			SceneManager::Instance().NowSceneUpdate(deltaTime);
+			SceneManager::Instance().CurrentSceneUpdate(deltaTime);
 
 			// ï`âÊ
-			SceneManager::Instance().NowSceneDraw();
+			SceneManager::Instance().CurrentSceneDraw();
 
-			char buffer[256];
-			sprintf_s(buffer, "%lld (ms)\n", deltaTime);
-			OutputDebugStringA(buffer);
+			//char buffer[256];
+			//sprintf_s(buffer, "%lld (ms)\n", deltaTime);
+			//OutputDebugStringA(buffer);
+
+			if (InputSystem::Instance().GetKeyDown(DIK_LEFTARROW))
+			{
+				OutputDebugStringA("LeftArrowKey Down");
+			}
+			if (InputSystem::Instance().GetMouseButtonDown(MOUSECODE::LEFT))
+			{
+				OutputDebugStringA("MouseLeftButton Down");
+			}
 		}
 
 		return;
@@ -47,7 +58,7 @@ namespace Framework
 	void Game::Final()
 	{
 		// èIóπèàóù
-		SceneManager::Instance().NowSceneFinal();
+		SceneManager::Instance().CurrentSceneFinal();
 
 		m_gameImpl.Final();
 	}

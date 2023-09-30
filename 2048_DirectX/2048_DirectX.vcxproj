@@ -47,6 +47,7 @@
     <ClCompile Include="Source\Framework\Sprite.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\Game2048.cpp" />
+    <ClCompile Include="Source\Game\GameScene.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
     <ClCompile Include="Source\Game\TitleScene.cpp" />
     <ClCompile Include="Source\pch.cpp">
@@ -90,6 +91,7 @@
     <ClInclude Include="Source\Framework\Transform.h" />
     <ClInclude Include="Source\Framework\Window.h" />
     <ClInclude Include="Source\Game\Game2048.h" />
+    <ClInclude Include="Source\Game\GameScene.h" />
     <ClInclude Include="Source\Game\TitleScene.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Renderer\IRenderer.h" />

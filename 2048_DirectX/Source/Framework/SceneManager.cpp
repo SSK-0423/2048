@@ -2,17 +2,25 @@
 
 namespace Framework
 {
-	void SceneManager::NowSceneUpdate(float deltaTime)
+	void SceneManager::CurrentSceneUpdate(float deltaTime)
 	{
+		m_currentScene->Update(deltaTime);
 	}
-	void SceneManager::NowSceneDraw()
+	void SceneManager::CurrentSceneDraw()
 	{
+		m_currentScene->Draw();
 	}
-	void SceneManager::NowSceneFinal()
+	void SceneManager::CurrentSceneFinal()
 	{
+		if (m_currentScene != nullptr)
+		{
+			m_currentScene->Final();
+		}
 	}
 	void SceneManager::LoadScene(const char* name)
 	{
-		m_scenes[name]->Init();
+		CurrentSceneFinal();
+		m_currentScene = m_scenes[name].get();
+		m_currentScene->Init();
 	}
 }

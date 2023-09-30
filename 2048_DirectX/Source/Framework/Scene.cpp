@@ -5,23 +5,23 @@ namespace Framework
 	{
 		for (auto& obj : m_gameObjects)
 		{
-			obj.Update(deltaTime);
+			obj->Update(deltaTime);
 		}
 
 		for (auto& obj : m_guiObjects)
 		{
-			obj.Update();
+			obj->Update();
 		}
 	}
 	void Scene::Draw()
 	{
 		for (auto& obj : m_gameObjects)
 		{
-			obj.Draw();
+			obj->Draw();
 		}
 		for (auto& obj : m_guiObjects)
 		{
-			obj.Draw();
+			obj->Draw();
 		}
 	}
 }

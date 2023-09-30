@@ -7,7 +7,7 @@ namespace Framework
 	{
 	public:
 		Object() = default;
-		~Object()
+		virtual ~Object()
 		{
 			m_components.clear();
 			m_components.shrink_to_fit();
@@ -28,6 +28,7 @@ namespace Framework
 
 			return nullptr;
 		}
+
 		template<class T, class ...K>
 		T* AddComponent(K ...k)
 		{

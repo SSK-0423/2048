@@ -1,216 +1,246 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Game">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Source">
+      <UniqueIdentifier>{9d987e61-13be-41fc-b013-1e3e08efc042}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Renderer">
+    <Filter Include="Source\Renderer">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="DX12Wrapper">
+    <Filter Include="Source\Utility">
+      <UniqueIdentifier>{9c4e3451-bb57-48b0-8286-1ca5978e772f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DX12Wrapper">
       <UniqueIdentifier>{431c8bb5-bf07-41a3-b62a-b9870e4fc9be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utility">
-      <UniqueIdentifier>{9c4e3451-bb57-48b0-8286-1ca5978e772f}</UniqueIdentifier>
+    <Filter Include="Source\Framework">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source\Game">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
-      <Filter>Game</Filter>
+      <Filter>Source\Game</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\Window.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\Game.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\GameObject.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\InputSystem.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\Scene.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\SceneManager.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\SoundClip.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\SoundManager.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\Sprite.cpp">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\ConstantBuffer.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\CubeRenderTarget.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\DepthStencilBuffer.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\DescriptorHeapCBV_SRV_UAV.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\DescriptorHeapDSV.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\DescriptorHeapRTV.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\GraphicsPipelineState.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\IndexBuffer.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\RenderingContext.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\RenderTarget.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\RenderTargetBuffer.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\RootSignature.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\Shader.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\ShaderLibrary.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\ShaderResourceViewDesc.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\Texture.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility\EngineUtility.cpp">
-      <Filter>Utility</Filter>
+      <Filter>Source\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\Dx12GraphicsEngine.cpp">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Game2048.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\GameScene.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\TitleScene.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\pch.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Game.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Window.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\IComponent.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Transform.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Object.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\GameObject.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\GUIObject.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\InputSystem.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\SceneManager.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Scene.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\SoundManager.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\SoundClip.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Sprite.h">
-      <Filter>Framework</Filter>
+      <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Renderer\IRenderer.h">
-      <Filter>Renderer</Filter>
+      <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\ConstantBuffer.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\CubeRenderTarget.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\DepthStencilBuffer.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\DescriptorHeapCBV_SRV_UAV.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\DescriptorHeapDSV.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\DescriptorHeapRTV.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\GraphicsPipelineState.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\IndexBuffer.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\InputLayout.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\RenderingContext.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\RenderTarget.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\RenderTargetBuffer.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\RootSignature.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\Shader.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\ShaderLibrary.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\Texture.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility\EngineUtility.h">
-      <Filter>Utility</Filter>
+      <Filter>Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\Dx12GraphicsEngine.h">
-      <Filter>DX12Wrapper</Filter>
+      <Filter>Source\DX12Wrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\pch.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\GameScene.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\TitleScene.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Game2048.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\GameImpl.h">
+      <Filter>Source\Framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

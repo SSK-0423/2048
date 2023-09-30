@@ -8,11 +8,11 @@ namespace Framework
 	{
 	public:
 		Scene() = default;
-		~Scene() = default;
+		virtual ~Scene() = default;
 
 	protected:
-		std::vector<GameObject> m_gameObjects;
-		std::vector<GUIObject> m_guiObjects;
+		std::vector<std::unique_ptr<GameObject>> m_gameObjects;
+		std::vector<std::unique_ptr<GUIObject>> m_guiObjects;
 
 	public:
 		virtual void Init() = 0;
