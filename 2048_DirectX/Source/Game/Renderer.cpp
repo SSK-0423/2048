@@ -51,6 +51,10 @@ namespace Game2048
 
 		// ブレンド
 		pipelineState.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+		pipelineState.BlendState.AlphaToCoverageEnable = true;
+		pipelineState.BlendState.RenderTarget[0].BlendEnable = true;
+		pipelineState.BlendState.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+		pipelineState.BlendState.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 
 		// ラスタライズ設定
 		pipelineState.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
@@ -77,8 +81,8 @@ namespace Game2048
 		pipelineState.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;	// カラー
 
 		// アンチエイリアシングのためのサンプル数設定
-		pipelineState.SampleDesc.Count = 1;			// サンプリングは1ピクセルにつき1
-		pipelineState.SampleDesc.Quality = 0;		// クオリティは最低
+		pipelineState.SampleDesc.Count = 1;
+		pipelineState.SampleDesc.Quality = 0;
 
 
 		return m_pipelineState->Create(device, pipelineState);
