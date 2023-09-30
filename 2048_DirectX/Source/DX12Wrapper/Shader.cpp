@@ -5,7 +5,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	HRESULT Shader::CompileShader(
 		const TCHAR* shaderFilePass, const char* entoryPointName, const char* shaderTypeAndVersion)

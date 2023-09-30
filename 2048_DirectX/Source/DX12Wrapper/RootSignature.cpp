@@ -4,7 +4,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	SamplerData::SamplerData(
 		D3D12_FILTER samplerFilter,

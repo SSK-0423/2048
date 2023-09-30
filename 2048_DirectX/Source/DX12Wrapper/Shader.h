@@ -7,7 +7,7 @@
 
 #include "../Utility/EngineUtility.h"
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	/// <summary>
 	/// シェーダー生成に必要な情報

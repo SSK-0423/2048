@@ -9,7 +9,7 @@
 #include "DescriptorHeapRTV.h"
 #include "DescriptorHeapDSV.h"
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	class RenderingContext;
 

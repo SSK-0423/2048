@@ -23,11 +23,11 @@ namespace Framework
 			MessageBoxA(NULL, "InputSystemの初期化に失敗", "エラー", MB_OK);
 		}
 
-		//result = DX12API::Dx12GraphicsEngine::Instance().Init(m_window.GetHwnd(), WIDTH, HEIGHT);
-		//if (result == RESULT::FAILED)
-		//{
-		//	MessageBoxA(NULL, "Dx12GraphicsEngineの初期化に失敗", "エラー", MB_OK);
-		//}
+		result = DX12Wrapper::Dx12GraphicsEngine::Instance().Init(m_window.GetHwnd(), WIDTH, HEIGHT);
+		if (result == RESULT::FAILED)
+		{
+			MessageBoxA(NULL, "Dx12GraphicsEngineの初期化に失敗", "エラー", MB_OK);
+		}
 
 		m_gameImpl.Init();
 	}
@@ -54,15 +54,6 @@ namespace Framework
 
 			// 描画
 			sceneManager.CurrentSceneDraw(m_renderer);
-
-			if (InputSystem::Instance().GetKeyDown(DIK_SPACE))
-			{
-				sceneManager.LoadScene("Game");
-			}
-			if (InputSystem::Instance().GetMouseButtonDown(MOUSECODE::LEFT))
-			{
-				OutputDebugStringA("MouseLeftButton Down");
-			}
 		}
 
 		return;

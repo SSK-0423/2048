@@ -2,7 +2,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	static const TCHAR* SHADER_FOLDER_PASS = L"Shaders/";
 	static const UINT BUFFSIZE = 128;

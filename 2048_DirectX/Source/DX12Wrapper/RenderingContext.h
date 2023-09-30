@@ -3,7 +3,7 @@
 #include <DirectXMath.h>
 #include "../Utility/EngineUtility.h"
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	class DescriptorHeapRTV;
 	class DescriptorHeapDSV;

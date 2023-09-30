@@ -2,7 +2,7 @@
 
 #include <d3d12.h>
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	class Texture;
 

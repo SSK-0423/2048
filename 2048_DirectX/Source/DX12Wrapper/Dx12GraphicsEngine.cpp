@@ -11,7 +11,7 @@
 
 using namespace Microsoft::WRL;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	Dx12GraphicsEngine::Dx12GraphicsEngine()
 		: _hwnd(0), _windowWidth(0), _windowHeight(0)
@@ -357,7 +357,7 @@ namespace DX12API
 		return Utility::RESULT::SUCCESS;
 	}
 
-	DX12API::RenderingContext& Dx12GraphicsEngine::GetRenderingContext()
+	DX12Wrapper::RenderingContext& Dx12GraphicsEngine::GetRenderingContext()
 	{
 		return _renderContext;
 	}

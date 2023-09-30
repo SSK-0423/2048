@@ -5,7 +5,7 @@
 using namespace Microsoft::WRL;
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	HRESULT ConstantBuffer::CreateConstantBuffer(ID3D12Device& device, const UINT& bufferSize)
 	{

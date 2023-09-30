@@ -7,7 +7,7 @@
 #include "GraphicsPipelineState.h"
 #include "RootSignature.h"
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	RenderingContext::RenderingContext()
 	{

@@ -3,7 +3,7 @@
 
 #pragma comment(lib,"d3d12.lib")
 
-namespace DX12API {
+namespace DX12Wrapper {
 	struct InputLayout {
 		std::vector<D3D12_INPUT_ELEMENT_DESC> inputElementDescs;
 

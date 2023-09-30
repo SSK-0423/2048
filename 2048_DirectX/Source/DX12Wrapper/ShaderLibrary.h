@@ -3,7 +3,7 @@
 #include "Shader.h"
 #include "../Utility/EngineUtility.h"
 
-namespace DX12API {
+namespace DX12Wrapper {
 	enum class SHADERTYPE {
 		VERTEX,
 		PIXEL

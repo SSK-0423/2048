@@ -1,15 +1,21 @@
 #include "pch.h"
 #include "TitleScene.h"
-#include "../Framework/Sprite.h"
+#include "Framework/Sprite.h"
+
+using namespace Framework;
 
 namespace Game2048
 {
 	void TitleScene::Init()
 	{
 		// GUIì¬
-		//Framework::GameObject* titleSprite = new Framework::GameObject();
-		//titleSprite->AddComponent<Framework::Sprite>(titleSprite);
-		MessageBoxA(NULL, "TitleScene", "Debug", MB_OK);
+		std::unique_ptr<GameObject> titleSprite = std::make_unique<GameObject>();
+		titleSprite->AddComponent<Sprite>(titleSprite.get());
+		titleSprite->GetComponent<Sprite>()->LoadTexture(std::wstring(L"res/Title.png"));
+
+		m_gameObjects.push_back(std::move(titleSprite));
+
+		//MessageBoxA(NULL, "TitleScene", "Debug", MB_OK);
 	}
 	void TitleScene::Final()
 	{
