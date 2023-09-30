@@ -34,7 +34,7 @@ namespace Framework
 		~InputSystem();
 
 	public:
-		Utility::RESULT Init(HWND hwnd);
+		Utility::RESULT Init(HWND& hwnd);
 
 		void Update();
 

@@ -6,7 +6,7 @@ namespace Framework
 	class SceneManager
 	{
 	private:
-		SceneManager() : m_currentSceneName(""), m_currentScene(nullptr) {};
+		SceneManager() : m_currentSceneName("") {};
 		~SceneManager() = default;
 	public:
 
@@ -18,7 +18,7 @@ namespace Framework
 
 		void CurrentSceneUpdate(float deltaTime);
 
-		void CurrentSceneDraw();
+		void CurrentSceneDraw(class IRenderer& renderer);
 
 		void CurrentSceneFinal();
 
@@ -32,7 +32,6 @@ namespace Framework
 
 	private:
 		const char* m_currentSceneName;
-		Scene* m_currentScene;
 		std::unordered_map<const char*, std::unique_ptr<Scene>> m_scenes;
 	};
 }

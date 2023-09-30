@@ -7,9 +7,8 @@ namespace Game2048
 	void TitleScene::Init()
 	{
 		// GUIì¬
-		Framework::GameObject* titleSprite = new Framework::GameObject();
-		titleSprite->AddComponent<Framework::Sprite>(titleSprite);
-
+		//Framework::GameObject* titleSprite = new Framework::GameObject();
+		//titleSprite->AddComponent<Framework::Sprite>(titleSprite);
 		MessageBoxA(NULL, "TitleScene", "Debug", MB_OK);
 	}
 	void TitleScene::Final()
@@ -19,5 +18,7 @@ namespace Game2048
 
 		m_guiObjects.clear();
 		m_guiObjects.shrink_to_fit();
+
+		OutputDebugStringA("TitleScene Final\n");
 	}
 }

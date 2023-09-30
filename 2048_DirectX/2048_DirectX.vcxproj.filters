@@ -4,10 +4,6 @@
     <Filter Include="Source">
       <UniqueIdentifier>{9d987e61-13be-41fc-b013-1e3e08efc042}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Renderer">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Source\Utility">
       <UniqueIdentifier>{9c4e3451-bb57-48b0-8286-1ca5978e772f}</UniqueIdentifier>
     </Filter>
@@ -123,6 +119,9 @@
     <ClCompile Include="Source\pch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\Renderer.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Game.h">
@@ -163,9 +162,6 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\Sprite.h">
       <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Renderer\IRenderer.h">
-      <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\ConstantBuffer.h">
       <Filter>Source\DX12Wrapper</Filter>
@@ -241,6 +237,12 @@
     </ClInclude>
     <ClInclude Include="Source\Framework\GameImpl.h">
       <Filter>Source\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\IRenderer.h">
+      <Filter>Source\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Renderer.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

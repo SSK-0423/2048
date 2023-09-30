@@ -25,7 +25,7 @@ namespace Framework
 		SafetyReleaseDevice(m_mouse);
 		SafetyRelease(m_directInputInterface);
 	}
-	Utility::RESULT InputSystem::Init(HWND hwnd)
+	Utility::RESULT InputSystem::Init(HWND& hwnd)
 	{
 		m_hwnd = hwnd;
 
@@ -51,7 +51,7 @@ namespace Framework
 		result = m_keyboard->SetDataFormat(&c_dfDIKeyboard);
 		if (FAILED(result)) { return result; }
 		// 協調モード設定
-		result = m_keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+		result = m_keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 		if (FAILED(result)) { return result; }
 		// キーボードの入力読み取り開始
 		result = m_keyboard->Acquire();

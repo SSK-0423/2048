@@ -1,10 +1,15 @@
 #include "Game.h"
+#include "GameImpl.h"
+#include "IRenderer.h"
 #include "InputSystem.h"
 #include "SceneManager.h"
+#include "DX12Wrapper/Dx12GraphicsEngine.h"
 
 static const TCHAR* NAME = L"2048_DirectX";
 static const LONG WIDTH = 1024;
 static const LONG HEIGHT = 768;
+
+using namespace Utility;
 
 namespace Framework
 {
@@ -12,7 +17,17 @@ namespace Framework
 	{
 		m_window.Create(NAME, WIDTH, HEIGHT);
 
-		InputSystem::Instance().Init(m_window.GetHwnd());
+		RESULT result = InputSystem::Instance().Init(m_window.GetHwnd());
+		if (result == RESULT::FAILED)
+		{
+			MessageBoxA(NULL, "InputSystemの初期化に失敗", "エラー", MB_OK);
+		}
+
+		//result = DX12API::Dx12GraphicsEngine::Instance().Init(m_window.GetHwnd(), WIDTH, HEIGHT);
+		//if (result == RESULT::FAILED)
+		//{
+		//	MessageBoxA(NULL, "Dx12GraphicsEngineの初期化に失敗", "エラー", MB_OK);
+		//}
 
 		m_gameImpl.Init();
 	}
@@ -20,6 +35,8 @@ namespace Framework
 	void Game::Run()
 	{
 		bool isPlaying = m_window.DispatchWindowMessage();
+
+		auto& sceneManager = SceneManager::Instance();
 
 		while (isPlaying)
 		{
@@ -33,18 +50,14 @@ namespace Framework
 			InputSystem::Instance().Update();
 
 			// 更新
-			SceneManager::Instance().CurrentSceneUpdate(deltaTime);
+			sceneManager.CurrentSceneUpdate(deltaTime);
 
 			// 描画
-			SceneManager::Instance().CurrentSceneDraw();
+			sceneManager.CurrentSceneDraw(m_renderer);
 
-			//char buffer[256];
-			//sprintf_s(buffer, "%lld (ms)\n", deltaTime);
-			//OutputDebugStringA(buffer);
-
-			if (InputSystem::Instance().GetKeyDown(DIK_LEFTARROW))
+			if (InputSystem::Instance().GetKeyDown(DIK_SPACE))
 			{
-				OutputDebugStringA("LeftArrowKey Down");
+				sceneManager.LoadScene("Game");
 			}
 			if (InputSystem::Instance().GetMouseButtonDown(MOUSECODE::LEFT))
 			{

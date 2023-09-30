@@ -3,7 +3,7 @@
 
 #include "Framework/SceneManager.h"
 #include "TitleScene.h"
-
+#include "GameScene.h"
 
 namespace Game2048
 {
@@ -13,7 +13,8 @@ namespace Game2048
 		auto& sceneManager = Framework::SceneManager::Instance();
 
 		sceneManager.AddScene<TitleScene>("Title");
-
+		sceneManager.AddScene<GameScene>("Game");
+		
 		sceneManager.LoadScene("Title");
 	}
 	void Game2048::Final()
