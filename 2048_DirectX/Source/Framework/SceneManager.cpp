@@ -3,29 +3,28 @@
 
 namespace Framework
 {
-	void SceneManager::CurrentSceneUpdate(float deltaTime)
+	void SceneManager::ActiveSceneUpdate(float deltaTime)
 	{
-		m_scenes[m_currentSceneName]->Update(deltaTime);
+		m_scenes[m_activeSceneName]->Update(deltaTime);
 	}
-	void SceneManager::CurrentSceneDraw(IRenderer& renderer)
+	void SceneManager::ActiveSceneDraw(IRenderer& renderer)
 	{
-		m_scenes[m_currentSceneName]->DrawScene(renderer);
-		m_scenes[m_currentSceneName]->DrawUI();
+		renderer.Render(m_scenes[m_activeSceneName].get());
 	}
-	void SceneManager::CurrentSceneFinal()
+	void SceneManager::ActiveSceneFinal()
 	{
-		if (m_scenes[m_currentSceneName] != nullptr)
+		if (m_scenes[m_activeSceneName] != nullptr)
 		{
-			m_scenes[m_currentSceneName]->Final();
+			m_scenes[m_activeSceneName]->Final();
 		}
 	}
 	void SceneManager::LoadScene(const char* name)
 	{
-		if (m_scenes[m_currentSceneName] != nullptr)
+		if (m_scenes[m_activeSceneName] != nullptr)
 		{
-			m_scenes[m_currentSceneName]->Final();
+			m_scenes[m_activeSceneName]->Final();
 		}
-		m_currentSceneName = name;
-		m_scenes[m_currentSceneName]->Init();
+		m_activeSceneName = name;
+		m_scenes[m_activeSceneName]->Init();
 	}
 }

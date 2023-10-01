@@ -40,6 +40,7 @@ namespace Framework
 
 		bool GetKeyDown(KEYCODE keyCode);
 		bool GetMouseButtonDown(MOUSECODE mouseCode);
+		POINT GetMousePosition();
 		void ViewMouseCursor();
 
 		static InputSystem& Instance() {

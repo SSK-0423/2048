@@ -156,6 +156,13 @@ namespace Framework
 	{
 		return m_mouseButtonState[static_cast<UINT>(mouseCode)] == BUTTON_STATE::DOWN;
 	}
+	POINT InputSystem::GetMousePosition()
+	{
+		POINT point;
+		GetCursorPos(&point);
+		ScreenToClient(m_hwnd, &point);
+		return point;
+	}
 	void InputSystem::ViewMouseCursor()
 	{
 		HRESULT result = m_mouse->SetCooperativeLevel(m_hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);

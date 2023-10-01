@@ -90,11 +90,6 @@ namespace DX12Wrapper
 			MessageBoxA(_hwnd, "ファクトリー生成失敗", "エラー", MB_OK | MB_ICONERROR);
 			return result;
 		}
-		//result = _dxgiFactory.Get()->QueryInterface(IID_PPV_ARGS(_dxgiFactory.ReleaseAndGetAddressOf()));
-		//if (FAILED(result)) {
-		//	MessageBoxA(_hwnd, "ファクトリー7生成失敗", "エラー", MB_OK | MB_ICONERROR);
-		//	return result;
-		//}
 
 		// アダプター列挙
 		std::vector<ComPtr<IDXGIAdapter>> adapters;
@@ -251,7 +246,7 @@ namespace DX12Wrapper
 		m_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
 
 		// 画面を指定色でクリア
-		DirectX::XMFLOAT4 color(0.f, 1.f, 1.f, 1.f);
+		DirectX::XMFLOAT4 color(0.f, 0.f, 0.f, 1.f);
 		m_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
 
 		// デプスステンシルバッファをクリア

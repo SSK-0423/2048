@@ -94,22 +94,21 @@ namespace Game2048
 
 		return m_rootSignature->Create(device, rootSigData);
 	}
-	void Renderer::Render(std::vector<std::unique_ptr<Framework::Object>>& gameObjects)
+	void Renderer::RenderScene(const std::vector<std::unique_ptr<Framework::Object>>& gameObjects)
 	{
 		auto& graphicsEngine = DX12Wrapper::Dx12GraphicsEngine::Instance();
 
-		graphicsEngine.BeginDraw();
-		{
-			auto& renderContext = graphicsEngine.GetRenderingContext();
-			renderContext.SetGraphicsRootSignature(*m_rootSignature);
-			renderContext.SetPipelineState(*m_pipelineState);
+		auto& renderContext = graphicsEngine.GetRenderingContext();
+		renderContext.SetGraphicsRootSignature(*m_rootSignature);
+		renderContext.SetPipelineState(*m_pipelineState);
 
-			for (auto& obj : gameObjects)
-			{
-				obj->Draw();
-			}
+		for (auto& obj : gameObjects)
+		{
+			obj->Draw();
 		}
-		graphicsEngine.EndDraw();
+	}
+	void Renderer::RenderUI(const std::vector<std::unique_ptr<Framework::Canvas>>& canvases)
+	{
 	}
 }
 

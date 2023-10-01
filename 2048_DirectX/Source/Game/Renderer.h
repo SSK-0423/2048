@@ -25,8 +25,10 @@ namespace Game2048
 		Utility::RESULT CreateGraphicsPipelineState(ID3D12Device& device);
 		Utility::RESULT CreateRootSignature(ID3D12Device& device);
 
+		void RenderScene(const std::vector<std::unique_ptr<class Framework::Object>>& gameObjects);
+		void RenderUI(const std::vector<std::unique_ptr<class Framework::Canvas>>& canvases);
+
 	public:
 		Utility::RESULT Init() override;
-		void Render(std::vector<std::unique_ptr<Framework::Object>>& gameObjects) override;
 	};
 }

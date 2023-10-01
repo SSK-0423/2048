@@ -15,15 +15,12 @@ namespace Framework
 			canvas->Update(deltaTime);
 		}
 	}
-	void Scene::DrawScene(IRenderer& renderer)
+	const std::vector<std::unique_ptr<GameObject>>& Scene::GetGameObjects() const
 	{
-		renderer.Render(m_gameObjects);
+		return m_gameObjects;
 	}
-	void Scene::DrawUI()
+	const std::vector<std::unique_ptr<Canvas>>& Scene::GetCanvases() const
 	{
-		for (auto& canvas : m_canvases)
-		{
-			canvas->Draw();
-		}
+		return m_canvases;
 	}
 }

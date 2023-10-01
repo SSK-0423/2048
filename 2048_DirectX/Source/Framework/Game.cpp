@@ -54,14 +54,14 @@ namespace Framework
 			InputSystem::Instance().Update();
 
 			// XV
-			sceneManager.CurrentSceneUpdate(deltaTime);
+			sceneManager.ActiveSceneUpdate(deltaTime);
 
 			// •`‰æ
-			sceneManager.CurrentSceneDraw(m_renderer);
+			sceneManager.ActiveSceneDraw(m_renderer);
 
-		#ifdef _DEBUG
+#ifdef _DEBUG
 			DebugLog("%f (ms) \n", deltaTime * 1000.f);
-		#endif
+#endif
 		}
 
 		return;
@@ -70,7 +70,7 @@ namespace Framework
 	void Game::Final()
 	{
 		// I—¹ˆ—
-		SceneManager::Instance().CurrentSceneFinal();
+		SceneManager::Instance().ActiveSceneFinal();
 
 		m_gameImpl.Final();
 	}

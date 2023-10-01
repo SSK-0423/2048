@@ -14,3 +14,6 @@
 #include <algorithm>
 #include <memory>
 #include <string>
+#include <functional>
+
+#include "Utility/EngineUtility.h"

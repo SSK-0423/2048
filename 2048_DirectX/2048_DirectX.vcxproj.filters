@@ -30,6 +30,9 @@
     <Filter Include="Source\Game\GameScene">
       <UniqueIdentifier>{b40128d6-a980-42f0-96cc-55b31a271adf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\DX12Wrapper\Graphics">
+      <UniqueIdentifier>{6bfd118c-8502-4318-9941-d08226b16471}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
@@ -137,13 +140,19 @@
     <ClCompile Include="Source\Game\TitleScene.cpp">
       <Filter>Source\Game\TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="source\Game\TitleSceneUI.cpp">
+    <ClCompile Include="source\Game\TitleSceneCanvas.cpp">
       <Filter>Source\Game\TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\GameScene.cpp">
       <Filter>Source\Game\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="source\Framework\Canvas.cpp">
+      <Filter>Source\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Button.cpp">
+      <Filter>Source\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\IRenderer.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
   </ItemGroup>
@@ -256,7 +265,7 @@
     <ClInclude Include="source\Game\ShaderLibrary.h">
       <Filter>Source\Game\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Game\TitleSceneUI.h">
+    <ClInclude Include="source\Game\TitleSceneCanvas.h">
       <Filter>Source\Game\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="source\Game\TitleSprite.h">

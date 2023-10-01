@@ -16,13 +16,9 @@ namespace Framework
 	public:
 		virtual void Init() = 0;
 		virtual void Update(float deltaTime);
-		virtual void DrawScene(class IRenderer& renderer);
-		virtual void DrawUI();
 		virtual void Final() = 0;
 
-		std::vector<std::unique_ptr<GameObject>>& GetGameObjects()
-		{
-			return m_gameObjects;
-		}
+		const std::vector<std::unique_ptr<GameObject>>& GetGameObjects() const;
+		const std::vector<std::unique_ptr<Canvas>>& GetCanvases() const;
 	};
 }

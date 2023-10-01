@@ -1,21 +1,27 @@
 #pragma once
 #include "IComponent.h"
-/// <summary>
-/// ŽÀ‘••û–@
-/// 1. Canvas‚ÉAdd
-/// 
-/// </summary>
+#include <DirectXMath.h>
 
 namespace Framework
 {
 	class Button : public IComponent
 	{
 	public:
-		Button();
-		~Button();
+		Button(Object* owner, std::function<void()> onClick, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 scale);
+		~Button() = default;
 
 	private:
+		std::unique_ptr<class Sprite> m_sprite;
+		//std::unique_ptr<class Text> m_text;
+		std::function<void()> m_onClick;
+		class Transform2D* m_transform;
+
+		bool CheckClick();
+	public:		
 		void Update(float deltaTime) override;
 		void Draw() override;
+		void SetPosition(float x, float y);
+		void SetScale(float x, float y);
+		void SetSprite(const std::wstring& path);
 	};
 }

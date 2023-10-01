@@ -8,5 +8,11 @@ namespace Game2048
 	public:
 		TitleSceneCanvas();
 		~TitleSceneCanvas();
+
+		void Init() override;
+		void Final() override;
+
+	private:
+		void LoadGameScene();
 	};
 }

@@ -9,10 +9,12 @@ namespace Framework
 		Canvas() = default;
 		virtual ~Canvas() {};
 
+		virtual void Init() = 0;
 		virtual void Update(float deltaTime);
 		virtual void Draw();
+		virtual void Final() = 0;
 
-	private:
+	protected:
 		std::vector<std::unique_ptr<Object>> m_guiObjects;
 	};
 }

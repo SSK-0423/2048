@@ -6,7 +6,7 @@ namespace Framework
 	class SceneManager
 	{
 	private:
-		SceneManager() : m_currentSceneName("") {};
+		SceneManager() : m_activeSceneName("") {};
 		~SceneManager() = default;
 	public:
 
@@ -16,11 +16,11 @@ namespace Framework
 			return inst;
 		}
 
-		void CurrentSceneUpdate(float deltaTime);
+		void ActiveSceneUpdate(float deltaTime);
 
-		void CurrentSceneDraw(class IRenderer& renderer);
+		void ActiveSceneDraw(class IRenderer& renderer);
 
-		void CurrentSceneFinal();
+		void ActiveSceneFinal();
 
 		void LoadScene(const char* name);
 
@@ -31,7 +31,7 @@ namespace Framework
 		}
 
 	private:
-		const char* m_currentSceneName;
+		const char* m_activeSceneName;
 		std::unordered_map<const char*, std::unique_ptr<Scene>> m_scenes;
 	};
 }
