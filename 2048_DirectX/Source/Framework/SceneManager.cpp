@@ -11,6 +11,10 @@ namespace Framework
 	{
 		renderer.Render(m_scenes[m_activeSceneName].get());
 	}
+	void SceneManager::ActiveSceneLateUpdate(float deltaTime)
+	{
+		m_scenes[m_activeSceneName]->LateUpdate(deltaTime);
+	}
 	void SceneManager::ActiveSceneFinal()
 	{
 		if (m_scenes[m_activeSceneName] != nullptr)
@@ -22,9 +26,10 @@ namespace Framework
 	{
 		if (m_scenes[m_activeSceneName] != nullptr)
 		{
-			m_scenes[m_activeSceneName]->Final();
+			m_scenes[m_activeSceneName]->SetActive(false);
 		}
 		m_activeSceneName = name;
+		m_scenes[m_activeSceneName]->SetActive(true);
 		m_scenes[m_activeSceneName]->Init();
 	}
 }

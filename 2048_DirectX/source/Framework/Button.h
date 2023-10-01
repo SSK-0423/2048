@@ -22,7 +22,7 @@ namespace Framework
 		void Draw() override;
 		void SetPosition(float x, float y);
 		void SetScale(float x, float y);
-		void SetSprite(const std::wstring& path);
+		void SetTexture(const std::wstring& path);
 		void SetOnClick(std::function<void()> onClick);
 	};
 }

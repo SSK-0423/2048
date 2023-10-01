@@ -20,6 +20,8 @@ namespace Framework
 
 		void ActiveSceneDraw(class IRenderer& renderer);
 
+		void ActiveSceneLateUpdate(float deltaTime);
+
 		void ActiveSceneFinal();
 
 		void LoadScene(const char* name);

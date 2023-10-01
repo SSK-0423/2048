@@ -11,11 +11,6 @@ namespace Game2048
 {
 	void TitleScene::Init()
 	{
-		// GUIì¬
-		std::unique_ptr<GameObject> titleSprite = std::make_unique<GameObject>();
-		titleSprite->AddComponent<TitleSprite>(titleSprite.get());
-		m_gameObjects.push_back(std::move(titleSprite));
-
 		// Canvasì¬
 		std::unique_ptr<TitleSceneCanvas> titleCanvas = std::make_unique<TitleSceneCanvas>();
 		titleCanvas->Init();

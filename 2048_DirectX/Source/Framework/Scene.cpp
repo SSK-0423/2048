@@ -15,6 +15,13 @@ namespace Framework
 			canvas->Update(deltaTime);
 		}
 	}
+	void Scene::LateUpdate(float deltaTime)
+	{
+		if (!m_isActive)
+		{
+			Final();
+		}
+	}
 	const std::vector<std::unique_ptr<GameObject>>& Scene::GetGameObjects() const
 	{
 		return m_gameObjects;
@@ -22,5 +29,9 @@ namespace Framework
 	const std::vector<std::unique_ptr<Canvas>>& Scene::GetCanvases() const
 	{
 		return m_canvases;
+	}
+	void Scene::SetActive(bool isActive)
+	{
+		m_isActive = isActive;
 	}
 }

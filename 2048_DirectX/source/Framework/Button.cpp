@@ -63,7 +63,7 @@ namespace Framework
 	{
 		m_owner->GetComponent<Transform2D>()->scale = DirectX::XMFLOAT2(x, y);
 	}
-	void Button::SetSprite(const std::wstring& path)
+	void Button::SetTexture(const std::wstring& path)
 	{
 		if (m_sprite == nullptr)
 		{
