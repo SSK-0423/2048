@@ -27,6 +27,6 @@ namespace Game2048
 
 	public:
 		Utility::RESULT Init() override;
-		void Render(std::vector<std::unique_ptr<Framework::GameObject>>& gameObjects) override;
+		void Render(std::vector<std::unique_ptr<Framework::Object>>& gameObjects) override;
 	};
 }

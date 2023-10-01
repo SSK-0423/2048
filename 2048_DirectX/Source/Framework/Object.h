@@ -44,8 +44,15 @@ namespace Framework
 			return static_cast<T*>(m_components[m_components.size() - 1].get());
 		}
 
+		void Update(float deltaTime);
+		void Draw();
+
 		Object* Parent();
 		void SetParent(Object* parent);
 		void AddChild(Object* child);
 	};
+
+	// Object‚É•Ê–¼‚ð‚Â‚¯‚é
+	using GameObject = Object;
+	using GUIObject = Object;
 }

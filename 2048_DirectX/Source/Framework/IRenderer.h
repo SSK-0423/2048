@@ -10,6 +10,6 @@ namespace Framework
 		IRenderer() = default;
 		virtual ~IRenderer() = default;
 		virtual Utility::RESULT Init() = 0;
-		virtual void Render(std::vector<std::unique_ptr<class GameObject>>& gameObjects) = 0;
+		virtual void Render(std::vector<std::unique_ptr<class Object>>& gameObjects) = 0;
 	};
 }

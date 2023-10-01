@@ -38,8 +38,6 @@
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
     <ClCompile Include="source\Framework\Canvas.cpp" />
     <ClCompile Include="Source\Framework\Game.cpp" />
-    <ClCompile Include="Source\Framework\GameObject.cpp" />
-    <ClCompile Include="source\Framework\GUIObject.cpp" />
     <ClCompile Include="Source\Framework\InputSystem.cpp" />
     <ClCompile Include="source\Framework\Object.cpp" />
     <ClCompile Include="Source\Framework\Scene.cpp" />
@@ -82,12 +80,11 @@
     <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h" />
     <ClInclude Include="Source\DX12Wrapper\Texture.h" />
     <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h" />
+    <ClInclude Include="source\Framework\Button.h" />
     <ClInclude Include="source\Framework\Canvas.h" />
     <ClInclude Include="Source\Framework\GameImpl.h" />
     <ClInclude Include="Source\Framework\IComponent.h" />
     <ClInclude Include="Source\Framework\Game.h" />
-    <ClInclude Include="Source\Framework\GameObject.h" />
-    <ClInclude Include="Source\Framework\GUIObject.h" />
     <ClInclude Include="Source\Framework\InputSystem.h" />
     <ClInclude Include="Source\Framework\IRenderer.h" />
     <ClInclude Include="Source\Framework\Object.h" />

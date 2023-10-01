@@ -41,9 +41,6 @@
     <ClCompile Include="Source\Framework\Game.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Framework\GameObject.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Framework\InputSystem.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
@@ -128,9 +125,6 @@
     <ClCompile Include="source\Game\ShaderLibrary.cpp">
       <Filter>Source\Game\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Framework\GUIObject.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="source\Framework\Transform2D.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
@@ -167,12 +161,6 @@
       <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Object.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\GameObject.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\GUIObject.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\InputSystem.h">
@@ -281,6 +269,9 @@
       <Filter>Source\Game\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="source\Framework\Canvas.h">
+      <Filter>Source\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\Button.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
   </ItemGroup>

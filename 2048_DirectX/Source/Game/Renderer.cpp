@@ -94,7 +94,7 @@ namespace Game2048
 
 		return m_rootSignature->Create(device, rootSigData);
 	}
-	void Renderer::Render(std::vector<std::unique_ptr<Framework::GameObject>>& gameObjects)
+	void Renderer::Render(std::vector<std::unique_ptr<Framework::Object>>& gameObjects)
 	{
 		auto& graphicsEngine = DX12Wrapper::Dx12GraphicsEngine::Instance();
 

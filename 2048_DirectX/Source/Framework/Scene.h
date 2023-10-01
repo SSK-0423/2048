@@ -1,6 +1,5 @@
 #pragma once
-#include "GameObject.h"
-#include "GUIObject.h"
+#include "Object.h"
 #include "Canvas.h"
 
 namespace Framework

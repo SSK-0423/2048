@@ -8,6 +8,20 @@ namespace Framework
 	{
 		m_components.push_back(std::make_unique<Transform2D>(this));
 	}
+	void Object::Update(float deltaTime)
+	{
+		for (auto& component : m_components)
+		{
+			component->Update(deltaTime);
+		}
+	}
+	void Object::Draw()
+	{
+		for (auto& component : m_components)
+		{
+			component->Draw();
+		}
+	}
 	Object* Object::Parent()
 	{
 		return m_parent;

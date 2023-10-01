@@ -7,7 +7,10 @@ using namespace Framework;
 
 namespace Game2048
 {
-	TitleSceneCanvas::TitleSceneCanvas(Framework::Object* owner)
+	TitleSceneCanvas::TitleSceneCanvas()
+	{
+	}
+	TitleSceneCanvas::~TitleSceneCanvas()
 	{
 	}
 }

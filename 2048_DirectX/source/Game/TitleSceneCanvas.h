@@ -6,6 +6,7 @@ namespace Game2048
 	class TitleSceneCanvas : public Framework::Canvas
 	{
 	public:
-		TitleSceneCanvas(Framework::Object* owner);
+		TitleSceneCanvas();
+		~TitleSceneCanvas();
 	};
 }
