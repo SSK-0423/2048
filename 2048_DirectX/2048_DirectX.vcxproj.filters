@@ -30,9 +30,6 @@
     <Filter Include="Source\Game\GameScene">
       <UniqueIdentifier>{b40128d6-a980-42f0-96cc-55b31a271adf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\DX12Wrapper\Graphics">
-      <UniqueIdentifier>{6bfd118c-8502-4318-9941-d08226b16471}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">

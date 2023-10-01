@@ -109,6 +109,16 @@ namespace Game2048
 	}
 	void Renderer::RenderUI(const std::vector<std::unique_ptr<Framework::Canvas>>& canvases)
 	{
+		auto& graphicsEngine = DX12Wrapper::Dx12GraphicsEngine::Instance();
+
+		auto& renderContext = graphicsEngine.GetRenderingContext();
+		renderContext.SetGraphicsRootSignature(*m_rootSignature);
+		renderContext.SetPipelineState(*m_pipelineState);
+
+		for (auto& canvas : canvases)
+		{
+			canvas->Draw();
+		}
 	}
 }
 

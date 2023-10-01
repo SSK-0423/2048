@@ -5,6 +5,8 @@
 #include "Framework/Button.h"
 #include "Framework/SceneManager.h"
 
+#include "Framework/Window.h"
+
 using namespace Framework;
 
 namespace Game2048
@@ -20,9 +22,13 @@ namespace Game2048
 		// ƒ{ƒ^ƒ“’Ç‰Á
 		std::unique_ptr<GUIObject> button = std::make_unique<GUIObject>();
 		std::function<void()> func = std::bind(&TitleSceneCanvas::LoadGameScene, this);
-		button->AddComponent<Button>(
-			button.get(), func, DirectX::XMFLOAT2(100, 100), DirectX::XMFLOAT2(100, 100));
+		button->AddComponent<Button>(button.get());
 		button->GetComponent<Button>()->SetSprite(L"res/StartButton.png");
+		auto size = Window::GetWindowSize();
+		button->GetComponent<Button>()->SetPosition(size.cx / 2.f, size.cy * 3.f / 4.f);
+		button->GetComponent<Button>()->SetScale(100, 50);
+		button->GetComponent<Button>()->SetOnClick(func);
+
 		m_guiObjects.push_back(std::move(button));
 	}
 	void TitleSceneCanvas::Final()
@@ -32,6 +38,6 @@ namespace Game2048
 	}
 	void TitleSceneCanvas::LoadGameScene()
 	{
-		SceneManager::Instance().LoadScene("GameScene");
+		SceneManager::Instance().LoadScene("Game");
 	}
 }
