@@ -21,9 +21,6 @@ namespace Game2048
 		m_gameObjects.clear();
 		m_gameObjects.shrink_to_fit();
 
-		m_guiObjects.clear();
-		m_guiObjects.shrink_to_fit();
-
 		OutputDebugStringA("TitleScene Final\n");
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "GUIObject.h"
+#include "Canvas.h"
 
 namespace Framework
 {
@@ -12,11 +13,12 @@ namespace Framework
 
 	protected:
 		std::vector<std::unique_ptr<GameObject>> m_gameObjects;
-		std::vector<std::unique_ptr<GUIObject>> m_guiObjects;
-
+		std::vector<std::unique_ptr<Canvas>> m_canvases;
 	public:
 		virtual void Init() = 0;
-		void Update(float deltaTime);
+		virtual void Update(float deltaTime);
+		virtual void DrawScene(class IRenderer& renderer);
+		virtual void DrawUI();
 		virtual void Final() = 0;
 
 		std::vector<std::unique_ptr<GameObject>>& GetGameObjects()

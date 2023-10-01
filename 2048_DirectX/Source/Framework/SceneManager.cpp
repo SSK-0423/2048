@@ -9,7 +9,8 @@ namespace Framework
 	}
 	void SceneManager::CurrentSceneDraw(IRenderer& renderer)
 	{
-		renderer.Render(m_scenes[m_currentSceneName].get());
+		m_scenes[m_currentSceneName]->DrawScene(renderer);
+		m_scenes[m_currentSceneName]->DrawUI();
 	}
 	void SceneManager::CurrentSceneFinal()
 	{

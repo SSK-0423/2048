@@ -15,6 +15,8 @@ namespace Framework
 
 	protected:
 		std::vector<std::unique_ptr<IComponent>> m_components;
+		Object* m_parent;
+		std::vector<Object*> m_children;
 
 	public:
 		template<class T>
@@ -39,8 +41,11 @@ namespace Framework
 			auto component = std::make_unique<T>(k...);
 			m_components.push_back(std::move(component));
 
-
 			return static_cast<T*>(m_components[m_components.size() - 1].get());
 		}
+
+		Object* Parent();
+		void SetParent(Object* parent);
+		void AddChild(Object* child);
 	};
 }

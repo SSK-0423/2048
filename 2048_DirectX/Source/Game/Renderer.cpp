@@ -94,7 +94,7 @@ namespace Game2048
 
 		return m_rootSignature->Create(device, rootSigData);
 	}
-	void Renderer::Render(Framework::Scene* scene)
+	void Renderer::Render(std::vector<std::unique_ptr<Framework::GameObject>>& gameObjects)
 	{
 		auto& graphicsEngine = DX12Wrapper::Dx12GraphicsEngine::Instance();
 
@@ -104,7 +104,7 @@ namespace Game2048
 			renderContext.SetGraphicsRootSignature(*m_rootSignature);
 			renderContext.SetPipelineState(*m_pipelineState);
 
-			for (auto& obj : scene->GetGameObjects())
+			for (auto& obj : gameObjects)
 			{
 				obj->Draw();
 			}

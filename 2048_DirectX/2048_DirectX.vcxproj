@@ -36,6 +36,7 @@
     <ClCompile Include="Source\DX12Wrapper\ShaderResourceViewDesc.cpp" />
     <ClCompile Include="Source\DX12Wrapper\Texture.cpp" />
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
+    <ClCompile Include="source\Framework\Canvas.cpp" />
     <ClCompile Include="Source\Framework\Game.cpp" />
     <ClCompile Include="Source\Framework\GameObject.cpp" />
     <ClCompile Include="source\Framework\GUIObject.cpp" />
@@ -54,6 +55,7 @@
     <ClCompile Include="Source\Game\Renderer.cpp" />
     <ClCompile Include="source\Game\ShaderLibrary.cpp" />
     <ClCompile Include="Source\Game\TitleScene.cpp" />
+    <ClCompile Include="source\Game\TitleSceneUI.cpp" />
     <ClCompile Include="source\Game\TitleSprite.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -80,6 +82,7 @@
     <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h" />
     <ClInclude Include="Source\DX12Wrapper\Texture.h" />
     <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h" />
+    <ClInclude Include="source\Framework\Canvas.h" />
     <ClInclude Include="Source\Framework\GameImpl.h" />
     <ClInclude Include="Source\Framework\IComponent.h" />
     <ClInclude Include="Source\Framework\Game.h" />
@@ -100,6 +103,7 @@
     <ClInclude Include="Source\Game\GameScene.h" />
     <ClInclude Include="source\Game\ShaderLibrary.h" />
     <ClInclude Include="Source\Game\TitleScene.h" />
+    <ClInclude Include="source\Game\TitleSceneUI.h" />
     <ClInclude Include="source\Game\TitleSprite.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Utility\EngineUtility.h" />
