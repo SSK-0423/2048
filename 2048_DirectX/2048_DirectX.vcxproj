@@ -38,12 +38,14 @@
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
     <ClCompile Include="Source\Framework\Game.cpp" />
     <ClCompile Include="Source\Framework\GameObject.cpp" />
+    <ClCompile Include="source\Framework\GUIObject.cpp" />
     <ClCompile Include="Source\Framework\InputSystem.cpp" />
     <ClCompile Include="Source\Framework\Scene.cpp" />
     <ClCompile Include="Source\Framework\SceneManager.cpp" />
     <ClCompile Include="Source\Framework\SoundClip.cpp" />
     <ClCompile Include="Source\Framework\SoundManager.cpp" />
     <ClCompile Include="Source\Framework\Sprite.cpp" />
+    <ClCompile Include="source\Framework\Transform2D.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\Game2048.cpp" />
     <ClCompile Include="Source\Game\GameScene.cpp" />
@@ -89,7 +91,7 @@
     <ClInclude Include="Source\Framework\SoundClip.h" />
     <ClInclude Include="Source\Framework\SoundManager.h" />
     <ClInclude Include="Source\Framework\Sprite.h" />
-    <ClInclude Include="Source\Framework\Transform.h" />
+    <ClInclude Include="Source\Framework\Transform2D.h" />
     <ClInclude Include="Source\Framework\Window.h" />
     <ClInclude Include="Source\Game\Game2048.h" />
     <ClInclude Include="Source\Game\Renderer.h" />

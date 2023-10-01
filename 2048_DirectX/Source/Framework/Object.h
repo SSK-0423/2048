@@ -1,12 +1,13 @@
 #pragma once
 #include "IComponent.h"
+#include "Transform2D.h"
 
 namespace Framework
 {
 	class Object
 	{
 	public:
-		Object() = default;
+		Object() { m_components.push_back(std::make_unique<Transform2D>(this)); }
 		virtual ~Object()
 		{
 			m_components.clear();

@@ -7,7 +7,7 @@ namespace Framework
 	{
 	public:
 		GUIObject() = default;
-		~GUIObject() = default;
+		virtual ~GUIObject() = default;
 
 	public:
 		virtual void Update() = 0;

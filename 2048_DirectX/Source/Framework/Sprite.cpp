@@ -11,6 +11,8 @@
 
 #include "DX12Wrapper/RenderingContext.h"
 
+#include "Framework/Object.h"
+
 using namespace Utility;
 using namespace DX12Wrapper;
 
@@ -23,10 +25,10 @@ namespace Framework
 		m_indexBuffer(std::make_unique<IndexBuffer>()),
 		m_descriptorHeap(std::make_unique<DescriptorHeapCBV_SRV_UAV>())
 	{
-		m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f, -0.5f, 0),DirectX::XMFLOAT2(0, 1) });
-		m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f,  0.5f, 0),DirectX::XMFLOAT2(0, 0) });
-		m_vertex.push_back({ DirectX::XMFLOAT3( 0.5f, -0.5f, 0),DirectX::XMFLOAT2(1, 1) });
-		m_vertex.push_back({ DirectX::XMFLOAT3( 0.5f,  0.5f, 0),DirectX::XMFLOAT2(1, 0) });
+		m_vertex.push_back({ DirectX::XMFLOAT3(-1.f, -1.f, 0),DirectX::XMFLOAT2(0, 1) });
+		m_vertex.push_back({ DirectX::XMFLOAT3(-1.f,  1.f, 0),DirectX::XMFLOAT2(0, 0) });
+		m_vertex.push_back({ DirectX::XMFLOAT3( 1.f, -1.f, 0),DirectX::XMFLOAT2(1, 1) });
+		m_vertex.push_back({ DirectX::XMFLOAT3( 1.f,  1.f, 0),DirectX::XMFLOAT2(1, 0) });
 
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 
@@ -45,6 +47,8 @@ namespace Framework
 		{
 			MessageBoxA(NULL, "DescriptorHeap‚Ì¶¬‚ÉŽ¸”s", "ƒGƒ‰[", MB_OK);
 		}
+
+		m_descriptorHeap->RegistConstantBuffer(device, owner->GetComponent<Transform2D>()->GetConstantBuffer(), 0);
 	}
 
 	void Sprite::LoadTexture(const std::wstring& path)
@@ -57,7 +61,7 @@ namespace Framework
 
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 		ShaderResourceViewDesc desc(*m_texture);
-		m_descriptorHeap->RegistShaderResource(device, *m_texture, desc);
+		m_descriptorHeap->RegistShaderResource(device, *m_texture, desc, 0);
 	}
 	void Sprite::Update(float deltaTime)
 	{

@@ -128,6 +128,12 @@
     <ClCompile Include="source\Game\ShaderLibrary.cpp">
       <Filter>Source\Game\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Framework\GUIObject.cpp">
+      <Filter>Source\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Transform2D.cpp">
+      <Filter>Source\Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Game.h">
@@ -139,7 +145,7 @@
     <ClInclude Include="Source\Framework\IComponent.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Framework\Transform.h">
+    <ClInclude Include="Source\Framework\Transform2D.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Object.h">

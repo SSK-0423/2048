@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include "Transform2D.h"
+
 namespace Framework
 {
 	void GameObject::Update(float deltaTime)

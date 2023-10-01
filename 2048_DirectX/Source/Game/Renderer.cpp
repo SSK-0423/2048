@@ -84,7 +84,6 @@ namespace Game2048
 		pipelineState.SampleDesc.Count = 1;
 		pipelineState.SampleDesc.Quality = 0;
 
-
 		return m_pipelineState->Create(device, pipelineState);
 	}
 	Utility::RESULT Renderer::CreateRootSignature(ID3D12Device& device)
@@ -104,6 +103,7 @@ namespace Game2048
 			auto& renderContext = graphicsEngine.GetRenderingContext();
 			renderContext.SetGraphicsRootSignature(*m_rootSignature);
 			renderContext.SetPipelineState(*m_pipelineState);
+
 			for (auto& obj : scene->GetGameObjects())
 			{
 				obj->Draw();

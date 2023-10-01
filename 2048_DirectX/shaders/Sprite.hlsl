@@ -2,6 +2,11 @@ Texture2D tex : register(t0);
 
 sampler smp : register(s0);
 
+cbuffer Transform : register(b0)
+{
+    matrix transform;
+};
+
 struct VertexInput
 {
     float3 position : POSITION;
@@ -17,7 +22,7 @@ struct VertexOutput
 VertexOutput VSMain(VertexInput input)
 {
     VertexOutput output;
-    output.position = float4(input.position, 1.f);
+    output.position = mul(transform, float4(input.position, 1.f));
     output.uv = input.uv;
     
     return output;
@@ -25,8 +30,6 @@ VertexOutput VSMain(VertexInput input)
 
 float4 PSMain(VertexOutput input) : SV_Target0
 {
-    //return float4(0, 1, 0, 1);
     float4 texColor = tex.Sample(smp, input.uv);
-    
     return texColor;
 }
