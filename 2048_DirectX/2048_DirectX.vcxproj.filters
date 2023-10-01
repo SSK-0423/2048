@@ -24,6 +24,9 @@
     <Filter Include="shaders">
       <UniqueIdentifier>{e947e5a3-a3af-4b0f-9d38-69dc8eac1a91}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game\ScriptComponent">
+      <UniqueIdentifier>{9a9c6532-80af-4e98-8967-9ab47121ba41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
@@ -132,6 +135,12 @@
       <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="source\Framework\Transform2D.cpp">
+      <Filter>Source\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\TitleSprite.cpp">
+      <Filter>Source\Game\ScriptComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Object.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
   </ItemGroup>
@@ -255,6 +264,9 @@
     </ClInclude>
     <ClInclude Include="source\Game\ShaderLibrary.h">
       <Filter>Source\Game\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\TitleSprite.h">
+      <Filter>Source\Game\ScriptComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

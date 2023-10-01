@@ -12,6 +12,7 @@
 #include "DX12Wrapper/RenderingContext.h"
 
 #include "Framework/Object.h"
+#include "Framework/Transform2D.h"
 
 using namespace Utility;
 using namespace DX12Wrapper;

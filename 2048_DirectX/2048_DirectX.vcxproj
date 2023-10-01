@@ -40,6 +40,7 @@
     <ClCompile Include="Source\Framework\GameObject.cpp" />
     <ClCompile Include="source\Framework\GUIObject.cpp" />
     <ClCompile Include="Source\Framework\InputSystem.cpp" />
+    <ClCompile Include="source\Framework\Object.cpp" />
     <ClCompile Include="Source\Framework\Scene.cpp" />
     <ClCompile Include="Source\Framework\SceneManager.cpp" />
     <ClCompile Include="Source\Framework\SoundClip.cpp" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Source\Game\Renderer.cpp" />
     <ClCompile Include="source\Game\ShaderLibrary.cpp" />
     <ClCompile Include="Source\Game\TitleScene.cpp" />
+    <ClCompile Include="source\Game\TitleSprite.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -98,6 +100,7 @@
     <ClInclude Include="Source\Game\GameScene.h" />
     <ClInclude Include="source\Game\ShaderLibrary.h" />
     <ClInclude Include="Source\Game\TitleScene.h" />
+    <ClInclude Include="source\Game\TitleSprite.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Utility\EngineUtility.h" />
   </ItemGroup>

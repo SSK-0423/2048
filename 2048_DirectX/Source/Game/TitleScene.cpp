@@ -2,6 +2,8 @@
 #include "TitleScene.h"
 #include "Framework/Sprite.h"
 
+#include "TitleSprite.h"
+
 using namespace Framework;
 
 namespace Game2048
@@ -10,8 +12,7 @@ namespace Game2048
 	{
 		// GUIçÏê¨
 		std::unique_ptr<GameObject> titleSprite = std::make_unique<GameObject>();
-		titleSprite->AddComponent<Sprite>(titleSprite.get());
-		titleSprite->GetComponent<Sprite>()->LoadTexture(std::wstring(L"res/Title.png"));
+		titleSprite->AddComponent<TitleSprite>(titleSprite.get());
 
 		m_gameObjects.push_back(std::move(titleSprite));
 	}

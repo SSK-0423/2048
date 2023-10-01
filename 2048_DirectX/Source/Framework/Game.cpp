@@ -34,7 +34,7 @@ namespace Framework
 		{
 			MessageBoxA(NULL, "Renderer‚Ì‰Šú‰»‚É¸”s", "ƒGƒ‰[", MB_OK);
 		}
-		
+
 		m_gameImpl.Init();
 	}
 
@@ -45,8 +45,8 @@ namespace Framework
 		while (bool isPlaying = m_window.DispatchWindowMessage())
 		{
 			auto currentFrameTime = std::chrono::system_clock::now();
-			auto deltaTime
-				= std::chrono::duration_cast<std::chrono::milliseconds>(currentFrameTime - m_prevFrameTime).count();
+			float deltaTime
+				= std::chrono::duration_cast<std::chrono::milliseconds>(currentFrameTime - m_prevFrameTime).count() / 1000.f;
 
 			m_prevFrameTime = std::chrono::system_clock::now();
 
@@ -58,6 +58,10 @@ namespace Framework
 
 			// •`‰æ
 			sceneManager.CurrentSceneDraw(m_renderer);
+
+		#ifdef _DEBUG
+			DebugLog("%f (ms) \n", deltaTime * 1000.f);
+		#endif
 		}
 
 		return;

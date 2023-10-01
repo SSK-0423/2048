@@ -23,8 +23,6 @@ namespace Framework
 	}
 	void Transform2D::Update(float deltaTime)
 	{
-		auto windowSize = Window::GetWindowSize();
-
 		m_bufferData.world = GetTransformMatrix();
 		m_buffer->UpdateData(&m_bufferData);
 	}

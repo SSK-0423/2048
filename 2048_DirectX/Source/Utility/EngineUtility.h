@@ -136,4 +136,17 @@ namespace Utility
 			ptr = nullptr;
 		}
 	}
+	/// <summary>
+	/// デバッグログ出力
+	/// </summary>
+	/// <typeparam name="...T"></typeparam>
+	/// <param name="format"></param>
+	/// <param name="...t"></param>
+	template<typename ...T>
+	void DebugLog(const char* format, T ...t)
+	{
+		char buff[256];
+		sprintf_s(buff, format, t...);
+		OutputDebugStringA(buff);
+	}
 }
