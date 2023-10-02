@@ -10,7 +10,7 @@
 static const TCHAR* NAME = L"2048_DirectX";
 static const LONG WIDTH = 1024;
 static const LONG HEIGHT = 768;
-static const TCHAR* FONT_PATH = L"res/font/fonttest.spritefont";
+static const TCHAR* FONT_PATH = L"res/font/segoe_ui.spritefont";
 
 using namespace Utility;
 

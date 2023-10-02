@@ -52,7 +52,7 @@ namespace Game2048
 		// テキスト
 		std::unique_ptr<GUIObject> text = std::make_unique<GUIObject>();
 		text->AddComponent<Text>(text.get());
-		text->GetComponent<Text>()->SetText(L"Game Start");
+		text->GetComponent<Text>()->SetText(L"Game Start!!!!");
 		text->GetComponent<Transform2D>()->position = { size.cx / 2.f, size.cy * 3.f / 4.f };
 		m_guiObjects.push_back(std::move(text));
 	}
