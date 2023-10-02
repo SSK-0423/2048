@@ -13,7 +13,7 @@ namespace Framework
 
 	private:
 		std::unique_ptr<class Sprite> m_sprite;
-		//std::unique_ptr<class Text> m_text;
+		std::unique_ptr<class Text> m_text;
 		std::function<void()> m_onClick;
 
 		bool CheckClick();
@@ -23,6 +23,7 @@ namespace Framework
 		void SetPosition(float x, float y);
 		void SetScale(float x, float y);
 		void SetTexture(const std::wstring& path);
+		void SetText(const std::wstring& text);
 		void SetOnClick(std::function<void()> onClick);
 	};
 }

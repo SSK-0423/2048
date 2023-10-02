@@ -26,6 +26,7 @@
     <ClCompile Include="Source\DX12Wrapper\DescriptorHeapDSV.cpp" />
     <ClCompile Include="Source\DX12Wrapper\DescriptorHeapRTV.cpp" />
     <ClCompile Include="Source\DX12Wrapper\Dx12GraphicsEngine.cpp" />
+    <ClCompile Include="source\DX12Wrapper\FontRenderer.cpp" />
     <ClCompile Include="Source\DX12Wrapper\GraphicsPipelineState.cpp" />
     <ClCompile Include="Source\DX12Wrapper\IndexBuffer.cpp" />
     <ClCompile Include="Source\DX12Wrapper\RenderingContext.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Source\Framework\SoundClip.cpp" />
     <ClCompile Include="Source\Framework\SoundManager.cpp" />
     <ClCompile Include="Source\Framework\Sprite.cpp" />
+    <ClCompile Include="source\Framework\Text.cpp" />
     <ClCompile Include="source\Framework\Transform2D.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\Game2048.cpp" />
@@ -71,6 +73,7 @@
     <ClInclude Include="Source\DX12Wrapper\DescriptorHeapDSV.h" />
     <ClInclude Include="Source\DX12Wrapper\DescriptorHeapRTV.h" />
     <ClInclude Include="Source\DX12Wrapper\Dx12GraphicsEngine.h" />
+    <ClInclude Include="source\DX12Wrapper\FontRenderer.h" />
     <ClInclude Include="Source\DX12Wrapper\GraphicsPipelineState.h" />
     <ClInclude Include="Source\DX12Wrapper\IndexBuffer.h" />
     <ClInclude Include="Source\DX12Wrapper\InputLayout.h" />
@@ -95,6 +98,7 @@
     <ClInclude Include="Source\Framework\SoundClip.h" />
     <ClInclude Include="Source\Framework\SoundManager.h" />
     <ClInclude Include="Source\Framework\Sprite.h" />
+    <ClInclude Include="source\Framework\Text.h" />
     <ClInclude Include="Source\Framework\Transform2D.h" />
     <ClInclude Include="Source\Framework\Window.h" />
     <ClInclude Include="Source\Game\Game2048.h" />
@@ -223,7 +227,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)source\;$(ProjectDir)DirectXTex\;$(ProjectDir)DirectXTK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -232,7 +236,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Debug;DirectXTK\Bin\Desktop_2019_Win10\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -243,18 +247,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)source\;$(ProjectDir)DirectXTex\;$(ProjectDir)DirectXTK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Release;DirectXTK\Bin\Desktop_2022_Win10\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

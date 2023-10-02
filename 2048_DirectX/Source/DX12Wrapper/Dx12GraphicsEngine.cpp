@@ -57,6 +57,9 @@ namespace DX12Wrapper
 		// レンダリングコンテキストの初期化
 		m_renderContext.Init(*_cmdList.Get());
 
+		// GraphicsMemory初期化(DirectXTKを利用したフォントレンダリングで使用)
+		m_graphicsMemory = std::make_unique<DirectX::GraphicsMemory>(_device.Get());
+
 		m_viewport = CD3DX12_VIEWPORT(
 			0.f, 0.f, static_cast<float>(windowWidth), static_cast<float>(windowHeight));
 		m_scissorRect = CD3DX12_RECT(0, 0, windowWidth, windowHeight);
@@ -297,6 +300,8 @@ namespace DX12Wrapper
 
 		// フリップ
 		_swapchain->Present(1, 0);
+
+		m_graphicsMemory->Commit(_cmdQueue.Get());
 	}
 
 	void Dx12GraphicsEngine::SetFrameRenderTarget(const CD3DX12_VIEWPORT& viewport, const CD3DX12_RECT& scissorRect)
@@ -363,5 +368,13 @@ namespace DX12Wrapper
 	DX12Wrapper::RenderingContext& Dx12GraphicsEngine::GetRenderingContext()
 	{
 		return m_renderContext;
+	}
+	DX12Wrapper::DescriptorHeapRTV& Dx12GraphicsEngine::GetFrameBufferDescriptorHeap()
+	{
+		return _frameHeap;
+	}
+	const CD3DX12_VIEWPORT& Dx12GraphicsEngine::GetViewport()
+	{
+		return m_viewport;
 	}
 }

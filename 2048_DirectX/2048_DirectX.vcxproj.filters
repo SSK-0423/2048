@@ -30,6 +30,9 @@
     <Filter Include="Source\Game\GameScene">
       <UniqueIdentifier>{b40128d6-a980-42f0-96cc-55b31a271adf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Framework\UI">
+      <UniqueIdentifier>{3fcc9a31-6413-4365-af75-2d66be8c2243}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
@@ -143,14 +146,20 @@
     <ClCompile Include="Source\Game\GameScene.cpp">
       <Filter>Source\Game\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="source\Framework\Canvas.cpp">
+    <ClCompile Include="source\Framework\IRenderer.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="source\Framework\Button.cpp">
-      <Filter>Source\Framework</Filter>
+      <Filter>Source\Framework\UI</Filter>
     </ClCompile>
-    <ClCompile Include="source\Framework\IRenderer.cpp">
-      <Filter>Source\Framework</Filter>
+    <ClCompile Include="source\Framework\Canvas.cpp">
+      <Filter>Source\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Text.cpp">
+      <Filter>Source\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\DX12Wrapper\FontRenderer.cpp">
+      <Filter>Source\DX12Wrapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,11 +283,17 @@
     <ClInclude Include="Source\Game\GameScene.h">
       <Filter>Source\Game\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="source\Framework\Canvas.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="source\Framework\Button.h">
-      <Filter>Source\Framework</Filter>
+      <Filter>Source\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\Canvas.h">
+      <Filter>Source\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\Text.h">
+      <Filter>Source\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\DX12Wrapper\FontRenderer.h">
+      <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,17 +2,18 @@
 #include "Button.h"
 #include "Object.h"
 #include "Sprite.h"
+#include "Text.h"
 #include "Transform2D.h"
 #include "InputSystem.h"
 
 namespace Framework
 {
 	Button::Button(Object* owner)
-		: IComponent(owner), m_sprite(nullptr), m_onClick(nullptr)
+		: IComponent(owner), m_sprite(nullptr), m_text(nullptr), m_onClick(nullptr)
 	{
 	}
 	Button::Button(Object* owner, std::function<void()> onClick, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 scale)
-		: IComponent(owner), m_sprite(nullptr)
+		: IComponent(owner), m_sprite(nullptr), m_text(nullptr)
 	{
 		m_onClick = onClick;
 		auto transform = owner->GetComponent<Transform2D>();
@@ -54,6 +55,8 @@ namespace Framework
 	{
 		if (m_sprite != nullptr)
 			m_sprite->Draw();
+		if (m_text != nullptr)
+			m_text->Draw();
 	}
 	void Button::SetPosition(float x, float y)
 	{
@@ -70,6 +73,14 @@ namespace Framework
 			m_sprite = std::make_unique<Sprite>(m_owner);
 		}
 		m_sprite->LoadTexture(path);
+	}
+	void Button::SetText(const std::wstring& text)
+	{
+		if (m_text == nullptr)
+		{
+			m_text = std::make_unique<Text>(m_owner);
+		}
+		m_text->SetText(text);
 	}
 	void Button::SetOnClick(std::function<void()> onClick)
 	{

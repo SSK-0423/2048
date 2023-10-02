@@ -14,6 +14,10 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
+#include <GraphicsMemory.h>
+
+#pragma comment(lib,"DirectXTK12.lib")
+
 #include <wrl.h>
 
 namespace DX12Wrapper
@@ -146,7 +150,10 @@ namespace DX12Wrapper
 		DX12Wrapper::DepthStencilBuffer _depthStencilBuffer;		    // デプスステンシルバッファー
 		DX12Wrapper::DescriptorHeapDSV _dsvHeap;					    // デプスステンシル用ヒープ
 
-		DX12Wrapper::DescriptorHeapCBV_SRV_UAV _imguiHeap;
+		DX12Wrapper::DescriptorHeapCBV_SRV_UAV m_imguiHeap;
+
+		// フォントレンダリング関連
+		std::unique_ptr<DirectX::GraphicsMemory> m_graphicsMemory;
 
 		CD3DX12_VIEWPORT m_viewport;
 		CD3DX12_RECT m_scissorRect;
@@ -164,6 +171,8 @@ namespace DX12Wrapper
 		/// <returns></returns>
 		DX12Wrapper::RenderingContext& GetRenderingContext();
 
-		DX12Wrapper::DescriptorHeapRTV& GetFrameBufferDescriptorHeap() { return _frameHeap; }
+		DX12Wrapper::DescriptorHeapRTV& GetFrameBufferDescriptorHeap();
+
+		const CD3DX12_VIEWPORT& GetViewport();
 	};
 }
