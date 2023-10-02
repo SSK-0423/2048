@@ -55,6 +55,8 @@
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\Game2048.cpp" />
     <ClCompile Include="Source\Game\GameScene.cpp" />
+    <ClCompile Include="source\Game\GameSceneCanvas.cpp" />
+    <ClCompile Include="source\Game\GameTimer.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
     <ClCompile Include="source\Game\PressEnterText.cpp" />
     <ClCompile Include="Source\Game\Renderer.cpp" />
@@ -106,6 +108,8 @@
     <ClInclude Include="Source\Framework\Transform2D.h" />
     <ClInclude Include="Source\Framework\Window.h" />
     <ClInclude Include="Source\Game\Game2048.h" />
+    <ClInclude Include="source\Game\GameSceneCanvas.h" />
+    <ClInclude Include="source\Game\GameTimer.h" />
     <ClInclude Include="source\Game\PressEnterText.h" />
     <ClInclude Include="Source\Game\Renderer.h" />
     <ClInclude Include="Source\Game\GameScene.h" />
