@@ -26,6 +26,7 @@
     <ClCompile Include="Source\DX12Wrapper\DescriptorHeapDSV.cpp" />
     <ClCompile Include="Source\DX12Wrapper\DescriptorHeapRTV.cpp" />
     <ClCompile Include="Source\DX12Wrapper\Dx12GraphicsEngine.cpp" />
+    <ClCompile Include="source\DX12Wrapper\FontRenderer.cpp" />
     <ClCompile Include="Source\DX12Wrapper\GraphicsPipelineState.cpp" />
     <ClCompile Include="Source\DX12Wrapper\IndexBuffer.cpp" />
     <ClCompile Include="Source\DX12Wrapper\RenderingContext.cpp" />
@@ -33,24 +34,33 @@
     <ClCompile Include="Source\DX12Wrapper\RenderTargetBuffer.cpp" />
     <ClCompile Include="Source\DX12Wrapper\RootSignature.cpp" />
     <ClCompile Include="Source\DX12Wrapper\Shader.cpp" />
-    <ClCompile Include="Source\DX12Wrapper\ShaderLibrary.cpp" />
     <ClCompile Include="Source\DX12Wrapper\ShaderResourceViewDesc.cpp" />
     <ClCompile Include="Source\DX12Wrapper\Texture.cpp" />
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
+    <ClCompile Include="source\Framework\Button.cpp" />
+    <ClCompile Include="source\Framework\ButtonRenderer.cpp" />
+    <ClCompile Include="source\Framework\Canvas.cpp" />
     <ClCompile Include="Source\Framework\Game.cpp" />
-    <ClCompile Include="Source\Framework\GameObject.cpp" />
     <ClCompile Include="Source\Framework\InputSystem.cpp" />
+    <ClCompile Include="source\Framework\IRenderer.cpp" />
+    <ClCompile Include="source\Framework\Object.cpp" />
     <ClCompile Include="Source\Framework\Scene.cpp" />
     <ClCompile Include="Source\Framework\SceneManager.cpp" />
+    <ClCompile Include="source\Framework\ShaderLibrary.cpp" />
     <ClCompile Include="Source\Framework\SoundClip.cpp" />
     <ClCompile Include="Source\Framework\SoundManager.cpp" />
     <ClCompile Include="Source\Framework\Sprite.cpp" />
+    <ClCompile Include="source\Framework\Text.cpp" />
+    <ClCompile Include="source\Framework\Transform2D.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
     <ClCompile Include="Source\Game\Game2048.cpp" />
     <ClCompile Include="Source\Game\GameScene.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
+    <ClCompile Include="source\Game\PressEnterText.cpp" />
     <ClCompile Include="Source\Game\Renderer.cpp" />
     <ClCompile Include="Source\Game\TitleScene.cpp" />
+    <ClCompile Include="source\Game\TitleSceneCanvas.cpp" />
+    <ClCompile Include="source\Game\TitleSprite.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -65,6 +75,7 @@
     <ClInclude Include="Source\DX12Wrapper\DescriptorHeapDSV.h" />
     <ClInclude Include="Source\DX12Wrapper\DescriptorHeapRTV.h" />
     <ClInclude Include="Source\DX12Wrapper\Dx12GraphicsEngine.h" />
+    <ClInclude Include="source\DX12Wrapper\FontRenderer.h" />
     <ClInclude Include="Source\DX12Wrapper\GraphicsPipelineState.h" />
     <ClInclude Include="Source\DX12Wrapper\IndexBuffer.h" />
     <ClInclude Include="Source\DX12Wrapper\InputLayout.h" />
@@ -73,31 +84,56 @@
     <ClInclude Include="Source\DX12Wrapper\RenderTargetBuffer.h" />
     <ClInclude Include="Source\DX12Wrapper\RootSignature.h" />
     <ClInclude Include="Source\DX12Wrapper\Shader.h" />
-    <ClInclude Include="Source\DX12Wrapper\ShaderLibrary.h" />
     <ClInclude Include="Source\DX12Wrapper\ShaderResourceViewDesc.h" />
     <ClInclude Include="Source\DX12Wrapper\Texture.h" />
     <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h" />
+    <ClInclude Include="source\Framework\Button.h" />
+    <ClInclude Include="source\Framework\ButtonRenderer.h" />
+    <ClInclude Include="source\Framework\Canvas.h" />
     <ClInclude Include="Source\Framework\GameImpl.h" />
     <ClInclude Include="Source\Framework\IComponent.h" />
     <ClInclude Include="Source\Framework\Game.h" />
-    <ClInclude Include="Source\Framework\GameObject.h" />
-    <ClInclude Include="Source\Framework\GUIObject.h" />
     <ClInclude Include="Source\Framework\InputSystem.h" />
     <ClInclude Include="Source\Framework\IRenderer.h" />
     <ClInclude Include="Source\Framework\Object.h" />
     <ClInclude Include="Source\Framework\Scene.h" />
     <ClInclude Include="Source\Framework\SceneManager.h" />
+    <ClInclude Include="source\Framework\ShaderLibrary.h" />
     <ClInclude Include="Source\Framework\SoundClip.h" />
     <ClInclude Include="Source\Framework\SoundManager.h" />
     <ClInclude Include="Source\Framework\Sprite.h" />
-    <ClInclude Include="Source\Framework\Transform.h" />
+    <ClInclude Include="source\Framework\Text.h" />
+    <ClInclude Include="Source\Framework\Transform2D.h" />
     <ClInclude Include="Source\Framework\Window.h" />
     <ClInclude Include="Source\Game\Game2048.h" />
+    <ClInclude Include="source\Game\PressEnterText.h" />
     <ClInclude Include="Source\Game\Renderer.h" />
     <ClInclude Include="Source\Game\GameScene.h" />
     <ClInclude Include="Source\Game\TitleScene.h" />
+    <ClInclude Include="source\Game\TitleSceneCanvas.h" />
+    <ClInclude Include="source\Game\TitleSprite.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Utility\EngineUtility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shaders\Button.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="shaders\Sprite.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VSMain</EntryPointName>
+    </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -203,7 +239,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)source\;$(ProjectDir)DirectXTex\;$(ProjectDir)DirectXTK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -212,7 +248,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Debug;DirectXTK\Bin\Desktop_2019_Win10\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -223,18 +259,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(ProjectDir)DirectXTex\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)source\;$(ProjectDir)DirectXTex\;$(ProjectDir)DirectXTK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>DirectXTex\Bin\Desktop_2019\x64\Release;DirectXTK\Bin\Desktop_2022_Win10\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

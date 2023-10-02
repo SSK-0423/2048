@@ -2,7 +2,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	HRESULT IndexBuffer::CreateIndexBufferAndView(ID3D12Device& device, const std::vector<UINT>& index)
 	{

@@ -3,7 +3,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	RenderTargetBufferData::RenderTargetBufferData(
 		const DXGI_FORMAT& colorFormat, const UINT& width, const UINT& height, const float(&color)[4])

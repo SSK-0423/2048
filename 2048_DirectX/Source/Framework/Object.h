@@ -6,7 +6,7 @@ namespace Framework
 	class Object
 	{
 	public:
-		Object() = default;
+		Object();
 		virtual ~Object()
 		{
 			m_components.clear();
@@ -15,6 +15,8 @@ namespace Framework
 
 	protected:
 		std::vector<std::unique_ptr<IComponent>> m_components;
+		Object* m_parent;
+		std::vector<Object*> m_children;
 
 	public:
 		template<class T>
@@ -41,5 +43,16 @@ namespace Framework
 
 			return static_cast<T*>(m_components[m_components.size() - 1].get());
 		}
+
+		void Update(float deltaTime);
+		void Draw();
+
+		Object* Parent();
+		void SetParent(Object* parent);
+		void AddChild(Object* child);
 	};
+
+	// Object‚É•Ê–¼‚ð‚Â‚¯‚é
+	using GameObject = Object;
+	using GUIObject = Object;
 }

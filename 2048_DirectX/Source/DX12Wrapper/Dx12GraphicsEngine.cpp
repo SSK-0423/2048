@@ -11,7 +11,7 @@
 
 using namespace Microsoft::WRL;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	Dx12GraphicsEngine::Dx12GraphicsEngine()
 		: _hwnd(0), _windowWidth(0), _windowHeight(0)
@@ -36,7 +36,7 @@ namespace DX12API
 
 		// デバッグレイヤー有効
 #ifdef _DEBUG
-		if (FAILED(EnableDebugLayer())) { return Utility::RESULT::FAILED; }
+		//if (FAILED(EnableDebugLayer())) { return Utility::RESULT::FAILED; }
 #endif // DEBUG
 
 		// デバイスとファクトリー生成
@@ -55,7 +55,14 @@ namespace DX12API
 		if (CreateFrameRenderTarget() == Utility::RESULT::FAILED) { return Utility::RESULT::FAILED; }
 
 		// レンダリングコンテキストの初期化
-		_renderContext.Init(*_cmdList.Get());
+		m_renderContext.Init(*_cmdList.Get());
+
+		// GraphicsMemory初期化(DirectXTKを利用したフォントレンダリングで使用)
+		m_graphicsMemory = std::make_unique<DirectX::GraphicsMemory>(_device.Get());
+
+		m_viewport = CD3DX12_VIEWPORT(
+			0.f, 0.f, static_cast<float>(windowWidth), static_cast<float>(windowHeight));
+		m_scissorRect = CD3DX12_RECT(0, 0, windowWidth, windowHeight);
 
 		return Utility::RESULT::SUCCESS;
 	}
@@ -86,11 +93,6 @@ namespace DX12API
 			MessageBoxA(_hwnd, "ファクトリー生成失敗", "エラー", MB_OK | MB_ICONERROR);
 			return result;
 		}
-		//result = _dxgiFactory.Get()->QueryInterface(IID_PPV_ARGS(_dxgiFactory.ReleaseAndGetAddressOf()));
-		//if (FAILED(result)) {
-		//	MessageBoxA(_hwnd, "ファクトリー7生成失敗", "エラー", MB_OK | MB_ICONERROR);
-		//	return result;
-		//}
 
 		// アダプター列挙
 		std::vector<ComPtr<IDXGIAdapter>> adapters;
@@ -238,22 +240,26 @@ namespace DX12API
 		auto dsvHandle = _dsvHeap.GetCPUDescriptorHandleForHeapStart();
 
 		// バリア処理
-		_renderContext.TransitionResourceState(
+		m_renderContext.TransitionResourceState(
 			_frameBuffers[bbIdx].GetBuffer(),
 			D3D12_RESOURCE_STATE_PRESENT,
 			D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 		// レンダーターゲットセット
-		_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
+		m_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
 
 		// 画面を指定色でクリア
-		DirectX::XMFLOAT4 color(0.f, 1.f, 1.f, 1.f);
-		_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
+		DirectX::XMFLOAT4 color(0.f, 0.f, 0.f, 1.f);
+		m_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
 
 		// デプスステンシルバッファをクリア
-		_renderContext.ClearDepthStencilView(
+		m_renderContext.ClearDepthStencilView(
 			dsvHandle, D3D12_CLEAR_FLAG_DEPTH,
 			depthStencilBufferData.clearDepth, depthStencilBufferData.clearStencil, 0, nullptr);
+
+		// ビューポートとシザー矩形セット
+		m_renderContext.SetViewport(m_viewport);
+		m_renderContext.SetScissorRect(m_scissorRect);
 	}
 
 	void Dx12GraphicsEngine::EndDraw()
@@ -262,13 +268,13 @@ namespace DX12API
 		auto bbIdx = _swapchain->GetCurrentBackBufferIndex();
 
 		// バリア処理
-		_renderContext.TransitionResourceState(
+		m_renderContext.TransitionResourceState(
 			_frameBuffers[bbIdx].GetBuffer(),
 			D3D12_RESOURCE_STATE_RENDER_TARGET,
 			D3D12_RESOURCE_STATE_PRESENT);
 
 		// 命令の受付終了
-		_renderContext.Close();
+		m_renderContext.Close();
 
 		// コマンドリストの実行
 		ID3D12CommandList* cmdlists[] = { _cmdList.Get() };
@@ -290,10 +296,12 @@ namespace DX12API
 		}
 
 		_cmdAllocator->Reset();	                        // キューをクリア
-		_renderContext.Reset(*_cmdAllocator.Get());	    // コマンドを受け付けられる状態にする
+		m_renderContext.Reset(*_cmdAllocator.Get());	    // コマンドを受け付けられる状態にする
 
 		// フリップ
 		_swapchain->Present(1, 0);
+
+		m_graphicsMemory->Commit(_cmdQueue.Get());
 	}
 
 	void Dx12GraphicsEngine::SetFrameRenderTarget(const CD3DX12_VIEWPORT& viewport, const CD3DX12_RECT& scissorRect)
@@ -309,20 +317,20 @@ namespace DX12API
 		auto dsvHandle = _dsvHeap.GetCPUDescriptorHandleForHeapStart();
 
 		// レンダーターゲットセット
-		_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
+		m_renderContext.SetRenderTarget(&rtvHandle, &dsvHandle);
 
 		// 画面を指定色でクリア
 		DirectX::XMFLOAT4 color(0.f, 1.f, 1.f, 1.f);
-		_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
+		m_renderContext.ClearRenderTarget(rtvHandle, color, 0, nullptr);
 
 		// デプスステンシルバッファをクリア
-		_renderContext.ClearDepthStencilView(
+		m_renderContext.ClearDepthStencilView(
 			dsvHandle, D3D12_CLEAR_FLAG_DEPTH,
 			depthStencilBufferData.clearDepth, depthStencilBufferData.clearStencil, 0, nullptr);
 
 		// ビューポートとシザー矩形セット
-		_renderContext.SetViewport(viewport);
-		_renderContext.SetScissorRect(scissorRect);
+		m_renderContext.SetViewport(viewport);
+		m_renderContext.SetScissorRect(scissorRect);
 	}
 
 	Utility::RESULT Dx12GraphicsEngine::CreateFrameRenderTarget()
@@ -357,8 +365,16 @@ namespace DX12API
 		return Utility::RESULT::SUCCESS;
 	}
 
-	DX12API::RenderingContext& Dx12GraphicsEngine::GetRenderingContext()
+	DX12Wrapper::RenderingContext& Dx12GraphicsEngine::GetRenderingContext()
 	{
-		return _renderContext;
+		return m_renderContext;
+	}
+	DX12Wrapper::DescriptorHeapRTV& Dx12GraphicsEngine::GetFrameBufferDescriptorHeap()
+	{
+		return _frameHeap;
+	}
+	const CD3DX12_VIEWPORT& Dx12GraphicsEngine::GetViewport()
+	{
+		return m_viewport;
 	}
 }

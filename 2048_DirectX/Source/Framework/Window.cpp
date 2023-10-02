@@ -44,7 +44,12 @@ namespace Framework
 			m_wndClassEx.hInstance,	// 呼び出しアプリケーションハンドル
 			nullptr);	            // 追加パラメータ
 
-		ShowWindow(m_hwnd, SW_SHOW);
+		// 最大化ボタンを消す
+		LONG style = GetWindowLong(m_hwnd, GWL_STYLE);
+		style &= ~WS_MAXIMIZEBOX;
+		SetWindowLong(m_hwnd, GWL_STYLE, style);
+
+		ShowWindow(m_hwnd, SW_SHOWNORMAL);
 	}
 	bool Window::DispatchWindowMessage()
 	{

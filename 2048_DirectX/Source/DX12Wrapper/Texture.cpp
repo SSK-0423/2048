@@ -6,7 +6,7 @@
 using namespace DirectX;
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	Texture& Texture::operator=(const Texture& inst)
 	{

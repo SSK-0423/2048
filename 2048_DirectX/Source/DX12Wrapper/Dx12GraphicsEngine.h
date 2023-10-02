@@ -14,9 +14,13 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
+#include <GraphicsMemory.h>
+
+#pragma comment(lib,"DirectXTK12.lib")
+
 #include <wrl.h>
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	class Dx12GraphicsEngine
 	{
@@ -137,17 +141,22 @@ namespace DX12API
 		/// </summary>
 		void SetFrameRenderTarget(const CD3DX12_VIEWPORT& viewport, const CD3DX12_RECT& scissorRect);
 
-		// 開発用
 	private:
-		DX12API::RenderingContext _renderContext;	            // レンダリングコンテキスト
-		DX12API::RenderTargetBuffer _frameBuffers[2];	        // フレームバッファ
-		DX12API::DescriptorHeapRTV _frameHeap;	                // フレームバッファ用ディスクリプタヒープ	
+		DX12Wrapper::RenderingContext m_renderContext;	            // レンダリングコンテキスト
+		DX12Wrapper::RenderTargetBuffer _frameBuffers[2];	        // フレームバッファ
+		DX12Wrapper::DescriptorHeapRTV _frameHeap;	                // フレームバッファ用ディスクリプタヒープ	
 
-		DX12API::DepthStencilBufferData depthStencilBufferData;	// デプスステンシルバッファーの設定
-		DX12API::DepthStencilBuffer _depthStencilBuffer;		    // デプスステンシルバッファー
-		DX12API::DescriptorHeapDSV _dsvHeap;					    // デプスステンシル用ヒープ
+		DX12Wrapper::DepthStencilBufferData depthStencilBufferData;	// デプスステンシルバッファーの設定
+		DX12Wrapper::DepthStencilBuffer _depthStencilBuffer;		    // デプスステンシルバッファー
+		DX12Wrapper::DescriptorHeapDSV _dsvHeap;					    // デプスステンシル用ヒープ
 
-		DX12API::DescriptorHeapCBV_SRV_UAV _imguiHeap;
+		DX12Wrapper::DescriptorHeapCBV_SRV_UAV m_imguiHeap;
+
+		// フォントレンダリング関連
+		std::unique_ptr<DirectX::GraphicsMemory> m_graphicsMemory;
+
+		CD3DX12_VIEWPORT m_viewport;
+		CD3DX12_RECT m_scissorRect;
 
 		/// <summary>
 		/// フレームバッファ用のレンダーターゲット生成
@@ -160,13 +169,10 @@ namespace DX12API
 		/// レンダリングコンテキスト取得
 		/// </summary>
 		/// <returns></returns>
-		DX12API::RenderingContext& GetRenderingContext();
+		DX12Wrapper::RenderingContext& GetRenderingContext();
 
-		DX12API::DescriptorHeapRTV& GetFrameBufferDescriptorHeap() { return _frameHeap; }
+		DX12Wrapper::DescriptorHeapRTV& GetFrameBufferDescriptorHeap();
+
+		const CD3DX12_VIEWPORT& GetViewport();
 	};
 }
-
-/// メモ
-/// MiniEngineはグローバル変数でポインタを持っていたのでよろしくない
-/// 同様のことをするならシングルトンの方が安全→デストラクタがprivateになっているのでどこかでdeleteされる心配がない
-/// メンバ関数の引数にメンバ変数を指定する→関数の処理内容、意図が明確に伝わる、影響範囲が明確になる

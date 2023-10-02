@@ -12,7 +12,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	RESULT RenderTarget::Create(ID3D12Device& device, RenderTargetData& renderTargetData)
 	{

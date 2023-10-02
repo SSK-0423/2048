@@ -3,7 +3,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	HRESULT DescriptorHeapRTV::CreateDescriptorHeap(ID3D12Device& device)
 	{

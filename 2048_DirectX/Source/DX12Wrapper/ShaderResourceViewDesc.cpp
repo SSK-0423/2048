@@ -1,7 +1,7 @@
 #include "ShaderResourceViewDesc.h"
 #include "Texture.h"
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	ShaderResourceViewDesc::ShaderResourceViewDesc(Texture& texture, bool isCubeTex)
 	{

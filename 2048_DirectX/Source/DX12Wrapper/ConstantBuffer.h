@@ -5,7 +5,7 @@
 
 #include "../Utility/EngineUtility.h"
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	/// <summary>
 	/// コンスタントバッファ―クラス

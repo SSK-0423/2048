@@ -1,4 +1,6 @@
 #include "Scene.h"
+#include "IRenderer.h"
+
 namespace Framework
 {
 	void Scene::Update(float deltaTime)
@@ -8,20 +10,28 @@ namespace Framework
 			obj->Update(deltaTime);
 		}
 
-		for (auto& obj : m_guiObjects)
+		for (auto& canvas : m_canvases)
 		{
-			obj->Update();
+			canvas->Update(deltaTime);
 		}
 	}
-	void Scene::Draw()
+	void Scene::LateUpdate(float deltaTime)
 	{
-		for (auto& obj : m_gameObjects)
+		if (!m_isActive)
 		{
-			obj->Draw();
+			Final();
 		}
-		for (auto& obj : m_guiObjects)
-		{
-			obj->Draw();
-		}
+	}
+	const std::vector<std::unique_ptr<GameObject>>& Scene::GetGameObjects() const
+	{
+		return m_gameObjects;
+	}
+	const std::vector<std::unique_ptr<Canvas>>& Scene::GetCanvases() const
+	{
+		return m_canvases;
+	}
+	void Scene::SetActive(bool isActive)
+	{
+		m_isActive = isActive;
 	}
 }

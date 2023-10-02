@@ -3,7 +3,7 @@
 
 using namespace Utility;
 
-namespace DX12API
+namespace DX12Wrapper
 {
 	DepthStencilBufferData::DepthStencilBufferData(
 		const DXGI_FORMAT& depthFormat, const UINT& width, const UINT& height,
