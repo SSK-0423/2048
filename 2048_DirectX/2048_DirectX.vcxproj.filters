@@ -125,9 +125,6 @@
     <ClCompile Include="Source\Game\Renderer.cpp">
       <Filter>Source\Game\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Game\ShaderLibrary.cpp">
-      <Filter>Source\Game\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="source\Framework\Transform2D.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
@@ -160,6 +157,15 @@
     </ClCompile>
     <ClCompile Include="source\DX12Wrapper\FontRenderer.cpp">
       <Filter>Source\DX12Wrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\ShaderLibrary.cpp">
+      <Filter>Source\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\ButtonRenderer.cpp">
+      <Filter>Source\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\PressEnterText.cpp">
+      <Filter>Source\Game\TitleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,9 +274,6 @@
     <ClInclude Include="Source\Game\Renderer.h">
       <Filter>Source\Game\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="source\Game\ShaderLibrary.h">
-      <Filter>Source\Game\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="source\Game\TitleSceneCanvas.h">
       <Filter>Source\Game\TitleScene</Filter>
     </ClInclude>
@@ -295,9 +298,21 @@
     <ClInclude Include="source\DX12Wrapper\FontRenderer.h">
       <Filter>Source\DX12Wrapper</Filter>
     </ClInclude>
+    <ClInclude Include="source\Framework\ButtonRenderer.h">
+      <Filter>Source\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\ShaderLibrary.h">
+      <Filter>Source\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\PressEnterText.h">
+      <Filter>Source\Game\TitleScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shaders\Sprite.hlsl">
+      <Filter>shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="shaders\Button.hlsl">
       <Filter>shaders</Filter>
     </FxCompile>
   </ItemGroup>

@@ -38,6 +38,7 @@
     <ClCompile Include="Source\DX12Wrapper\Texture.cpp" />
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
     <ClCompile Include="source\Framework\Button.cpp" />
+    <ClCompile Include="source\Framework\ButtonRenderer.cpp" />
     <ClCompile Include="source\Framework\Canvas.cpp" />
     <ClCompile Include="Source\Framework\Game.cpp" />
     <ClCompile Include="Source\Framework\InputSystem.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="source\Framework\Object.cpp" />
     <ClCompile Include="Source\Framework\Scene.cpp" />
     <ClCompile Include="Source\Framework\SceneManager.cpp" />
+    <ClCompile Include="source\Framework\ShaderLibrary.cpp" />
     <ClCompile Include="Source\Framework\SoundClip.cpp" />
     <ClCompile Include="Source\Framework\SoundManager.cpp" />
     <ClCompile Include="Source\Framework\Sprite.cpp" />
@@ -54,8 +56,8 @@
     <ClCompile Include="Source\Game\Game2048.cpp" />
     <ClCompile Include="Source\Game\GameScene.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
+    <ClCompile Include="source\Game\PressEnterText.cpp" />
     <ClCompile Include="Source\Game\Renderer.cpp" />
-    <ClCompile Include="source\Game\ShaderLibrary.cpp" />
     <ClCompile Include="Source\Game\TitleScene.cpp" />
     <ClCompile Include="source\Game\TitleSceneCanvas.cpp" />
     <ClCompile Include="source\Game\TitleSprite.cpp" />
@@ -86,6 +88,7 @@
     <ClInclude Include="Source\DX12Wrapper\Texture.h" />
     <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h" />
     <ClInclude Include="source\Framework\Button.h" />
+    <ClInclude Include="source\Framework\ButtonRenderer.h" />
     <ClInclude Include="source\Framework\Canvas.h" />
     <ClInclude Include="Source\Framework\GameImpl.h" />
     <ClInclude Include="Source\Framework\IComponent.h" />
@@ -95,6 +98,7 @@
     <ClInclude Include="Source\Framework\Object.h" />
     <ClInclude Include="Source\Framework\Scene.h" />
     <ClInclude Include="Source\Framework\SceneManager.h" />
+    <ClInclude Include="source\Framework\ShaderLibrary.h" />
     <ClInclude Include="Source\Framework\SoundClip.h" />
     <ClInclude Include="Source\Framework\SoundManager.h" />
     <ClInclude Include="Source\Framework\Sprite.h" />
@@ -102,9 +106,9 @@
     <ClInclude Include="Source\Framework\Transform2D.h" />
     <ClInclude Include="Source\Framework\Window.h" />
     <ClInclude Include="Source\Game\Game2048.h" />
+    <ClInclude Include="source\Game\PressEnterText.h" />
     <ClInclude Include="Source\Game\Renderer.h" />
     <ClInclude Include="Source\Game\GameScene.h" />
-    <ClInclude Include="source\Game\ShaderLibrary.h" />
     <ClInclude Include="Source\Game\TitleScene.h" />
     <ClInclude Include="source\Game\TitleSceneCanvas.h" />
     <ClInclude Include="source\Game\TitleSprite.h" />
@@ -112,6 +116,14 @@
     <ClInclude Include="Source\Utility\EngineUtility.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="shaders\Button.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VSMain</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="shaders\Sprite.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>

@@ -14,9 +14,16 @@ namespace Framework
 
 		void Update(float deltaTime) override;
 		void Draw() override;
+
 		void SetText(const std::wstring& text);
+		void SetColor(const DirectX::XMVECTORF32& color);
+		void SetPosition(const DirectX::XMFLOAT2& position);
+		void SetScale(const float& scale);
+		void SetRotation(float angle);
+
 	private:
 		std::wstring m_text;
+		DirectX::XMVECTORF32 m_color;
 		DX12Wrapper::FontRenderer& m_fontRenderer;
 	};
 }

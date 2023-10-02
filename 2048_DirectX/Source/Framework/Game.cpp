@@ -49,6 +49,9 @@ namespace Framework
 	{
 		auto& sceneManager = SceneManager::Instance();
 
+		// 1フレーム目でのデルタタイムを0秒とする
+		m_prevFrameTime = std::chrono::system_clock::now();
+		
 		while (bool isPlaying = m_window.DispatchWindowMessage())
 		{
 			auto currentFrameTime = std::chrono::system_clock::now();

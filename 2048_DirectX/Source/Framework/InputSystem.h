@@ -29,11 +29,10 @@ namespace Framework
 
 	class InputSystem
 	{
-	private:
+	public:
 		InputSystem();
 		~InputSystem();
 
-	public:
 		Utility::RESULT Init(HWND& hwnd);
 
 		void Update();
@@ -52,11 +51,11 @@ namespace Framework
 		HWND m_hwnd;
 
 		// IDirectInput8インターフェース
-		LPDIRECTINPUT8 m_directInputInterface = nullptr;
+		LPDIRECTINPUT8 m_directInputInterface;
 		// キーボード用デバイス
-		LPDIRECTINPUTDEVICE8 m_keyboard = nullptr;
+		LPDIRECTINPUTDEVICE8 m_keyboard;
 		// マウス用デバイス
-		LPDIRECTINPUTDEVICE8 m_mouse = nullptr;
+		LPDIRECTINPUTDEVICE8 m_mouse;
 
 		HRESULT SetupKeyboard(HWND& hwnd);
 		HRESULT SetupMouse(HWND& hwnd);

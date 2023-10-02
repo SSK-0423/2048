@@ -3,7 +3,7 @@
 using namespace Utility;
 using namespace DX12Wrapper;
 
-namespace Game2048
+namespace Framework
 {
 	static const TCHAR* SHADER_FOLDER_PASS = L"shaders/";
 	static const UINT BUFFSIZE = 128;
@@ -15,6 +15,8 @@ namespace Game2048
 
 		RegistShader(L"Sprite", "SpriteVS", SHADERTYPE::VERTEX, "VSMain");
 		RegistShader(L"Sprite", "SpritePS", SHADERTYPE::PIXEL, "PSMain");
+		RegistShader(L"Button", "ButtonVS", SHADERTYPE::VERTEX, "VSMain");
+		RegistShader(L"Button", "ButtonPS", SHADERTYPE::PIXEL, "PSMain");
 	};
 	ShaderLibrary::~ShaderLibrary()
 	{

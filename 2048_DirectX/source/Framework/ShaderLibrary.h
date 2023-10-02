@@ -3,7 +3,7 @@
 #include "DX12Wrapper/Shader.h"
 #include "Utility/EngineUtility.h"
 
-namespace Game2048 {
+namespace Framework {
 	enum class SHADERTYPE {
 		VERTEX,
 		PIXEL

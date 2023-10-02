@@ -36,7 +36,7 @@ namespace DX12Wrapper
 
 		// デバッグレイヤー有効
 #ifdef _DEBUG
-		if (FAILED(EnableDebugLayer())) { return Utility::RESULT::FAILED; }
+		//if (FAILED(EnableDebugLayer())) { return Utility::RESULT::FAILED; }
 #endif // DEBUG
 
 		// デバイスとファクトリー生成

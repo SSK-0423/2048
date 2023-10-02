@@ -74,13 +74,20 @@ namespace DX12Wrapper
 		static FontRenderer instance;
 		return instance;
 	}
-	void FontRenderer::DrawString(const std::wstring& text, const DirectX::XMFLOAT2& pos, const DirectX::XMVECTORF32& color)
+	void FontRenderer::DrawString(const std::wstring& text, const DirectX::XMFLOAT2& pos, const float& scale, const DirectX::XMVECTORF32& color)
 	{
 		auto& renderContext = Dx12GraphicsEngine::Instance().GetRenderingContext();
 
-		renderContext.SetDescriptorHeap(*m_fontHeap);
+		renderContext.SetDescriptorHeap(*m_fontHeap.get());
 		m_spriteBatch->Begin(&Dx12GraphicsEngine::Instance().CmdList());
-		m_spriteFont->DrawString(m_spriteBatch.get(), text.c_str(), pos, color);
+		m_spriteFont->DrawString(
+			m_spriteBatch.get(),			// SpriteBatch
+			text.c_str(),					// •¶š—ñ
+			pos,							// À•W
+			color,							// F
+			0.f,							// ‰ñ“]Šp“x
+			DirectX::XMFLOAT2(0.f, 0.f),	// ‰ñ“]²
+			scale);							// Šg‘å—¦
 		m_spriteBatch->End();
 	}
 }

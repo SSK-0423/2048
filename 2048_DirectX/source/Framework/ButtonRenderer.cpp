@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "Renderer.h"
-#include "Framework\ShaderLibrary.h"
+#include "ButtonRenderer.h"
+#include "ShaderLibrary.h"
 
 #include "DX12Wrapper/Dx12GraphicsEngine.h"
 #include "DX12Wrapper/RootSignature.h"
@@ -11,18 +11,17 @@
 
 using namespace Utility;
 using namespace DX12Wrapper;
-using namespace Framework;
 
-namespace Game2048
+namespace Framework
 {
-	Renderer::Renderer()
+	ButtonRenderer::ButtonRenderer()
 		: m_rootSignature(std::make_unique<RootSignature>()), m_pipelineState(std::make_unique<GraphicsPipelineState>())
 	{
 	}
-	Renderer::~Renderer()
+	ButtonRenderer::~ButtonRenderer()
 	{
 	}
-	Utility::RESULT Renderer::Init()
+	Utility::RESULT ButtonRenderer::Init()
 	{
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 
@@ -39,13 +38,13 @@ namespace Game2048
 
 		return RESULT::SUCCESS;
 	}
-	Utility::RESULT Renderer::CreateGraphicsPipelineState(ID3D12Device& device)
+	Utility::RESULT ButtonRenderer::CreateGraphicsPipelineState(ID3D12Device& device)
 	{
 		// ルートシグネチャとシェーダーセット
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineState = {};
 		pipelineState.pRootSignature = &m_rootSignature->GetRootSignature();
-		pipelineState.VS = CD3DX12_SHADER_BYTECODE(&ShaderLibrary::Instance().GetShader("SpriteVS")->GetShader());
-		pipelineState.PS = CD3DX12_SHADER_BYTECODE(&ShaderLibrary::Instance().GetShader("SpritePS")->GetShader());
+		pipelineState.VS = CD3DX12_SHADER_BYTECODE(&ShaderLibrary::Instance().GetShader("ButtonVS")->GetShader());
+		pipelineState.PS = CD3DX12_SHADER_BYTECODE(&ShaderLibrary::Instance().GetShader("ButtonPS")->GetShader());
 
 		// サンプルマスク設定
 		pipelineState.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
@@ -87,39 +86,15 @@ namespace Game2048
 
 		return m_pipelineState->Create(device, pipelineState);
 	}
-	Utility::RESULT Renderer::CreateRootSignature(ID3D12Device& device)
+	Utility::RESULT ButtonRenderer::CreateRootSignature(ID3D12Device& device)
 	{
 		RootSignatureData rootSigData;
-		rootSigData._descRangeData.cbvDescriptorNum = 1;
+		rootSigData._descRangeData.cbvDescriptorNum = 2;
 		rootSigData._descRangeData.srvDescriptorNum = 1;
 
 		return m_rootSignature->Create(device, rootSigData);
 	}
-	void Renderer::RenderScene(const std::vector<std::unique_ptr<Framework::Object>>& gameObjects)
+	void ButtonRenderer::Render()
 	{
-		auto& graphicsEngine = DX12Wrapper::Dx12GraphicsEngine::Instance();
-
-		auto& renderContext = graphicsEngine.GetRenderingContext();
-		renderContext.SetGraphicsRootSignature(*m_rootSignature);
-		renderContext.SetPipelineState(*m_pipelineState);
-
-		for (auto& obj : gameObjects)
-		{
-			obj->Draw();
-		}
-	}
-	void Renderer::RenderUI(const std::vector<std::unique_ptr<Framework::Canvas>>& canvases)
-	{
-		auto& graphicsEngine = DX12Wrapper::Dx12GraphicsEngine::Instance();
-
-		auto& renderContext = graphicsEngine.GetRenderingContext();
-		renderContext.SetGraphicsRootSignature(*m_rootSignature);
-		renderContext.SetPipelineState(*m_pipelineState);
-
-		for (auto& canvas : canvases)
-		{
-			canvas->Draw();
-		}
 	}
 }
-

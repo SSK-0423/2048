@@ -19,7 +19,9 @@ namespace DX12Wrapper
 		static FontRenderer& Instance();
 
 		Utility::RESULT Init(const std::wstring& fontPath);
-		void DrawString(const std::wstring& text, const DirectX::XMFLOAT2& pos, const DirectX::XMVECTORF32& color);
+		void DrawString(
+			const std::wstring& text, const DirectX::XMFLOAT2& pos,
+			const float& scale, const DirectX::XMVECTORF32& color);
 	private:
 		// ƒtƒFƒ“ƒX
 		Microsoft::WRL::ComPtr<ID3D12Fence> m_fence = nullptr;
