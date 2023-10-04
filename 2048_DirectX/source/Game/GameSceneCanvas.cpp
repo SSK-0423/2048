@@ -21,22 +21,6 @@ namespace Game2048
 	{
 		auto windowSize = Window::GetWindowSize();
 
-		// グリッド
-		std::unique_ptr<GUIObject> grid = std::make_unique<GUIObject>();
-		grid->AddComponent<Sprite>(grid.get());
-		grid->GetComponent<Sprite>()->LoadTexture(L"res/TitleBackground.png");
-		grid->GetComponent<Transform2D>()->scale = { windowSize.cx * 0.5f, windowSize.cy * 0.5f };
-		grid->GetComponent<Transform2D>()->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
-		m_guiObjects.push_back(std::move(grid));
-
-		// 背景
-		std::unique_ptr<GUIObject> background = std::make_unique<GUIObject>();
-		background->AddComponent<Sprite>(background.get());
-		background->GetComponent<Sprite>()->LoadTexture(L"res/GameBackground.png");
-		background->GetComponent<Transform2D>()->scale = { windowSize.cx * 1.f, windowSize.cy * 1.f };
-		m_guiObjects.push_back(std::move(background));
-
-
 		// 経過時間
 		std::unique_ptr<GUIObject> elapsedTimeText = std::make_unique<GUIObject>();
 		elapsedTimeText->AddComponent<GameTimer>(elapsedTimeText.get());

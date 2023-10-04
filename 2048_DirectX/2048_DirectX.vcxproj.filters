@@ -167,6 +167,18 @@
     <ClCompile Include="source\Game\PressEnterText.cpp">
       <Filter>Source\Game\TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="source\Game\GameSceneCanvas.cpp">
+      <Filter>Source\Game\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\GameTimer.cpp">
+      <Filter>Source\Game\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\Panel.cpp">
+      <Filter>Source\Game\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\Grid.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\Game.h">
@@ -306,6 +318,18 @@
     </ClInclude>
     <ClInclude Include="source\Game\PressEnterText.h">
       <Filter>Source\Game\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\GameSceneCanvas.h">
+      <Filter>Source\Game\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\GameTimer.h">
+      <Filter>Source\Game\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\Panel.h">
+      <Filter>Source\Game\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\Grid.h">
+      <Filter>Source\Game\GameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
