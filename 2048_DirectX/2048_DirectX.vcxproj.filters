@@ -173,7 +173,7 @@
     <ClCompile Include="source\Game\GameTimer.cpp">
       <Filter>Source\Game\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="source\Game\Panel.cpp">
+    <ClCompile Include="source\Game\Tile.cpp">
       <Filter>Source\Game\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="source\Game\Grid.cpp">
@@ -325,7 +325,7 @@
     <ClInclude Include="source\Game\GameTimer.h">
       <Filter>Source\Game\GameScene</Filter>
     </ClInclude>
-    <ClInclude Include="source\Game\Panel.h">
+    <ClInclude Include="source\Game\Tile.h">
       <Filter>Source\Game\GameScene</Filter>
     </ClInclude>
     <ClInclude Include="source\Game\Grid.h">

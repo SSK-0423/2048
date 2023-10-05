@@ -29,6 +29,7 @@ namespace Game2048
 		std::unique_ptr<GUIObject> background = std::make_unique<GUIObject>();
 		background->AddComponent<Sprite>(background.get());
 		background->GetComponent<Sprite>()->LoadTexture(L"res/TitleBackground.png");
+		background->GetComponent<Transform2D>()->position = { size.cx / 2.f, size.cy / 2.f };
 		background->GetComponent<Transform2D>()->scale = { size.cx * 1.f, size.cy * 1.f };
 		m_guiObjects.push_back(std::move(background));
 

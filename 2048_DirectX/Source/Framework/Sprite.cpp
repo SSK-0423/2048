@@ -26,10 +26,10 @@ namespace Framework
 		m_indexBuffer(std::make_unique<IndexBuffer>()),
 		m_descriptorHeap(std::make_unique<DescriptorHeapCBV_SRV_UAV>())
 	{
-		m_vertex.push_back({ DirectX::XMFLOAT3(-1.f, -1.f, 0),DirectX::XMFLOAT2(0, 1) });
-		m_vertex.push_back({ DirectX::XMFLOAT3(-1.f,  1.f, 0),DirectX::XMFLOAT2(0, 0) });
-		m_vertex.push_back({ DirectX::XMFLOAT3( 1.f, -1.f, 0),DirectX::XMFLOAT2(1, 1) });
-		m_vertex.push_back({ DirectX::XMFLOAT3( 1.f,  1.f, 0),DirectX::XMFLOAT2(1, 0) });
+		m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f, -0.5f, 0),DirectX::XMFLOAT2(0, 1) }); // ç∂â∫
+		m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f,  0.5f, 0),DirectX::XMFLOAT2(0, 0) }); // ç∂è„
+		m_vertex.push_back({ DirectX::XMFLOAT3( 0.5f, -0.5f, 0),DirectX::XMFLOAT2(1, 1) }); // âEâ∫
+		m_vertex.push_back({ DirectX::XMFLOAT3( 0.5f,  0.5f, 0),DirectX::XMFLOAT2(1, 0) }); // âEè„
 
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 

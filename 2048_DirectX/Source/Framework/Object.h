@@ -13,12 +13,6 @@ namespace Framework
 			m_components.shrink_to_fit();
 		}
 
-	protected:
-		std::vector<std::unique_ptr<IComponent>> m_components;
-		Object* m_parent;
-		std::vector<Object*> m_children;
-
-	public:
 		template<class T>
 		T* GetComponent()
 		{
@@ -50,6 +44,13 @@ namespace Framework
 		Object* Parent();
 		void SetParent(Object* parent);
 		void AddChild(Object* child);
+
+	protected:
+		std::vector<std::unique_ptr<IComponent>> m_components;
+		Object* m_parent;
+		std::vector<Object*> m_children;
+		class Scene* m_scene;
+
 	};
 
 	// Object‚É•Ê–¼‚ð‚Â‚¯‚é

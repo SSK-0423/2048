@@ -13,6 +13,10 @@ namespace Game2048
 		void Draw() override;
 
 	private:
-		std::vector<std::vector<int>> m_grid;
+		std::vector<std::vector<unsigned int>> m_grid;
+		std::unique_ptr<class Framework::Object> m_testTile;
+
+		float m_gridLeft = 0;
+		float m_gridTop = 0;
 	};
 }

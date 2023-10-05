@@ -14,9 +14,22 @@ namespace Framework
 		{
 			component->Update(deltaTime);
 		}
+
+		for (auto& child : m_children)
+		{
+			child->Update(deltaTime);
+		}
 	}
 	void Object::Draw()
 	{
+		// 子オブジェクトが存在する場合、
+		// 親オブジェクトはステージなどの背景オブジェクトの可能性があるため、
+		// 子オブジェクトを先に描画する
+		for (auto& child : m_children)
+		{
+			child->Draw();
+		}
+
 		for (auto& component : m_components)
 		{
 			component->Draw();

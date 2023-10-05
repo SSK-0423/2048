@@ -52,7 +52,7 @@ namespace Game2048
 
 
 		// オブジェクトプール
-
+		std::unique_ptr<GameObject> panelPool = std::make_unique<GameObject>();
 
 		// 数値パネル
 

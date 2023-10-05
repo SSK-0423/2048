@@ -22,7 +22,7 @@ namespace Framework
 		};
 		Transform2DData m_bufferData;
 		std::unique_ptr<DX12Wrapper::ConstantBuffer> m_buffer;
-		
+
 		DirectX::XMMATRIX GetTransformMatrix();
 
 	public:
@@ -32,6 +32,7 @@ namespace Framework
 		DirectX::XMFLOAT2 position;
 		DirectX::XMFLOAT2 scale;
 		float angle;
+		float depth;
 
 		DX12Wrapper::ConstantBuffer& GetConstantBuffer();
 	};
