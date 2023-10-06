@@ -50,6 +50,7 @@
     <ClCompile Include="Source\Framework\SoundClip.cpp" />
     <ClCompile Include="Source\Framework\SoundManager.cpp" />
     <ClCompile Include="Source\Framework\Sprite.cpp" />
+    <ClCompile Include="source\Framework\SpriteRenderer.cpp" />
     <ClCompile Include="source\Framework\Text.cpp" />
     <ClCompile Include="source\Framework\Transform2D.cpp" />
     <ClCompile Include="Source\Framework\Window.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Source\Framework\SoundClip.h" />
     <ClInclude Include="Source\Framework\SoundManager.h" />
     <ClInclude Include="Source\Framework\Sprite.h" />
+    <ClInclude Include="source\Framework\SpriteRenderer.h" />
     <ClInclude Include="source\Framework\Text.h" />
     <ClInclude Include="Source\Framework\Transform2D.h" />
     <ClInclude Include="Source\Framework\Window.h" />

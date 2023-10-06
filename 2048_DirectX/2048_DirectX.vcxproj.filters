@@ -177,7 +177,10 @@
       <Filter>Source\Game\GameScene</Filter>
     </ClCompile>
     <ClCompile Include="source\Game\Grid.cpp">
-      <Filter>Source\Game</Filter>
+      <Filter>Source\Game\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\SpriteRenderer.cpp">
+      <Filter>Source\Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -330,6 +333,9 @@
     </ClInclude>
     <ClInclude Include="source\Game\Grid.h">
       <Filter>Source\Game\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\SpriteRenderer.h">
+      <Filter>Source\Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

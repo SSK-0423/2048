@@ -24,6 +24,7 @@ namespace Framework
 	{
 	public:
 		Sprite(Object* owner, SPRITE_PIVOT pivot = SPRITE_PIVOT::CENTER);
+		Sprite(const std::wstring& path, SPRITE_PIVOT pivot = SPRITE_PIVOT::CENTER);
 		~Sprite() = default;
 
 	private:
@@ -43,5 +44,9 @@ namespace Framework
 		void LoadTexture(const std::wstring& path);
 		void Update(float deltaTime) override;
 		void Draw() override;
+
+		DX12Wrapper::DescriptorHeapCBV_SRV_UAV& GetDescriptorHeap() const;
+		DX12Wrapper::VertexBuffer& GetVertexBuffer() const;
+		DX12Wrapper::IndexBuffer& GetIndexBuffer() const;
 	};
 }
