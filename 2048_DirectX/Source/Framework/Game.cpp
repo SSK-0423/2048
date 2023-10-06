@@ -70,7 +70,7 @@ namespace Framework
 			sceneManager.ActiveSceneDraw(m_renderer);
 
 #ifdef _DEBUG
-			DebugLog("%f (ms) \n", deltaTime * 1000.f);
+			//DebugLog("%f (ms) \n", deltaTime * 1000.f);
 #endif
 		}
 

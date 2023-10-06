@@ -19,17 +19,27 @@ using namespace DX12Wrapper;
 
 namespace Framework
 {
-	Sprite::Sprite(Object* owner)
+	Sprite::Sprite(Object* owner, SPRITE_PIVOT pivot)
 		: IComponent(owner),
 		m_texture(std::make_unique<Texture>()),
 		m_vertexBuffer(std::make_unique<VertexBuffer>()),
 		m_indexBuffer(std::make_unique<IndexBuffer>()),
 		m_descriptorHeap(std::make_unique<DescriptorHeapCBV_SRV_UAV>())
 	{
-		m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f, -0.5f, 0),DirectX::XMFLOAT2(0, 1) }); // 左下
-		m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f,  0.5f, 0),DirectX::XMFLOAT2(0, 0) }); // 左上
-		m_vertex.push_back({ DirectX::XMFLOAT3( 0.5f, -0.5f, 0),DirectX::XMFLOAT2(1, 1) }); // 右下
-		m_vertex.push_back({ DirectX::XMFLOAT3( 0.5f,  0.5f, 0),DirectX::XMFLOAT2(1, 0) }); // 右上
+		if (pivot == SPRITE_PIVOT::CENTER)
+		{
+			m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f, -0.5f, 0),DirectX::XMFLOAT2(0, 1) }); // 左下
+			m_vertex.push_back({ DirectX::XMFLOAT3(-0.5f,  0.5f, 0),DirectX::XMFLOAT2(0, 0) }); // 左上
+			m_vertex.push_back({ DirectX::XMFLOAT3(0.5f, -0.5f, 0),DirectX::XMFLOAT2(1, 1) }); // 右下
+			m_vertex.push_back({ DirectX::XMFLOAT3(0.5f,  0.5f, 0),DirectX::XMFLOAT2(1, 0) }); // 右上
+		}
+		else if (pivot == SPRITE_PIVOT::TOP_LEFT)
+		{
+			m_vertex.push_back({ DirectX::XMFLOAT3(0.0f, -1.0f, 0),DirectX::XMFLOAT2(0, 1) }); // 左下
+			m_vertex.push_back({ DirectX::XMFLOAT3(0.0f,  0.0f, 0),DirectX::XMFLOAT2(0, 0) }); // 左上
+			m_vertex.push_back({ DirectX::XMFLOAT3(1.0f, -1.0f, 0),DirectX::XMFLOAT2(1, 1) }); // 右下
+			m_vertex.push_back({ DirectX::XMFLOAT3(1.0f,  0.0f, 0),DirectX::XMFLOAT2(1, 0) }); // 右上
+		}
 
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 

@@ -12,7 +12,7 @@ namespace Game2048
 		void Update(float deltaTime) override;
 		void Draw() override;
 		void SetNumber(unsigned int number);
-		void SetGridPosition(unsigned int x, unsigned int y, float gridTop, float gridLeft);
+		void SetGridPosition(unsigned int x, unsigned int y, float gridLeft, float gridTop);
 		unsigned int GetNumber();
 
 	private:

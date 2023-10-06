@@ -14,10 +14,16 @@ namespace DX12Wrapper
 
 namespace Framework
 {
+	enum class SPRITE_PIVOT
+	{
+		TOP_LEFT,
+		CENTER,
+	};
+
 	class Sprite : public IComponent
 	{
 	public:
-		Sprite(Object* owner);
+		Sprite(Object* owner, SPRITE_PIVOT pivot = SPRITE_PIVOT::CENTER);
 		~Sprite() = default;
 
 	private:
