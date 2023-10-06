@@ -10,6 +10,7 @@
 #include "Framework/Sprite.h"
 #include "Framework/Text.h"
 #include "Framework/Transform2D.h"
+#include "Framework/SpriteRenderer.h"
 
 using namespace Framework;
 
@@ -31,8 +32,8 @@ namespace Game2048
 
 		// 背景
 		std::unique_ptr<GameObject> background = std::make_unique<GameObject>();
-		background->AddComponent<Sprite>(background.get());
-		background->GetComponent<Sprite>()->LoadTexture(L"res/GameBackground.png");
+		Sprite* backgroundSprite = new Sprite(L"res/GameBackground.png");
+		background->AddComponent<SpriteRenderer>(background.get(), backgroundSprite);
 		background->GetComponent<Transform2D>()->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
 		background->GetComponent<Transform2D>()->scale = { windowSize.cx * 1.f, windowSize.cy * 1.f };
 		m_gameObjects.push_back(std::move(background));
@@ -50,14 +51,6 @@ namespace Game2048
 		// ・パネルが動くときにはアニメーションをつける
 		// ・パネルが動くときには音を鳴らす
 		//
-
-
-		// オブジェクトプール
-		std::unique_ptr<GameObject> panelPool = std::make_unique<GameObject>();
-
-		// 数値パネル
-
-
 	}
 	void GameScene::Final()
 	{

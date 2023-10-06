@@ -131,9 +131,6 @@
     <ClCompile Include="source\Framework\Object.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
-    <ClCompile Include="source\Game\TitleSprite.cpp">
-      <Filter>Source\Game\TitleScene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game\TitleScene.cpp">
       <Filter>Source\Game\TitleScene</Filter>
     </ClCompile>
@@ -290,9 +287,6 @@
       <Filter>Source\Game\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Game\TitleSceneCanvas.h">
-      <Filter>Source\Game\TitleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Game\TitleSprite.h">
       <Filter>Source\Game\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\TitleScene.h">

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "TitleScene.h"
-#include "TitleSprite.h"
 #include "TitleSceneCanvas.h"
 
 #include "Framework/Sprite.h"

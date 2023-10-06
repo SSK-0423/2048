@@ -14,7 +14,7 @@ namespace Framework
 		SpriteRenderer(Framework::Object* owner, class Sprite* sprite);
 		~SpriteRenderer() = default;
 
-		void SetSprite(const class Sprite& sprite);
+		void SetSprite(class Sprite* sprite);
 		void Update(float deltaTime) override;
 		void Draw() override;
 

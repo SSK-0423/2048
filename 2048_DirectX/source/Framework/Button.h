@@ -7,14 +7,13 @@ namespace Framework
 	class Button : public IComponent
 	{
 	public:
-		Button(Object* owner);
-		Button(Object* owner, std::function<void()> onClick, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 scale);
+		Button(Object* owner, std::function<void()> onClick, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 scale, class Sprite* sprite);
 		~Button() = default;
 
 	private:
-		std::unique_ptr<class Sprite> m_sprite;
-		std::unique_ptr<class Text> m_text;
-		std::function<void()> m_onClick;
+		std::unique_ptr<class SpriteRenderer> m_spriteRenderer = nullptr;
+		std::unique_ptr<class Text> m_text = nullptr;
+		std::function<void()> m_onClick = nullptr;
 
 		bool CheckClick();
 	public:

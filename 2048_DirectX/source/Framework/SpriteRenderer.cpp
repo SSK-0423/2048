@@ -1,5 +1,9 @@
 #include "pch.h"
 #include "SpriteRenderer.h"
+#include "Object.h"
+#include "Sprite.h"
+#include "ShaderLibrary.h"
+#include "Transform2D.h"
 
 #include "DX12Wrapper/Dx12GraphicsEngine.h"
 #include "DX12Wrapper/VertexBuffer.h"
@@ -11,10 +15,6 @@
 #include "DX12Wrapper/RenderingContext.h"
 #include "DX12Wrapper/InputLayout.h"
 
-#include "Framework/Object.h"
-#include "Framework/Sprite.h"
-#include "Framework/ShaderLibrary.h"
-#include "Framework/Transform2D.h"
 
 using namespace Utility;
 using namespace DX12Wrapper;
@@ -41,8 +41,9 @@ namespace Framework
 		// スプライトにTransform情報をセット
 		m_sprite->GetDescriptorHeap().RegistConstantBuffer(device, owner->GetComponent<Transform2D>()->GetConstantBuffer(), 0);
 	}
-	void SpriteRenderer::SetSprite(const Sprite& sprite)
+	void SpriteRenderer::SetSprite(Sprite* sprite)
 	{
+		m_sprite.reset(sprite);
 	}
 	void SpriteRenderer::Update(float deltaTime)
 	{

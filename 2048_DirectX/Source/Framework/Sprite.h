@@ -1,6 +1,5 @@
 #pragma once
 #include "IComponent.h"
-#include "Utility/EngineUtility.h"
 
 #include <DirectXMath.h>
 
@@ -20,12 +19,11 @@ namespace Framework
 		CENTER,
 	};
 
-	class Sprite : public IComponent
+	class Sprite
 	{
 	public:
-		Sprite(Object* owner, SPRITE_PIVOT pivot = SPRITE_PIVOT::CENTER);
 		Sprite(const std::wstring& path, SPRITE_PIVOT pivot = SPRITE_PIVOT::CENTER);
-		~Sprite() = default;
+		~Sprite();
 
 	private:
 		struct SpriteVertex
@@ -35,15 +33,13 @@ namespace Framework
 		};
 		std::vector<SpriteVertex> m_vertex;
 
-		std::unique_ptr<DX12Wrapper::Texture> m_texture;
-		std::unique_ptr<DX12Wrapper::VertexBuffer> m_vertexBuffer;
-		std::unique_ptr<DX12Wrapper::IndexBuffer> m_indexBuffer;
-		std::unique_ptr<DX12Wrapper::DescriptorHeapCBV_SRV_UAV> m_descriptorHeap;
+		std::unique_ptr<DX12Wrapper::Texture> m_texture = nullptr;
+		std::unique_ptr<DX12Wrapper::VertexBuffer> m_vertexBuffer = nullptr;
+		std::unique_ptr<DX12Wrapper::IndexBuffer> m_indexBuffer = nullptr;
+		std::unique_ptr<DX12Wrapper::DescriptorHeapCBV_SRV_UAV> m_descriptorHeap = nullptr;
 
 	public:
 		void LoadTexture(const std::wstring& path);
-		void Update(float deltaTime) override;
-		void Draw() override;
 
 		DX12Wrapper::DescriptorHeapCBV_SRV_UAV& GetDescriptorHeap() const;
 		DX12Wrapper::VertexBuffer& GetVertexBuffer() const;

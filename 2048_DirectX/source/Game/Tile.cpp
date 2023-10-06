@@ -3,6 +3,7 @@
 
 #include "Framework/Object.h"
 #include "Framework/Sprite.h"
+#include "Framework/SpriteRenderer.h"
 #include "Framework/Transform2D.h"
 #include "Framework/Window.h"
 
@@ -15,9 +16,10 @@ namespace Game2048
 	Tile::Tile(Framework::Object* owner, float width, float height) :
 		IComponent(owner), m_width(width), m_height(height)
 	{
-		// Spriteコンポーネント追加
-		auto sprite = m_owner->AddComponent<Sprite>(m_owner, SPRITE_PIVOT::TOP_LEFT);
-		sprite->LoadTexture(L"res/numberTile/Tile_2.png");
+		// SpriteRendererコンポーネント追加
+		m_owner->AddComponent<SpriteRenderer>(
+			m_owner,
+			new Sprite(L"res/numberTile/Tile_2.png", SPRITE_PIVOT::TOP_LEFT));
 
 		// ウインドウサイズ取得
 		auto window = Window::GetWindowSize();

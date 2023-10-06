@@ -34,7 +34,6 @@ namespace Game2048
 		howToPlayText->GetComponent<Text>()->SetPosition({ windowSize.cx - 250.f, windowSize.cy - 50.f });
 		howToPlayText->GetComponent<Text>()->SetText(L"Use Arrow Keys");
 		m_guiObjects.push_back(std::move(howToPlayText));
-
 	}
 	void GameSceneCanvas::Final()
 	{

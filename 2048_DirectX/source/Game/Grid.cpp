@@ -5,6 +5,7 @@
 #include "Framework/Window.h"
 #include "Framework/Object.h"
 #include "Framework/Sprite.h"
+#include "Framework/SpriteRenderer.h"
 #include "Framework/Transform2D.h"
 #include "Framework/InputSystem.h"
 
@@ -20,8 +21,7 @@ namespace Game2048
 	Grid::Grid(Framework::Object* owner) : IComponent(owner)
 	{
 		// Spriteコンポーネント追加
-		auto sprite = m_owner->AddComponent<Sprite>(m_owner);
-		sprite->LoadTexture(L"res/Grid.png");
+		m_owner->AddComponent<SpriteRenderer>(m_owner, new Sprite(L"res/Grid.png"));
 
 		auto windowSize = Window::GetWindowSize();
 
@@ -311,7 +311,7 @@ namespace Game2048
 			{
 				if (m_grid[y][x] != 0)
 				{
-					m_testTiles[y][x]->GetComponent<Sprite>()->Draw();
+					m_testTiles[y][x]->GetComponent<SpriteRenderer>()->Draw();
 				}
 			}
 		}
