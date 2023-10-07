@@ -33,33 +33,24 @@
     <Filter Include="Source\Framework\UI">
       <UniqueIdentifier>{3fcc9a31-6413-4365-af75-2d66be8c2243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Framework\System">
+      <UniqueIdentifier>{e23b6b25-ad8a-4e52-9165-20a827e5d9a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Framework\Sound">
+      <UniqueIdentifier>{324ec51a-cf6d-4b01-bf9f-8d00d3a157fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Framework\GameObject">
+      <UniqueIdentifier>{bb0377b8-173d-432d-81f7-3d609db30b40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
       <Filter>Source\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Framework\Window.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\Game.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\InputSystem.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Framework\Scene.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\Framework\SceneManager.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\SoundClip.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\SoundManager.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Framework\Sprite.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="Source\DX12Wrapper\ConstantBuffer.cpp">
@@ -125,12 +116,6 @@
     <ClCompile Include="Source\Game\Renderer.cpp">
       <Filter>Source\Game\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="source\Framework\Transform2D.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Framework\Object.cpp">
-      <Filter>Source\Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game\TitleScene.cpp">
       <Filter>Source\Game\TitleScene</Filter>
     </ClCompile>
@@ -139,9 +124,6 @@
     </ClCompile>
     <ClCompile Include="Source\Game\GameScene.cpp">
       <Filter>Source\Game\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Framework\IRenderer.cpp">
-      <Filter>Source\Framework</Filter>
     </ClCompile>
     <ClCompile Include="source\Framework\Button.cpp">
       <Filter>Source\Framework\UI</Filter>
@@ -176,42 +158,48 @@
     <ClCompile Include="source\Game\Grid.cpp">
       <Filter>Source\Game\GameScene</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Framework\Game.cpp">
+      <Filter>Source\Framework\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\InputSystem.cpp">
+      <Filter>Source\Framework\System</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\IRenderer.cpp">
+      <Filter>Source\Framework\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\Window.cpp">
+      <Filter>Source\Framework\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\SoundClip.cpp">
+      <Filter>Source\Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\SoundManager.cpp">
+      <Filter>Source\Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Framework\Sprite.cpp">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="source\Framework\SpriteRenderer.cpp">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Transform2D.cpp">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Object.cpp">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Framework\Camera.cpp">
       <Filter>Source\Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Framework\Game.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\Window.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Framework\IComponent.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\Transform2D.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\Object.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\InputSystem.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\SceneManager.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\Framework\Scene.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\SoundManager.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\SoundClip.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\Sprite.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Source\DX12Wrapper\ConstantBuffer.h">
@@ -277,12 +265,6 @@
     <ClInclude Include="Source\Game\Game2048.h">
       <Filter>Source\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Framework\GameImpl.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Framework\IRenderer.h">
-      <Filter>Source\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game\Renderer.h">
       <Filter>Source\Game\Graphics</Filter>
     </ClInclude>
@@ -328,7 +310,40 @@
     <ClInclude Include="source\Game\Grid.h">
       <Filter>Source\Game\GameScene</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Framework\GameImpl.h">
+      <Filter>Source\Framework\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Game.h">
+      <Filter>Source\Framework\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\InputSystem.h">
+      <Filter>Source\Framework\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\IRenderer.h">
+      <Filter>Source\Framework\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Window.h">
+      <Filter>Source\Framework\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\SoundManager.h">
+      <Filter>Source\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\SoundClip.h">
+      <Filter>Source\Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Sprite.h">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="source\Framework\SpriteRenderer.h">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Transform2D.h">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Framework\Object.h">
+      <Filter>Source\Framework\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Framework\Camera.h">
       <Filter>Source\Framework</Filter>
     </ClInclude>
   </ItemGroup>

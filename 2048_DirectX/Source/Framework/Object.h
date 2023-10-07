@@ -11,6 +11,8 @@ namespace Framework
 		{
 			m_components.clear();
 			m_components.shrink_to_fit();
+			m_children.clear();
+			m_children.shrink_to_fit();
 		}
 
 		template<class T>
@@ -47,10 +49,8 @@ namespace Framework
 
 	protected:
 		std::vector<std::unique_ptr<IComponent>> m_components;
-		Object* m_parent;
+		Object* m_parent = nullptr;
 		std::vector<Object*> m_children;
-		class Scene* m_scene;
-
 	};
 
 	// Object‚É•Ê–¼‚ð‚Â‚¯‚é

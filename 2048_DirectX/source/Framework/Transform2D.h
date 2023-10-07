@@ -23,7 +23,6 @@ namespace Framework
 		Transform2DData m_bufferData;
 		std::unique_ptr<DX12Wrapper::ConstantBuffer> m_buffer;
 
-		DirectX::XMMATRIX GetTransformMatrix();
 
 	public:
 		void Update(float deltaTime) override;
@@ -35,5 +34,6 @@ namespace Framework
 		float depth;
 
 		DX12Wrapper::ConstantBuffer& GetConstantBuffer();
+		DirectX::XMMATRIX GetTransformMatrix();
 	};
 }

@@ -11,6 +11,7 @@
 #include "Framework/Text.h"
 #include "Framework/Transform2D.h"
 #include "Framework/SpriteRenderer.h"
+#include "Framework/Camera.h"
 
 using namespace Framework;
 

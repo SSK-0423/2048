@@ -43,6 +43,9 @@ namespace Framework
 		m_sprite.reset(sprite);
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 		m_sprite->GetDescriptorHeap().RegistConstantBuffer(device, m_owner->GetComponent<Transform2D>()->GetConstantBuffer(), 0);
+		
+		// Œ»ÝŠ‘®‚µ‚Ä‚¢‚éƒV[ƒ“‚ÌƒJƒƒ‰‚ðŽæ“¾
+		//m_sprite->GetDescriptorHeap().RegistConstantBuffer(device, );
 	}
 	void SpriteRenderer::Update(float deltaTime)
 	{

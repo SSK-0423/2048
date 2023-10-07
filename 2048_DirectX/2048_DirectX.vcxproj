@@ -39,6 +39,7 @@
     <ClCompile Include="Source\DX12Wrapper\VertexBuffer.cpp" />
     <ClCompile Include="source\Framework\Button.cpp" />
     <ClCompile Include="source\Framework\ButtonRenderer.cpp" />
+    <ClCompile Include="source\Framework\Camera.cpp" />
     <ClCompile Include="source\Framework\Canvas.cpp" />
     <ClCompile Include="Source\Framework\Game.cpp" />
     <ClCompile Include="Source\Framework\InputSystem.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Source\DX12Wrapper\VertexBuffer.h" />
     <ClInclude Include="source\Framework\Button.h" />
     <ClInclude Include="source\Framework\ButtonRenderer.h" />
+    <ClInclude Include="source\Framework\Camera.h" />
     <ClInclude Include="source\Framework\Canvas.h" />
     <ClInclude Include="Source\Framework\GameImpl.h" />
     <ClInclude Include="Source\Framework\IComponent.h" />
