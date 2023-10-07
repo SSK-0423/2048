@@ -4,6 +4,8 @@
 #include "Sprite.h"
 #include "ShaderLibrary.h"
 #include "Transform2D.h"
+#include "Camera.h"
+#include "Scene.h"
 
 #include "DX12Wrapper/Dx12GraphicsEngine.h"
 #include "DX12Wrapper/VertexBuffer.h"
@@ -14,7 +16,6 @@
 #include "DX12Wrapper/ShaderResourceViewDesc.h"
 #include "DX12Wrapper/RenderingContext.h"
 #include "DX12Wrapper/InputLayout.h"
-
 
 using namespace Utility;
 using namespace DX12Wrapper;
@@ -42,10 +43,17 @@ namespace Framework
 	{
 		m_sprite.reset(sprite);
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
-		m_sprite->GetDescriptorHeap().RegistConstantBuffer(device, m_owner->GetComponent<Transform2D>()->GetConstantBuffer(), 0);
-		
-		// 現在所属しているシーンのカメラを取得
-		//m_sprite->GetDescriptorHeap().RegistConstantBuffer(device, );
+		m_sprite->GetDescriptorHeap().RegistConstantBuffer(
+			device,
+			m_owner->GetComponent<Transform2D>()->GetConstantBuffer(),
+			static_cast<UINT>(CONSTANT_BUFFER_INDEX::TRANSFORM));
+
+		// アクティブなシーンのカメラを取得
+		auto& camera = Scene::GetCamera();
+		m_sprite->GetDescriptorHeap().RegistConstantBuffer(
+			device,
+			camera.GetConstantBuffer(),
+			static_cast<UINT>(CONSTANT_BUFFER_INDEX::CAMERA));
 	}
 	void SpriteRenderer::Update(float deltaTime)
 	{
@@ -115,7 +123,7 @@ namespace Framework
 	Utility::RESULT SpriteRenderer::CreateRootSignature(ID3D12Device& device)
 	{
 		RootSignatureData rootSigData;
-		rootSigData._descRangeData.cbvDescriptorNum = 1;
+		rootSigData._descRangeData.cbvDescriptorNum = static_cast<UINT>(CONSTANT_BUFFER_INDEX::BUFFER_COUNT);
 		rootSigData._descRangeData.srvDescriptorNum = 1;
 
 		return m_rootSignature->Create(device, rootSigData);

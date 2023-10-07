@@ -22,6 +22,13 @@ namespace Framework
 		Utility::RESULT CreateRootSignature(ID3D12Device& device);
 
 	private:
+		enum class CONSTANT_BUFFER_INDEX
+		{
+			TRANSFORM = 0,
+			CAMERA = 1,
+			BUFFER_COUNT
+		};
+
 		std::unique_ptr<DX12Wrapper::RootSignature> m_rootSignature = nullptr;
 		std::unique_ptr<DX12Wrapper::GraphicsPipelineState> m_pipelineState = nullptr;
 		std::unique_ptr<class Sprite> m_sprite = nullptr;

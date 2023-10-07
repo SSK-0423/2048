@@ -4,7 +4,13 @@ sampler smp : register(s0);
 
 cbuffer Transform : register(b0)
 {
-    matrix transform;
+    matrix world;
+};
+
+cbuffer Camera : register(b1)
+{
+    matrix view;
+    matrix proj;
 };
 
 struct VertexInput
@@ -22,7 +28,11 @@ struct VertexOutput
 VertexOutput VSMain(VertexInput input)
 {
     VertexOutput output;
-    output.position = mul(transform, float4(input.position, 1.f));
+    
+    matrix viewProj = mul(proj, view);
+    matrix worldViewProj = mul(viewProj, world);
+    
+    output.position = mul(worldViewProj, float4(input.position, 1.f));
     output.uv = input.uv;
     
     return output;

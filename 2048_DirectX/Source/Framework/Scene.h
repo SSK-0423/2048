@@ -1,13 +1,14 @@
 #pragma once
 #include "Object.h"
 #include "Canvas.h"
+#include "Camera.h"
 
 namespace Framework
 {
 	class Scene
 	{
 	public:
-		Scene() = default;
+		Scene();
 		virtual ~Scene() = default;
 
 		virtual void Init() = 0;
@@ -15,23 +16,16 @@ namespace Framework
 		virtual void LateUpdate(float deltaTime);
 		virtual void Final() = 0;
 
-
 		const std::vector<std::unique_ptr<GameObject>>& GetGameObjects() const;
 		const std::vector<std::unique_ptr<Canvas>>& GetCanvases() const;
 
 		void SetActive(bool isActive);
 
-		static const class Camera& GetCamera()
-		{
-			return *m_camera.get();
-		}
+		static const Camera& GetCamera();
 	protected:
 		std::vector<std::unique_ptr<GameObject>> m_gameObjects;
 		std::vector<std::unique_ptr<Canvas>> m_canvases;
-
-		// ÉVÅ[ÉìÇ≤Ç∆Ç…Initä÷êîÇ≈èâä˙âªÇ∑ÇÈ
-		static std::unique_ptr<class Camera> m_camera;
-
+		static std::unique_ptr<GameObject> m_cameraObject;
 		bool m_isActive = false;
 	};
 }

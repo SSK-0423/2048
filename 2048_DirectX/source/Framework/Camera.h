@@ -14,23 +14,29 @@ namespace Framework
 	{
 	public:
 		Camera(Object* owner);
-		~Camera();
+		~Camera() = default;
 
 		void Update(float deltaTime) override;
 		void Draw() override;
 
-		class DX12Wrapper::ConstantBuffer& GetConstantBuffer() const;
+		DX12Wrapper::ConstantBuffer& GetConstantBuffer() const;
 		float GetFar() const;
 		float GetNear() const;
 		DirectX::XMMATRIX GetViewMatrix() const;
 		DirectX::XMMATRIX GetProjectionMatrix() const;
 
 	private:
-		class std::unique_ptr<class DX12Wrapper::ConstantBuffer> m_constantBuffer;
-		float m_far = 1.f;
+
+		struct CameraData
+		{
+			DirectX::XMMATRIX view;
+			DirectX::XMMATRIX projection;
+		};
+		CameraData m_bufferData;
+
+		std::unique_ptr<DX12Wrapper::ConstantBuffer> m_constantBuffer;
 		float m_near = 0.f;
-		DirectX::XMMATRIX m_view;
-		DirectX::XMMATRIX m_projection;
+		float m_far = 1.f;
 	};
 }
 
