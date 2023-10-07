@@ -66,14 +66,14 @@ namespace Game2048
 		m_testTiles.resize(GRID_HEIGHT);
 		std::for_each(m_testTiles.begin(), m_testTiles.end(), [](auto& row) { row.resize(GRID_WIDTH); });
 
-		for (int i = 0; i < GRID_HEIGHT; i++)
+		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
-			for (int j = 0; j < GRID_WIDTH; j++)
+			for (int x = 0; x < GRID_WIDTH; x++)
 			{
-				m_testTiles[i][j] = std::make_unique<GameObject>();
-				auto tile = m_testTiles[i][j]->AddComponent<Tile>(m_testTiles[i][j].get());
+				m_testTiles[y][x] = std::make_unique<GameObject>();
+				auto tile = m_testTiles[y][x]->AddComponent<Tile>(m_testTiles[y][x].get());
 				tile->SetScale(tileWidth, tileHeight);
-				tile->SetGridPosition(i, j, m_gridLeft, m_gridTop);
+				tile->SetGridPosition(x, y, m_gridLeft, m_gridTop);
 			}
 		}
 
@@ -83,7 +83,6 @@ namespace Game2048
 			// NONE以外ならなんでもOK
 			SpawnTile(INPUT_DIRECTION::LEFT);
 		}
-
 	}
 
 	void Grid::Update(float deltaTime)
@@ -112,16 +111,16 @@ namespace Game2048
 	{
 		TestTileDraw();
 
-		Utility::DebugLog("---------------------\n");
-		//出力
-		for (int y = 0; y < GRID_HEIGHT; y++)
-		{
-			for (int x = 0; x < GRID_WIDTH; x++)
-			{
-				Utility::DebugLog("%4d ", m_grid[y][x]);
-			}
-			Utility::DebugLog("\n");
-		}
+		//Utility::DebugLog("---------------------\n");
+		////出力
+		//for (int y = 0; y < GRID_HEIGHT; y++)
+		//{
+		//	for (int x = 0; x < GRID_WIDTH; x++)
+		//	{
+		//		Utility::DebugLog("%4d ", m_grid[y][x]);
+		//	}
+		//	Utility::DebugLog("\n");
+		//}
 	}
 
 	Grid::INPUT_DIRECTION Grid::CheckInputDirection()
@@ -164,14 +163,32 @@ namespace Game2048
 		{
 			// 上に移動
 		case Grid::INPUT_DIRECTION::UP:
-			for (int y = 0; y < GRID_HEIGHT - 1; y++)
+			for (int x = 0; x < GRID_WIDTH; x++)
 			{
-				for (int x = 0; x < GRID_WIDTH; x++)
+				// 上端から順にチェック
+				for (int y = 0; y < GRID_HEIGHT - 1; y++)
 				{
-					if (m_grid[y][x] == m_grid[y + 1][x])
+					// 空白マスはスキップ
+					if (m_grid[y][x] == 0)
 					{
-						m_grid[y][x] *= 2;
-						m_grid[y + 1][x] = 0;
+						continue;
+					}
+					// 下側にマスを見ていって同じ数字があったら合体
+					for (int i = y + 1; i < GRID_HEIGHT; i++)
+					{
+						if (m_grid[y][x] == m_grid[i][x])
+						{
+							m_grid[y][x] *= 2;
+							m_grid[i][x] = 0;
+
+							// 2段階の合体を防ぐ
+							continue;
+						}
+						// 参照したマスに数字がある場合はそこでチェック終了
+						else if (m_grid[i][x] != 0)
+						{
+							break;
+						}
 					}
 				}
 			}
@@ -179,14 +196,33 @@ namespace Game2048
 
 			// 下に移動
 		case Grid::INPUT_DIRECTION::DOWN:
-			for (int y = GRID_HEIGHT - 1; y > 0; y--)
+			for (int x = 0; x < GRID_WIDTH; x++)
 			{
-				for (int x = 0; x < GRID_WIDTH; x++)
+				// 下端から順にチェック
+				for (int y = GRID_HEIGHT - 1; y > 0; y--)
 				{
-					if (m_grid[y][x] == m_grid[y - 1][x])
+					// 空白マスはスキップ
+					if (m_grid[y][x] == 0)
 					{
-						m_grid[y][x] *= 2;
-						m_grid[y - 1][x] = 0;
+						continue;
+					}
+
+					// 上側にマスを見ていって同じ数字があったら合体
+					for (int i = y - 1; i >= 0; i--)
+					{
+						if (m_grid[y][x] == m_grid[i][x])
+						{
+							m_grid[y][x] *= 2;
+							m_grid[i][x] = 0;
+
+							// 2段階の合体を防ぐ
+							continue;
+						}
+						// 参照したマスに数字がある場合はそこでチェック終了
+						else if (m_grid[i][x] != 0)
+						{
+							break;
+						}
 					}
 				}
 			}
@@ -196,12 +232,30 @@ namespace Game2048
 		case Grid::INPUT_DIRECTION::LEFT:
 			for (int y = 0; y < GRID_HEIGHT; y++)
 			{
+				// 左端から順にチェック
 				for (int x = 0; x < GRID_WIDTH - 1; x++)
 				{
-					if (m_grid[y][x] == m_grid[y][x + 1])
+					// 空白マスはスキップ
+					if (m_grid[y][x] == 0)
 					{
-						m_grid[y][x] *= 2;
-						m_grid[y][x + 1] = 0;
+						continue;
+					}
+					// 右側にマスを見ていって同じ数字があったら合体
+					for (int i = x + 1; i < GRID_WIDTH; i++)
+					{
+						if (m_grid[y][x] == m_grid[y][i])
+						{
+							m_grid[y][x] *= 2;
+							m_grid[y][i] = 0;
+
+							// 2段階の合体を防ぐ
+							continue;
+						}
+						// 参照したマスに数字がある場合はそこでチェック終了
+						else if (m_grid[y][i] != 0)
+						{
+							break;
+						}
 					}
 				}
 			}
@@ -211,12 +265,30 @@ namespace Game2048
 		case Grid::INPUT_DIRECTION::RIGHT:
 			for (int y = 0; y < GRID_HEIGHT; y++)
 			{
+				// 右端から順にチェック
 				for (int x = GRID_WIDTH - 1; x > 0; x--)
 				{
-					if (m_grid[y][x] == m_grid[y][x - 1])
+					// 空白マスはスキップ
+					if (m_grid[y][x] == 0)
 					{
-						m_grid[y][x] *= 2;
-						m_grid[y][x - 1] = 0;
+						continue;
+					}
+					// 左側にマスを見ていって同じ数字があったら合体
+					for (int i = x - 1; i >= 0; i--)
+					{
+						if (m_grid[y][x] == m_grid[y][i])
+						{
+							m_grid[y][x] *= 2;
+							m_grid[y][i] = 0;
+
+							// 2段階の合体を防ぐ
+							continue;
+						}
+						// 参照したマスに数字がある場合はそこでチェック終了
+						else if (m_grid[y][i] != 0)
+						{
+							break;
+						}
 					}
 				}
 			}
@@ -335,7 +407,15 @@ namespace Game2048
 			int y = rand() % GRID_HEIGHT;
 			if (m_grid[y][x] == 0)
 			{
-				m_grid[y][x] = (rand() % 2 + 1) * 2;
+				int random = rand();
+				if (random % 100 <= 75)
+				{
+					m_grid[y][x] = 2;
+				}
+				else
+				{
+					m_grid[y][x] = 4;
+				}
 				return;
 			}
 		}
