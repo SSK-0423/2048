@@ -16,9 +16,10 @@ namespace Game2048
 		enum class DRAW_LAYER
 		{
 			UI = 0,
-			TILE = 1,
-			GRID = 2,
-			BACKGROUND = 3,
+			GRID_LINE = 1,
+			TILE = 2,
+			GRID_BACKGROUND = 3,
+			BACKGROUND = 4,
 		};
 	};
 }

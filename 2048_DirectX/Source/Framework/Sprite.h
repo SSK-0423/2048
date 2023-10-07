@@ -33,13 +33,15 @@ namespace Framework
 		};
 		std::vector<SpriteVertex> m_vertex;
 
-		std::unique_ptr<DX12Wrapper::Texture> m_texture = nullptr;
+		// 複数のオブジェクトで同じテクスチャを使う場合を考慮
+		std::shared_ptr<DX12Wrapper::Texture> m_texture = nullptr;
 		std::unique_ptr<DX12Wrapper::VertexBuffer> m_vertexBuffer = nullptr;
 		std::unique_ptr<DX12Wrapper::IndexBuffer> m_indexBuffer = nullptr;
 		std::unique_ptr<DX12Wrapper::DescriptorHeapCBV_SRV_UAV> m_descriptorHeap = nullptr;
 
 	public:
 		void LoadTexture(const std::wstring& path);
+		void SetTexture(std::shared_ptr<DX12Wrapper::Texture>& texture);
 
 		DX12Wrapper::DescriptorHeapCBV_SRV_UAV& GetDescriptorHeap() const;
 		DX12Wrapper::VertexBuffer& GetVertexBuffer() const;

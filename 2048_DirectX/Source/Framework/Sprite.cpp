@@ -66,7 +66,7 @@ namespace Framework
 	{
 		if (m_texture == nullptr)
 		{
-			m_texture = std::make_unique<Texture>();
+			m_texture = std::make_shared<Texture>();
 		}
 
 		RESULT result = m_texture->CreateTextureFromWIC(Dx12GraphicsEngine::Instance(), path);
@@ -78,6 +78,15 @@ namespace Framework
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 		ShaderResourceViewDesc desc(*m_texture);
 		m_descriptorHeap->RegistShaderResource(device, *m_texture, desc, 0);
+	}
+	void Sprite::SetTexture(std::shared_ptr<DX12Wrapper::Texture>& texture)
+	{
+		m_texture = texture;
+
+		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
+		ShaderResourceViewDesc desc(*m_texture);
+		m_descriptorHeap->RegistShaderResource(device, *m_texture, desc, 0);
+
 	}
 	DescriptorHeapCBV_SRV_UAV& Sprite::GetDescriptorHeap() const
 	{

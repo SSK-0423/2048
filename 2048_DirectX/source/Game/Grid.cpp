@@ -9,6 +9,7 @@
 #include "Framework/SpriteRenderer.h"
 #include "Framework/Transform2D.h"
 #include "Framework/InputSystem.h"
+#include "Framework/Text.h"
 
 constexpr size_t GRID_WIDTH = 4;
 constexpr size_t GRID_HEIGHT = 4;
@@ -21,20 +22,37 @@ namespace Game2048
 {
 	Grid::Grid(Framework::Object* owner) : IComponent(owner)
 	{
-		// Spriteコンポーネント追加
-		auto spriteRenderer = m_owner->AddComponent<SpriteRenderer>(m_owner);
-		spriteRenderer->SetSprite(new Sprite(L"res/Grid.png"));
-		spriteRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::GRID));
+		Tile::LoadTileTextures();
 
 		auto windowSize = Window::GetWindowSize();
+		DirectX::XMFLOAT2 gridPosition = { windowSize.cx / 2.f, windowSize.cy / 2.f };
+		DirectX::XMFLOAT2 gridScale = { GRID_WIDTH_SIZE, GRID_HEIGHT_SIZE };
 
-		auto transform = m_owner->GetComponent<Transform2D>();
-		transform->scale = { GRID_WIDTH_SIZE, GRID_HEIGHT_SIZE };
-		transform->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
+		// グリッドの背景
+		std::unique_ptr<GameObject> gridBackground = std::make_unique<GameObject>();
+		Sprite* gridBackgroundSprite = new Sprite(L"res/GridBackground.png");
+		auto backGroundRenderer = gridBackground->AddComponent<SpriteRenderer>(gridBackground.get());
+		backGroundRenderer->SetSprite(gridBackgroundSprite);
+		backGroundRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::GRID_BACKGROUND));
+		auto backGroundTransform = gridBackground->GetComponent<Transform2D>();
+		backGroundTransform->position = gridPosition;
+		backGroundTransform->scale = gridScale;
+		m_owner->AddChild(gridBackground);
+
+		// グリッドの線
+		std::unique_ptr<GameObject> gridLine = std::make_unique<GameObject>();
+		Sprite* gridLineSprite = new Sprite(L"res/GridLine.png");
+		auto gridLineRenderer = gridLine->AddComponent<SpriteRenderer>(gridLine.get());
+		gridLineRenderer->SetSprite(gridLineSprite);
+		gridLineRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::GRID_LINE));
+		auto gridLineTransform = gridLine->GetComponent<Transform2D>();
+		gridLineTransform->position = gridPosition;
+		gridLineTransform->scale = gridScale;
+		m_owner->AddChild(gridLine);
 
 		// グリッドの左上座標取得
-		m_gridLeft = transform->position.x - GRID_WIDTH_SIZE / 2.f;
-		m_gridTop = transform->position.y - GRID_HEIGHT_SIZE / 2.f;
+		m_gridLeft = gridPosition.x - GRID_WIDTH_SIZE / 2.f;
+		m_gridTop = gridPosition.y - GRID_HEIGHT_SIZE / 2.f;
 
 		// グリッドの初期化
 		m_grid.resize(GRID_HEIGHT);
@@ -65,6 +83,7 @@ namespace Game2048
 			// NONE以外ならなんでもOK
 			SpawnTile(INPUT_DIRECTION::LEFT);
 		}
+
 	}
 
 	void Grid::Update(float deltaTime)
@@ -80,6 +99,11 @@ namespace Game2048
 			for (int x = 0; x < GRID_WIDTH; x++)
 			{
 				m_testTiles[y][x]->Update(deltaTime);
+				if (m_grid[y][x] != 0)
+				{
+					m_testTiles[y][x]->GetComponent<Tile>()->SetNumber(m_grid[y][x]);
+					m_testTiles[y][x]->GetComponent<Tile>()->SetGridPosition(x, y, m_gridLeft, m_gridTop);
+				}
 			}
 		}
 	}
@@ -324,7 +348,6 @@ namespace Game2048
 			{
 				if (m_grid[y][x] != 0)
 				{
-					m_testTiles[y][x]->GetComponent<Tile>()->SetGridPosition(x, y, m_gridLeft, m_gridTop);
 					m_testTiles[y][x]->GetComponent<SpriteRenderer>()->Draw();
 				}
 			}

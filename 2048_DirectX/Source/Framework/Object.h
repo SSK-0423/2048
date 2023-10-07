@@ -45,12 +45,12 @@ namespace Framework
 
 		Object* Parent();
 		void SetParent(Object* parent);
-		void AddChild(Object* child);
+		void AddChild(std::unique_ptr<Object>& child);
 
 	protected:
 		std::vector<std::unique_ptr<IComponent>> m_components;
 		Object* m_parent = nullptr;
-		std::vector<Object*> m_children;
+		std::vector<std::unique_ptr<Object>> m_children;
 	};
 
 	// Object‚É•Ê–¼‚ð‚Â‚¯‚é

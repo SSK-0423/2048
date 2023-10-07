@@ -43,8 +43,8 @@ namespace Framework
 	{
 		m_parent = parent;
 	}
-	void Object::AddChild(Object* child)
+	void Object::AddChild(std::unique_ptr<Object>& child)
 	{
-		m_children.push_back(child);
+		m_children.push_back(std::move(child));
 	}
 }
