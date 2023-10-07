@@ -27,7 +27,6 @@ namespace Game2048
 	}
 	void Renderer::RenderScene(const std::vector<std::unique_ptr<Framework::Object>>& gameObjects)
 	{
-		// ƒ\[ƒg
 		for (auto& obj : gameObjects)
 		{
 			obj->Draw();

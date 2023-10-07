@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Grid.h"
 #include "Tile.h"
+#include "GameScene.h"
 
 #include "Framework/Window.h"
 #include "Framework/Object.h"
@@ -23,13 +24,13 @@ namespace Game2048
 		// Spriteコンポーネント追加
 		auto spriteRenderer = m_owner->AddComponent<SpriteRenderer>(m_owner);
 		spriteRenderer->SetSprite(new Sprite(L"res/Grid.png"));
+		spriteRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::GRID));
 
 		auto windowSize = Window::GetWindowSize();
 
 		auto transform = m_owner->GetComponent<Transform2D>();
 		transform->scale = { GRID_WIDTH_SIZE, GRID_HEIGHT_SIZE };
 		transform->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
-		transform->depth;
 
 		// グリッドの左上座標取得
 		m_gridLeft = transform->position.x - GRID_WIDTH_SIZE / 2.f;
@@ -73,13 +74,22 @@ namespace Game2048
 		UnionAndCheckGameClear(direction);
 		MoveAndCheckGameOver(direction);
 		SpawnTile(direction);
+
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			for (int x = 0; x < GRID_WIDTH; x++)
+			{
+				m_testTiles[y][x]->Update(deltaTime);
+			}
+		}
 	}
 
 	void Grid::Draw()
 	{
 		TestTileDraw();
+
 		Utility::DebugLog("---------------------\n");
-		// 出力
+		//出力
 		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
 			for (int x = 0; x < GRID_WIDTH; x++)
@@ -314,6 +324,7 @@ namespace Game2048
 			{
 				if (m_grid[y][x] != 0)
 				{
+					m_testTiles[y][x]->GetComponent<Tile>()->SetGridPosition(x, y, m_gridLeft, m_gridTop);
 					m_testTiles[y][x]->GetComponent<SpriteRenderer>()->Draw();
 				}
 			}

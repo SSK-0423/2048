@@ -36,6 +36,7 @@ namespace Game2048
 		Sprite* backgroundSprite = new Sprite(L"res/GameBackground.png");
 		background->AddComponent<SpriteRenderer>(background.get());
 		background->GetComponent<SpriteRenderer>()->SetSprite(backgroundSprite);
+		background->GetComponent<SpriteRenderer>()->SetLayer(static_cast<UINT>(DRAW_LAYER::BACKGROUND));
 		background->GetComponent<Transform2D>()->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
 		background->GetComponent<Transform2D>()->scale = { windowSize.cx * 1.f, windowSize.cy * 1.f };
 		m_gameObjects.push_back(std::move(background));

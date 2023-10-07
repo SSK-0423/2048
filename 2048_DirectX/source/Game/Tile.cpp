@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Tile.h"
+#include "GameScene.h"
 
 #include "Framework/Object.h"
 #include "Framework/Sprite.h"
@@ -17,7 +18,8 @@ namespace Game2048
 	{
 		// SpriteRendererコンポーネント追加
 		auto spriteRenderer = m_owner->AddComponent<SpriteRenderer>(m_owner);
-		spriteRenderer->SetSprite(new Sprite(L"res/numberTile/tile_2.png"));
+		spriteRenderer->SetSprite(new Sprite(L"res/numberTile/tile_2.png", SPRITE_PIVOT::TOP_LEFT));
+		spriteRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::TILE));
 	}
 	void Tile::Update(float deltaTime)
 	{

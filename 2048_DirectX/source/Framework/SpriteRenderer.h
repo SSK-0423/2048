@@ -29,6 +29,12 @@ namespace Framework
 		void Draw() override;
 		void SetSprite(class Sprite* sprite);
 		void SetDrawMode(SPRITE_DRAW_MODE drawMode);
+		/// <summary>
+		/// スプライトの描画順を制御するレイヤー(最大32)を設定する
+		/// レイヤーの値が小さいほど手前に描画される
+		/// </summary>
+		/// <param name="layer">レイヤー</param>
+		void SetLayer(UINT layer);
 
 		Utility::RESULT CreateGraphicsPipelineState(ID3D12Device& device);
 		Utility::RESULT CreateRootSignature(ID3D12Device& device);

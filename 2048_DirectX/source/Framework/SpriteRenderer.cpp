@@ -20,6 +20,8 @@
 using namespace Utility;
 using namespace DX12Wrapper;
 
+constexpr int SPRITE_LAYER_MAX = 32;
+
 namespace Framework
 {
 	SpriteRenderer::SpriteRenderer(Framework::Object* owner)
@@ -72,6 +74,11 @@ namespace Framework
 	{
 		m_drawMode = drawMode;
 		m_drawModeBuffer->UpdateData(&m_drawMode);
+	}
+	void SpriteRenderer::SetLayer(UINT layer)
+	{
+		// ƒŒƒCƒ„[‚ª¬‚³‚¢Žè‘O‚É•`‰æ‚³‚ê‚é
+		m_owner->GetComponent<Transform2D>()->depth = static_cast<float>(layer) / SPRITE_LAYER_MAX;
 	}
 	void SpriteRenderer::Update(float deltaTime)
 	{

@@ -11,5 +11,14 @@ namespace Game2048
 
 		void Init() override;
 		void Final() override;
+
+		// オブジェクトの描画レイヤー
+		enum class DRAW_LAYER
+		{
+			UI = 0,
+			TILE = 1,
+			GRID = 2,
+			BACKGROUND = 3,
+		};
 	};
 }

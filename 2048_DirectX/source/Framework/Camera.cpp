@@ -25,7 +25,7 @@ namespace Framework
 
 		auto transform = m_owner->GetComponent<Transform2D>();
 		// カメラを画面の中心に配置
-		transform->position = { windowSize.cx / 2.f, windowSize.cy / 4.f };
+		transform->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
 		transform->angle = 0.f;
 
 		// Transform2D側でピクセル単位の数値を正規化デバイス座標系(-1～1)に変換する際に、
