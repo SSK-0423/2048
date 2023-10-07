@@ -9,15 +9,9 @@
 
 namespace Framework
 {
-	Button::Button(Object* owner, std::function<void()> onClick, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 scale, Sprite* sprite)
-		: IComponent(owner)
+	Button::Button(Object* owner) : IComponent(owner)
 	{
-		m_onClick = onClick;
-		auto transform = owner->GetComponent<Transform2D>();
-		transform->position = pos;
-		transform->scale = scale;
-
-		m_spriteRenderer = std::make_unique<SpriteRenderer>(owner, sprite);
+		m_spriteRenderer = std::make_unique<SpriteRenderer>(m_owner);
 	}
 	bool Button::CheckClick()
 	{
@@ -59,11 +53,11 @@ namespace Framework
 	}
 	void Button::SetPosition(float x, float y)
 	{
-		m_owner->GetComponent<Transform2D>()->position = DirectX::XMFLOAT2(x, y);
+		m_owner->GetComponent<Transform2D>()->position = { x, y };
 	}
 	void Button::SetScale(float x, float y)
 	{
-		m_owner->GetComponent<Transform2D>()->scale = DirectX::XMFLOAT2(x, y);
+		m_owner->GetComponent<Transform2D>()->scale = { x, y };
 	}
 	void Button::SetTexture(const std::wstring& path)
 	{
@@ -77,7 +71,7 @@ namespace Framework
 		}
 		m_text->SetText(text);
 	}
-	void Button::SetOnClick(std::function<void()> onClick)
+	void Button::SetOnClick(const std::function<void()>& onClick)
 	{
 		m_onClick = onClick;
 	}

@@ -25,14 +25,14 @@ namespace Framework
 			return nullptr;
 		}
 
-		template<class T, class ...K>
-		T* AddComponent(K ...k)
+		template<class T>
+		T* AddComponent(Object* owner)
 		{
 			for (auto& comp : m_components) {
 				if (typeid(*comp.get()) == typeid(T))
 					return nullptr;
 			}
-			auto component = std::make_unique<T>(k...);
+			auto component = std::make_unique<T>(owner);
 			m_components.push_back(std::move(component));
 
 			return static_cast<T*>(m_components[m_components.size() - 1].get());

@@ -7,7 +7,7 @@ namespace Framework
 	class Button : public IComponent
 	{
 	public:
-		Button(Object* owner, std::function<void()> onClick, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 scale, class Sprite* sprite);
+		Button(Object* owner);
 		~Button() = default;
 
 	private:
@@ -23,6 +23,6 @@ namespace Framework
 		void SetScale(float x, float y);
 		void SetTexture(const std::wstring& path);
 		void SetText(const std::wstring& text);
-		void SetOnClick(std::function<void()> onClick);
+		void SetOnClick(const std::function<void()>& onClick);
 	};
 }

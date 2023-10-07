@@ -55,7 +55,10 @@ namespace Framework
 			MessageBoxA(NULL, "DescriptorHeap‚Ì¶¬‚É¸”s", "ƒGƒ‰[", MB_OK);
 		}
 
-		LoadTexture(path);
+		if (!path.empty())
+		{
+			LoadTexture(path);
+		}
 	}
 
 	Sprite::~Sprite()

@@ -21,10 +21,10 @@ using namespace DX12Wrapper;
 
 namespace Framework
 {
-	SpriteRenderer::SpriteRenderer(Framework::Object* owner, Sprite* sprite)
+	SpriteRenderer::SpriteRenderer(Framework::Object* owner)
 		: IComponent(owner)
 	{
-		m_sprite = std::unique_ptr<Sprite>(sprite);
+		m_sprite = std::make_unique<Sprite>(L"");
 		m_rootSignature = std::make_unique<RootSignature>();
 		m_pipelineState = std::make_unique<GraphicsPipelineState>();
 
@@ -37,13 +37,12 @@ namespace Framework
 		{
 			MessageBoxA(NULL, "GraphicsPipelineStateの生成に失敗", "エラー", MB_OK);
 		}
-
-		// スプライトにTransform情報をセット
-		m_sprite->GetDescriptorHeap().RegistConstantBuffer(device, owner->GetComponent<Transform2D>()->GetConstantBuffer(), 0);
 	}
 	void SpriteRenderer::SetSprite(Sprite* sprite)
 	{
 		m_sprite.reset(sprite);
+		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
+		m_sprite->GetDescriptorHeap().RegistConstantBuffer(device, m_owner->GetComponent<Transform2D>()->GetConstantBuffer(), 0);
 	}
 	void SpriteRenderer::Update(float deltaTime)
 	{

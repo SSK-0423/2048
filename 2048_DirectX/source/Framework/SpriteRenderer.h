@@ -11,7 +11,7 @@ namespace Framework
 	class SpriteRenderer : public IComponent
 	{
 	public:
-		SpriteRenderer(Framework::Object* owner, class Sprite* sprite);
+		SpriteRenderer(Framework::Object* owner);
 		~SpriteRenderer() = default;
 
 		void SetSprite(class Sprite* sprite);

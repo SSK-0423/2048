@@ -21,7 +21,8 @@ namespace Game2048
 	Grid::Grid(Framework::Object* owner) : IComponent(owner)
 	{
 		// Spriteコンポーネント追加
-		m_owner->AddComponent<SpriteRenderer>(m_owner, new Sprite(L"res/Grid.png"));
+		auto spriteRenderer = m_owner->AddComponent<SpriteRenderer>(m_owner);
+		spriteRenderer->SetSprite(new Sprite(L"res/Grid.png"));
 
 		auto windowSize = Window::GetWindowSize();
 
@@ -50,8 +51,9 @@ namespace Game2048
 			for (int j = 0; j < GRID_WIDTH; j++)
 			{
 				m_testTiles[i][j] = std::make_unique<GameObject>();
-				m_testTiles[i][j]->AddComponent<Tile>(m_testTiles[i][j].get(), tileWidth, tileHeight);
-				m_testTiles[i][j]->GetComponent<Tile>()->SetGridPosition(i, j, m_gridLeft, m_gridTop);
+				auto tile = m_testTiles[i][j]->AddComponent<Tile>(m_testTiles[i][j].get());
+				tile->SetScale(tileWidth, tileHeight);
+				tile->SetGridPosition(i, j, m_gridLeft, m_gridTop);
 			}
 		}
 

@@ -13,19 +13,11 @@ constexpr float TILE_OFFSET = 0.f;
 
 namespace Game2048
 {
-	Tile::Tile(Framework::Object* owner, float width, float height) :
-		IComponent(owner), m_width(width), m_height(height)
+	Tile::Tile(Framework::Object* owner) :IComponent(owner)
 	{
 		// SpriteRendererコンポーネント追加
-		m_owner->AddComponent<SpriteRenderer>(
-			m_owner,
-			new Sprite(L"res/numberTile/Tile_2.png", SPRITE_PIVOT::TOP_LEFT));
-
-		// ウインドウサイズ取得
-		auto window = Window::GetWindowSize();
-		auto transform = m_owner->GetComponent<Transform2D>();
-		transform->scale = { m_width, m_height };
-		transform->position = { window.cx / 2.f, window.cy / 2.f };
+		auto spriteRenderer = m_owner->AddComponent<SpriteRenderer>(m_owner);
+		spriteRenderer->SetSprite(new Sprite(L"res/numberTile/tile_2.png"));
 	}
 	void Tile::Update(float deltaTime)
 	{
@@ -36,6 +28,12 @@ namespace Game2048
 	void Tile::SetNumber(unsigned int number)
 	{
 		m_number = number;
+	}
+	void Tile::SetScale(float width, float height)
+	{
+		m_width = width;
+		m_height = height;
+		m_owner->GetComponent<Transform2D>()->scale = { m_width, m_height };
 	}
 	void Tile::SetGridPosition(unsigned int x, unsigned int y, float gridLeft, float gridTop)
 	{
