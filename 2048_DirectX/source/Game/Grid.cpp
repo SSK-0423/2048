@@ -29,6 +29,7 @@ namespace Game2048
 		auto transform = m_owner->GetComponent<Transform2D>();
 		transform->scale = { GRID_WIDTH_SIZE, GRID_HEIGHT_SIZE };
 		transform->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
+		transform->depth;
 
 		// グリッドの左上座標取得
 		m_gridLeft = transform->position.x - GRID_WIDTH_SIZE / 2.f;

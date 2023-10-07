@@ -10,10 +10,10 @@
 #include "DX12Wrapper/Dx12GraphicsEngine.h"
 #include "DX12Wrapper/VertexBuffer.h"
 #include "DX12Wrapper/IndexBuffer.h"
+#include "DX12Wrapper/ConstantBuffer.h"
 #include "DX12Wrapper/GraphicsPipelineState.h"
 #include "DX12Wrapper/RootSignature.h"
 #include "DX12Wrapper/DescriptorHeapCBV_SRV_UAV.h"
-#include "DX12Wrapper/ShaderResourceViewDesc.h"
 #include "DX12Wrapper/RenderingContext.h"
 #include "DX12Wrapper/InputLayout.h"
 
@@ -28,6 +28,7 @@ namespace Framework
 		m_sprite = std::make_unique<Sprite>(L"");
 		m_rootSignature = std::make_unique<RootSignature>();
 		m_pipelineState = std::make_unique<GraphicsPipelineState>();
+		m_drawModeBuffer = std::make_unique<ConstantBuffer>();
 
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
 		if (CreateRootSignature(device) == RESULT::FAILED)
@@ -38,22 +39,39 @@ namespace Framework
 		{
 			MessageBoxA(NULL, "GraphicsPipelineStateの生成に失敗", "エラー", MB_OK);
 		}
+		if (m_drawModeBuffer->Create(device, &m_drawMode, sizeof(SPRITE_DRAW_MODE)) == RESULT::FAILED)
+		{
+			MessageBoxA(NULL, "ContantBufferの生成に失敗", "エラー", MB_OK);
+		}
 	}
 	void SpriteRenderer::SetSprite(Sprite* sprite)
 	{
 		m_sprite.reset(sprite);
 		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
+
+		// モデル行列をセット
 		m_sprite->GetDescriptorHeap().RegistConstantBuffer(
 			device,
 			m_owner->GetComponent<Transform2D>()->GetConstantBuffer(),
 			static_cast<UINT>(CONSTANT_BUFFER_INDEX::TRANSFORM));
 
-		// アクティブなシーンのカメラを取得
+		// ビュープロジェクション行列をセット
 		auto& camera = Scene::GetCamera();
 		m_sprite->GetDescriptorHeap().RegistConstantBuffer(
 			device,
 			camera.GetConstantBuffer(),
 			static_cast<UINT>(CONSTANT_BUFFER_INDEX::CAMERA));
+
+		// 描画モードをセット
+		m_sprite->GetDescriptorHeap().RegistConstantBuffer(
+			device,
+			*m_drawModeBuffer.get(),
+			static_cast<UINT>(CONSTANT_BUFFER_INDEX::DRAW_MODE));
+	}
+	void SpriteRenderer::SetDrawMode(SPRITE_DRAW_MODE drawMode)
+	{
+		m_drawMode = drawMode;
+		m_drawModeBuffer->UpdateData(&m_drawMode);
 	}
 	void SpriteRenderer::Update(float deltaTime)
 	{

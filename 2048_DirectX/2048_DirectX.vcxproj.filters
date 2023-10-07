@@ -42,6 +42,12 @@
     <Filter Include="Source\Framework\GameObject">
       <UniqueIdentifier>{bb0377b8-173d-432d-81f7-3d609db30b40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game\GameScene\Object">
+      <UniqueIdentifier>{cf313fa9-dd7c-44ec-a0f3-19480d798f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Game\GameScene\UI">
+      <UniqueIdentifier>{bf9a654c-c781-4284-80c1-8e02bff30adb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
@@ -146,18 +152,6 @@
     <ClCompile Include="source\Game\PressEnterText.cpp">
       <Filter>Source\Game\TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="source\Game\GameSceneCanvas.cpp">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Game\GameTimer.cpp">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Game\Tile.cpp">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Game\Grid.cpp">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Framework\Game.cpp">
       <Filter>Source\Framework\System</Filter>
     </ClCompile>
@@ -190,6 +184,18 @@
     </ClCompile>
     <ClCompile Include="source\Framework\Camera.cpp">
       <Filter>Source\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\Grid.cpp">
+      <Filter>Source\Game\GameScene\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\Tile.cpp">
+      <Filter>Source\Game\GameScene\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\GameSceneCanvas.cpp">
+      <Filter>Source\Game\GameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game\GameTimer.cpp">
+      <Filter>Source\Game\GameScene\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,18 +304,6 @@
     <ClInclude Include="source\Game\PressEnterText.h">
       <Filter>Source\Game\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="source\Game\GameSceneCanvas.h">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Game\GameTimer.h">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Game\Tile.h">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Game\Grid.h">
-      <Filter>Source\Game\GameScene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Framework\GameImpl.h">
       <Filter>Source\Framework\System</Filter>
     </ClInclude>
@@ -345,6 +339,18 @@
     </ClInclude>
     <ClInclude Include="source\Framework\Camera.h">
       <Filter>Source\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\Grid.h">
+      <Filter>Source\Game\GameScene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\Tile.h">
+      <Filter>Source\Game\GameScene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\GameSceneCanvas.h">
+      <Filter>Source\Game\GameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\GameTimer.h">
+      <Filter>Source\Game\GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

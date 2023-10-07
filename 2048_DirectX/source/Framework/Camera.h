@@ -34,7 +34,7 @@ namespace Framework
 		};
 		CameraData m_bufferData;
 
-		std::unique_ptr<DX12Wrapper::ConstantBuffer> m_constantBuffer;
+		std::unique_ptr<DX12Wrapper::ConstantBuffer> m_cameraBuffer;
 		float m_near = 0.f;
 		float m_far = 1.f;
 	};

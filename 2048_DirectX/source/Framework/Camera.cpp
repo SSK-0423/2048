@@ -16,7 +16,7 @@ namespace Framework
 {
 	Camera::Camera(Object* owner) : IComponent(owner)
 	{
-		m_constantBuffer = std::make_unique<ConstantBuffer>();
+		m_cameraBuffer = std::make_unique<ConstantBuffer>();
 
 		auto windowSize = Window::GetWindowSize();
 		// Transform2D側でピクセル単位の数値を正規化デバイス座標系(-1～1)に変換しているので、
@@ -25,7 +25,7 @@ namespace Framework
 
 		auto transform = m_owner->GetComponent<Transform2D>();
 		// カメラを画面の中心に配置
-		transform->position = { windowSize.cx / 2.f, windowSize.cy / 2.f };
+		transform->position = { windowSize.cx / 2.f, windowSize.cy / 4.f };
 		transform->angle = 0.f;
 
 		// Transform2D側でピクセル単位の数値を正規化デバイス座標系(-1～1)に変換する際に、
@@ -35,8 +35,7 @@ namespace Framework
 		m_bufferData.view = transform->GetTransformMatrix();
 
 		auto& device = Dx12GraphicsEngine::Instance().Device();
-		RESULT result = m_constantBuffer->Create(device, &m_bufferData, sizeof(CameraData));
-		if (result == RESULT::FAILED)
+		if (m_cameraBuffer->Create(device, &m_bufferData, sizeof(CameraData)) == RESULT::FAILED)
 		{
 			MessageBoxA(NULL, "ContantBufferの生成に失敗", "エラー", MB_OK);
 		}
@@ -44,14 +43,14 @@ namespace Framework
 	void Camera::Update(float deltaTime)
 	{
 		m_bufferData.view = m_owner->GetComponent<Transform2D>()->GetTransformMatrix();
-		m_constantBuffer->UpdateData(&m_bufferData);
+		m_cameraBuffer->UpdateData(&m_bufferData);
 	}
 	void Camera::Draw()
 	{
 	}
 	ConstantBuffer& Framework::Camera::GetConstantBuffer() const
 	{
-		return *m_constantBuffer.get();
+		return *m_cameraBuffer.get();
 	}
 	float Camera::GetFar() const
 	{

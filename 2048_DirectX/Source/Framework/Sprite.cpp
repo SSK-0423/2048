@@ -34,27 +34,24 @@ namespace Framework
 			m_vertex.push_back({ DirectX::XMFLOAT3(1.0f,  0.0f, 0),DirectX::XMFLOAT2(1, 0) }); // 右上
 		}
 
-		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
-
 		m_vertexBuffer = std::make_unique<VertexBuffer>();
-		RESULT result = m_vertexBuffer->Create(device, &m_vertex[0], SizeofVector<SpriteVertex>(m_vertex), sizeof(SpriteVertex));
-		if (result == RESULT::FAILED)
+		m_indexBuffer = std::make_unique<IndexBuffer>();
+		m_descriptorHeap = std::make_unique<DescriptorHeapCBV_SRV_UAV>();
+
+		ID3D12Device& device = Dx12GraphicsEngine::Instance().Device();
+		if (m_vertexBuffer->Create(
+			device, &m_vertex[0], SizeofVector<SpriteVertex>(m_vertex), sizeof(SpriteVertex)) == RESULT::FAILED)
 		{
 			MessageBoxA(NULL, "VertexBufferの生成に失敗", "エラー", MB_OK);
 		}
-		m_indexBuffer = std::make_unique<IndexBuffer>();
-		result = m_indexBuffer->Create(device, { 0,1,2,2,1,3 });
-		if (result == RESULT::FAILED)
+		if (m_indexBuffer->Create(device, { 0,1,2,2,1,3 }) == RESULT::FAILED)
 		{
 			MessageBoxA(NULL, "IndexBufferの生成に失敗", "エラー", MB_OK);
 		}
-		m_descriptorHeap = std::make_unique<DescriptorHeapCBV_SRV_UAV>();
-		result = m_descriptorHeap->Create(device);
-		if (result == RESULT::FAILED)
+		if (m_descriptorHeap->Create(device) == RESULT::FAILED)
 		{
 			MessageBoxA(NULL, "DescriptorHeapの生成に失敗", "エラー", MB_OK);
 		}
-
 		if (!path.empty())
 		{
 			LoadTexture(path);
