@@ -4,12 +4,28 @@ sampler smp : register(s0);
 
 cbuffer Transform : register(b0)
 {
-    matrix transform;
+    matrix model;
 };
 
-cbuffer ButtonParam : register(b1)
+cbuffer Camera : register(b1)
 {
-    bool isForcus;
+    matrix view;
+    matrix proj;
+};
+
+cbuffer DrawMode : register(b2)
+{
+    // 0: ゲームオブジェクトとして描画
+    // 1: UIとして描画
+    uint drawMode;
+};
+
+cbuffer ButtonParam : register(b3)
+{
+    
+    // 0: ボタンがフォーカスされていない
+    // 1: ボタンがフォーカスされている
+    uint isForcus;
 };
 
 struct VertexInput
@@ -27,7 +43,12 @@ struct VertexOutput
 VertexOutput VSMain(VertexInput input)
 {
     VertexOutput output;
-    output.position = mul(transform, float4(input.position, 1.f));
+    
+    // UIとして描画する場合は、ビュー行列を適用しない
+    matrix viewProj = (drawMode == 1) ? proj : mul(proj, view);
+    matrix modelViewProj = mul(viewProj, model);
+    
+    output.position = mul(modelViewProj, float4(input.position, 1.f));
     output.uv = input.uv;
     
     return output;
@@ -37,10 +58,8 @@ float4 PSMain(VertexOutput input) : SV_Target0
 {
     float4 texColor = tex.Sample(smp, input.uv);
     
-    if (isForcus)
-    {
-        texColor.rgb = texColor.rgb * 0.5f;
-    }
+    // ボタンがフォーカスされている場合は、色を変える
+    texColor = (isForcus == 1) ? texColor *= 0.8f : texColor;
     
     return texColor;
 }

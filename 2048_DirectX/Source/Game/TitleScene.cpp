@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "TitleScene.h"
-#include "TitleSprite.h"
 #include "TitleSceneCanvas.h"
 
 #include "Framework/Sprite.h"
@@ -21,6 +20,10 @@ namespace Game2048
 		m_gameObjects.clear();
 		m_gameObjects.shrink_to_fit();
 
+		for (auto& canvas : m_canvases)
+		{
+			canvas->Final();
+		}
 		m_canvases.clear();
 		m_canvases.shrink_to_fit();
 

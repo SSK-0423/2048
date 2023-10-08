@@ -3,13 +3,15 @@
 
 namespace Game2048
 {
-	class TitleSprite : public Framework::IComponent
+	class GameTimer : public Framework::IComponent
 	{
 	public:
-		TitleSprite(Framework::Object* owner);
-		~TitleSprite();
+		GameTimer(Framework::Object* owner);
+		~GameTimer() = default;
 
 		void Update(float deltaTime) override;
 		void Draw() override;
+	private:
+		float m_elapsedTime = 0.f;
 	};
 }

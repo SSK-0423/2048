@@ -4,7 +4,20 @@ sampler smp : register(s0);
 
 cbuffer Transform : register(b0)
 {
-    matrix transform;
+    matrix model;
+};
+
+cbuffer Camera : register(b1)
+{
+    matrix view;
+    matrix proj;
+};
+
+cbuffer DrawMode : register(b2)
+{
+    // 0: ゲームオブジェクトとして描画
+    // 1: UIとして描画
+    uint drawMode;
 };
 
 struct VertexInput
@@ -22,7 +35,12 @@ struct VertexOutput
 VertexOutput VSMain(VertexInput input)
 {
     VertexOutput output;
-    output.position = mul(transform, float4(input.position, 1.f));
+    
+    // UIとして描画する場合は、ビュー行列を適用しない
+    matrix viewProj = (drawMode == 1) ? proj : mul(proj, view);
+    matrix modelViewProj = mul(viewProj, model);
+    
+    output.position = mul(modelViewProj, float4(input.position, 1.f));
     output.uv = input.uv;
     
     return output;

@@ -1,13 +1,28 @@
 #include "Scene.h"
 #include "IRenderer.h"
+#include "Transform2D.h"
 
 namespace Framework
 {
+	std::unique_ptr<GameObject> Scene::m_cameraObject = nullptr;
+
+	Scene::Scene()
+	{
+		// シーンがインスタンス化されるたびにカメラが生成されるのを防ぐ
+		if (m_cameraObject == nullptr)
+		{
+			m_cameraObject = std::make_unique<GameObject>();
+			m_cameraObject->AddComponent<Camera>(m_cameraObject.get());
+		}
+	}
 	void Scene::Update(float deltaTime)
 	{
 		for (auto& obj : m_gameObjects)
 		{
-			obj->Update(deltaTime);
+			if (obj->GetActive())
+			{
+				obj->Update(deltaTime);
+			}
 		}
 
 		for (auto& canvas : m_canvases)
@@ -33,5 +48,9 @@ namespace Framework
 	void Scene::SetActive(bool isActive)
 	{
 		m_isActive = isActive;
+	}
+	const Camera& Scene::GetCamera()
+	{
+		return *m_cameraObject->GetComponent<Camera>();
 	}
 }
