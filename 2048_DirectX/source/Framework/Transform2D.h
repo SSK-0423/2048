@@ -18,12 +18,11 @@ namespace Framework
 	private:
 		struct Transform2DData
 		{
-			DirectX::XMMATRIX world;
+			DirectX::XMMATRIX model;
 		};
 		Transform2DData m_bufferData;
-		std::unique_ptr<DX12Wrapper::ConstantBuffer> m_buffer;
-		
-		DirectX::XMMATRIX GetTransformMatrix();
+		std::unique_ptr<DX12Wrapper::ConstantBuffer> m_transformBuffer;
+
 
 	public:
 		void Update(float deltaTime) override;
@@ -32,7 +31,9 @@ namespace Framework
 		DirectX::XMFLOAT2 position;
 		DirectX::XMFLOAT2 scale;
 		float angle;
+		float depth;
 
 		DX12Wrapper::ConstantBuffer& GetConstantBuffer();
+		DirectX::XMMATRIX GetTransformMatrix();
 	};
 }

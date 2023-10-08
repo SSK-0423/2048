@@ -33,7 +33,9 @@ namespace Framework
 		}
 
 	private:
-		const char* m_activeSceneName;
+		const char* m_activeSceneName = "";
+		const char* m_oldSceneName = "";
+		bool m_isSceneChanged = false;
 		std::unordered_map<const char*, std::unique_ptr<Scene>> m_scenes;
 	};
 }

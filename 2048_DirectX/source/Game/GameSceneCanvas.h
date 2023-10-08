@@ -3,11 +3,11 @@
 
 namespace Game2048
 {
-	class TitleSceneCanvas : public Framework::Canvas
+	class GameSceneCanvas : public Framework::Canvas
 	{
 	public:
-		TitleSceneCanvas();
-		~TitleSceneCanvas();
+		GameSceneCanvas();
+		~GameSceneCanvas() = default;
 
 		void Init() override;
 		void Final() override;

@@ -2,23 +2,16 @@
 #include "Button.h"
 #include "Object.h"
 #include "Sprite.h"
+#include "SpriteRenderer.h"
 #include "Text.h"
 #include "Transform2D.h"
 #include "InputSystem.h"
 
 namespace Framework
 {
-	Button::Button(Object* owner)
-		: IComponent(owner), m_sprite(nullptr), m_text(nullptr), m_onClick(nullptr)
+	Button::Button(Object* owner) : IComponent(owner)
 	{
-	}
-	Button::Button(Object* owner, std::function<void()> onClick, DirectX::XMFLOAT2 pos, DirectX::XMFLOAT2 scale)
-		: IComponent(owner), m_sprite(nullptr), m_text(nullptr)
-	{
-		m_onClick = onClick;
-		auto transform = owner->GetComponent<Transform2D>();
-		transform->position = pos;
-		transform->scale = scale;
+		m_spriteRenderer = std::make_unique<SpriteRenderer>(m_owner);
 	}
 	bool Button::CheckClick()
 	{
@@ -53,26 +46,22 @@ namespace Framework
 	}
 	void Button::Draw()
 	{
-		if (m_sprite != nullptr)
-			m_sprite->Draw();
+		if (m_spriteRenderer != nullptr)
+			m_spriteRenderer->Draw();
 		if (m_text != nullptr)
 			m_text->Draw();
 	}
 	void Button::SetPosition(float x, float y)
 	{
-		m_owner->GetComponent<Transform2D>()->position = DirectX::XMFLOAT2(x, y);
+		m_owner->GetComponent<Transform2D>()->position = { x, y };
 	}
 	void Button::SetScale(float x, float y)
 	{
-		m_owner->GetComponent<Transform2D>()->scale = DirectX::XMFLOAT2(x, y);
+		m_owner->GetComponent<Transform2D>()->scale = { x, y };
 	}
 	void Button::SetTexture(const std::wstring& path)
 	{
-		if (m_sprite == nullptr)
-		{
-			m_sprite = std::make_unique<Sprite>(m_owner);
-		}
-		m_sprite->LoadTexture(path);
+		m_spriteRenderer->SetSprite(new Sprite(path));
 	}
 	void Button::SetText(const std::wstring& text)
 	{
@@ -82,7 +71,7 @@ namespace Framework
 		}
 		m_text->SetText(text);
 	}
-	void Button::SetOnClick(std::function<void()> onClick)
+	void Button::SetOnClick(const std::function<void()>& onClick)
 	{
 		m_onClick = onClick;
 	}

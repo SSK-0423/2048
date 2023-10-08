@@ -51,7 +51,7 @@ namespace Framework
 
 		// 1フレーム目でのデルタタイムを0秒とする
 		m_prevFrameTime = std::chrono::system_clock::now();
-		
+
 		while (bool isPlaying = m_window.DispatchWindowMessage())
 		{
 			auto currentFrameTime = std::chrono::system_clock::now();
@@ -68,6 +68,9 @@ namespace Framework
 
 			// 描画
 			sceneManager.ActiveSceneDraw(m_renderer);
+
+			// フレーム最後の更新処理
+			sceneManager.ActiveSceneLateUpdate(deltaTime);
 
 #ifdef _DEBUG
 			DebugLog("%f (ms) \n", deltaTime * 1000.f);

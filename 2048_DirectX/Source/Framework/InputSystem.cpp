@@ -144,7 +144,10 @@ namespace Framework
 		m_prevMouse = m_currentMouse;
 		// ÅV‚ÌƒL[‚Ì‰Ÿ‰ºó‘Ô‚ðŽæ“¾‚·‚é
 		HRESULT result = m_mouse->GetDeviceState(sizeof(DIMOUSESTATE), &m_currentMouse);
-		if (FAILED(result)) { return; }
+		if (FAILED(result)) { 
+			m_mouse->Acquire();
+			m_mouse->GetDeviceState(sizeof(DIMOUSESTATE), &m_currentMouse);
+		}
 
 		for (UINT index = 0; index < sizeof(m_currentMouse.rgbButtons); index++) {
 			if (m_currentMouse.rgbButtons[index] & ON_VALUE) {

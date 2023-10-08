@@ -13,7 +13,16 @@ namespace Framework
 	}
 	void SceneManager::ActiveSceneLateUpdate(float deltaTime)
 	{
-		m_scenes[m_activeSceneName]->LateUpdate(deltaTime);
+		// シーンが切り替わった場合は前のシーンのLateUpdateを呼ぶ
+		if (m_isSceneChanged && m_oldSceneName != "")
+		{
+			m_scenes[m_oldSceneName]->LateUpdate(deltaTime);
+			m_isSceneChanged = false;
+		}
+		else
+		{
+			m_scenes[m_activeSceneName]->LateUpdate(deltaTime);
+		}
 	}
 	void SceneManager::ActiveSceneFinal()
 	{
@@ -28,8 +37,10 @@ namespace Framework
 		{
 			m_scenes[m_activeSceneName]->SetActive(false);
 		}
+		m_oldSceneName = m_activeSceneName;
 		m_activeSceneName = name;
 		m_scenes[m_activeSceneName]->SetActive(true);
 		m_scenes[m_activeSceneName]->Init();
+		m_isSceneChanged = true;
 	}
 }

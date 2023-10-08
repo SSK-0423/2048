@@ -14,9 +14,22 @@ namespace Framework
 		{
 			component->Update(deltaTime);
 		}
+
+		for (auto& child : m_children)
+		{
+			child->Update(deltaTime);
+		}
 	}
 	void Object::Draw()
 	{
+		// 子オブジェクトが存在する場合、
+		// 親オブジェクトはステージなどの背景オブジェクトの可能性があるため、
+		// 子オブジェクトを先に描画する
+		for (auto& child : m_children)
+		{
+			child->Draw();
+		}
+
 		for (auto& component : m_components)
 		{
 			component->Draw();
@@ -30,8 +43,16 @@ namespace Framework
 	{
 		m_parent = parent;
 	}
-	void Object::AddChild(Object* child)
+	void Object::AddChild(std::unique_ptr<Object>& child)
 	{
-		m_children.push_back(child);
+		m_children.push_back(std::move(child));
+	}
+	void Object::SetActive(bool isActive)
+	{
+		m_isActive = isActive;
+	}
+	bool Object::GetActive()
+	{
+		return m_isActive;
 	}
 }
