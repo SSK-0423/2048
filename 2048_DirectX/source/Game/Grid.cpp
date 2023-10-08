@@ -110,12 +110,6 @@ namespace Game2048
 			// NONE以外ならなんでもOK
 			SpawnTile(INPUT_DIRECTION::LEFT);
 		}
-
-		// テスト用
-		m_grid[0][0] = 2;
-		m_grid[0][1] = 2;
-		m_grid[0][2] = 4;
-		m_grid[0][3] = 8;
 	}
 
 	void Grid::Update(float deltaTime)
@@ -148,7 +142,7 @@ namespace Game2048
 		bool canUnion = Union(direction);
 		bool canMove = Move(direction);
 
-		if (canMove || canUnion)
+		if (canUnion || canMove)
 		{
 			SpawnTile(direction);
 		}
@@ -248,7 +242,7 @@ namespace Game2048
 							m_grid[i][x] = 0;
 							canUnion = true;
 							// 2段階の合体を防ぐ
-							continue;
+							break;
 						}
 						// 参照したマスに数字がある場合はそこでチェック終了
 						else if (m_grid[i][x] != 0)
@@ -282,7 +276,7 @@ namespace Game2048
 							m_grid[i][x] = 0;
 							canUnion = true;
 							// 2段階の合体を防ぐ
-							continue;
+							break;
 						}
 						// 参照したマスに数字がある場合はそこでチェック終了
 						else if (m_grid[i][x] != 0)
@@ -316,7 +310,7 @@ namespace Game2048
 							m_grid[y][i] = 0;
 							canUnion = true;
 							// 2段階の合体を防ぐ
-							continue;
+							break;
 						}
 						// 参照したマスに数字がある場合はそこでチェック終了
 						else if (m_grid[y][i] != 0)
@@ -349,7 +343,7 @@ namespace Game2048
 							m_grid[y][i] = 0;
 							canUnion = true;
 							// 2段階の合体を防ぐ
-							continue;
+							break;
 						}
 						// 参照したマスに数字がある場合はそこでチェック終了
 						else if (m_grid[y][i] != 0)

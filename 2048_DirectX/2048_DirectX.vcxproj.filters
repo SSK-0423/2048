@@ -197,6 +197,9 @@
     <ClCompile Include="source\Game\GameTimer.cpp">
       <Filter>Source\Game\GameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="source\Game\QuitButton.cpp">
+      <Filter>Source\Game\GameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Framework\IComponent.h">
@@ -354,6 +357,9 @@
     </ClInclude>
     <ClInclude Include="source\Utility\ISingleton.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Game\QuitButton.h">
+      <Filter>Source\Game\GameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

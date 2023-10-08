@@ -64,8 +64,4 @@ namespace Game2048
 		m_guiObjects.clear();
 		m_guiObjects.shrink_to_fit();
 	}
-	void TitleSceneCanvas::LoadGameScene()
-	{
-		SceneManager::Instance().LoadScene("Game");
-	}
 }

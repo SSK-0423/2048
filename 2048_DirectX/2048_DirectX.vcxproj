@@ -61,6 +61,7 @@
     <ClCompile Include="source\Game\GameTimer.cpp" />
     <ClCompile Include="source\Game\Grid.cpp" />
     <ClCompile Include="Source\Game\main.cpp" />
+    <ClCompile Include="source\Game\QuitButton.cpp" />
     <ClCompile Include="source\Game\Tile.cpp" />
     <ClCompile Include="source\Game\PressEnterText.cpp" />
     <ClCompile Include="Source\Game\Renderer.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="source\Game\GameSceneCanvas.h" />
     <ClInclude Include="source\Game\GameTimer.h" />
     <ClInclude Include="source\Game\Grid.h" />
+    <ClInclude Include="source\Game\QuitButton.h" />
     <ClInclude Include="source\Game\Tile.h" />
     <ClInclude Include="source\Game\PressEnterText.h" />
     <ClInclude Include="Source\Game\Renderer.h" />

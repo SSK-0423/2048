@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameSceneCanvas.h"
 #include "GameTimer.h"
+#include "QuitButton.h"
 
 #include "Framework/Object.h"
 #include "Framework/Button.h"
@@ -34,8 +35,15 @@ namespace Game2048
 		howToPlayText->GetComponent<Text>()->SetPosition({ windowSize.cx - 250.f, windowSize.cy - 50.f });
 		howToPlayText->GetComponent<Text>()->SetText(L"Use Arrow Keys");
 		m_guiObjects.push_back(std::move(howToPlayText));
+
+		// èIóπÉ{É^Éì
+		std::unique_ptr<GUIObject> quitButton = std::make_unique<GUIObject>();
+		quitButton->AddComponent<QuitButton>(quitButton.get());
+		m_guiObjects.push_back(std::move(quitButton));
 	}
 	void GameSceneCanvas::Final()
 	{
+		m_guiObjects.clear();
+		m_guiObjects.shrink_to_fit();
 	}
 }

@@ -11,8 +11,5 @@ namespace Game2048
 
 		void Init() override;
 		void Final() override;
-
-	private:
-		void LoadGameScene();
 	};
 }
