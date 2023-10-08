@@ -110,6 +110,12 @@ namespace Game2048
 			// NONE以外ならなんでもOK
 			SpawnTile(INPUT_DIRECTION::LEFT);
 		}
+
+		// テスト用
+		m_grid[0][0] = 2;
+		m_grid[0][1] = 2;
+		m_grid[0][2] = 4;
+		m_grid[0][3] = 8;
 	}
 
 	void Grid::Update(float deltaTime)
@@ -139,8 +145,13 @@ namespace Game2048
 	{
 		INPUT_DIRECTION direction = CheckInputDirection();
 
-		Union(direction);
-		Move(direction);
+		bool canUnion = Union(direction);
+		bool canMove = Move(direction);
+
+		if (canMove || canUnion)
+		{
+			SpawnTile(direction);
+		}
 
 		UpdateTile(deltaTime);
 
@@ -205,12 +216,14 @@ namespace Game2048
 	}
 
 	// 合体処理
-	void Grid::Union(INPUT_DIRECTION direction)
+	bool Grid::Union(INPUT_DIRECTION direction)
 	{
 		if (direction == INPUT_DIRECTION::NONE)
 		{
-			return;
+			return false;
 		}
+
+		bool canUnion = false;
 
 		switch (direction)
 		{
@@ -233,7 +246,7 @@ namespace Game2048
 						{
 							m_grid[y][x] *= 2;
 							m_grid[i][x] = 0;
-
+							canUnion = true;
 							// 2段階の合体を防ぐ
 							continue;
 						}
@@ -267,7 +280,7 @@ namespace Game2048
 						{
 							m_grid[y][x] *= 2;
 							m_grid[i][x] = 0;
-
+							canUnion = true;
 							// 2段階の合体を防ぐ
 							continue;
 						}
@@ -301,7 +314,7 @@ namespace Game2048
 						{
 							m_grid[y][x] *= 2;
 							m_grid[y][i] = 0;
-
+							canUnion = true;
 							// 2段階の合体を防ぐ
 							continue;
 						}
@@ -334,7 +347,7 @@ namespace Game2048
 						{
 							m_grid[y][x] *= 2;
 							m_grid[y][i] = 0;
-
+							canUnion = true;
 							// 2段階の合体を防ぐ
 							continue;
 						}
@@ -351,13 +364,15 @@ namespace Game2048
 		default:
 			break;
 		}
+
+		return canUnion;
 	}
 	// 移動処理
-	void Grid::Move(INPUT_DIRECTION direction)
+	bool Grid::Move(INPUT_DIRECTION direction)
 	{
 		if (direction == INPUT_DIRECTION::NONE)
 		{
-			return;
+			return false;
 		}
 		bool canMove = false;
 
@@ -475,11 +490,7 @@ namespace Game2048
 			break;
 		}
 
-		// 入力方向にタイルが移動できた場合は新しいタイルをスポーン
-		if (canMove)
-		{
-			SpawnTile(direction);
-		}
+		return canMove;
 	}
 	void Grid::SpawnTile(INPUT_DIRECTION direction)
 	{

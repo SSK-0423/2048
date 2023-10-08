@@ -51,8 +51,8 @@ namespace Game2048
 		void GameOver(float deltaTime);
 
 		INPUT_DIRECTION CheckInputDirection();
-		void Union(INPUT_DIRECTION direction);
-		void Move(INPUT_DIRECTION direction);
+		bool Union(INPUT_DIRECTION direction);
+		bool Move(INPUT_DIRECTION direction);
 		void SpawnTile(INPUT_DIRECTION direction);
 		void UpdateTile(float deltaTime);
 
