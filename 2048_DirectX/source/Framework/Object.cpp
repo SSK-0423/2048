@@ -47,4 +47,12 @@ namespace Framework
 	{
 		m_children.push_back(std::move(child));
 	}
+	void Object::SetActive(bool isActive)
+	{
+		m_isActive = isActive;
+	}
+	bool Object::GetActive()
+	{
+		return m_isActive;
+	}
 }

@@ -15,6 +15,7 @@ constexpr size_t GRID_WIDTH = 4;
 constexpr size_t GRID_HEIGHT = 4;
 constexpr size_t GRID_WIDTH_SIZE = 600;
 constexpr size_t GRID_HEIGHT_SIZE = 600;
+constexpr unsigned int GAME_CLEAR_NUMBER = 2048;
 
 using namespace Framework;
 
@@ -25,7 +26,7 @@ namespace Game2048
 		Tile::LoadTileTextures();
 
 		auto windowSize = Window::GetWindowSize();
-		DirectX::XMFLOAT2 gridPosition = { windowSize.cx / 2.f, windowSize.cy / 2.f };
+		DirectX::XMFLOAT2 windowCenter = { windowSize.cx / 2.f, windowSize.cy / 2.f };
 		DirectX::XMFLOAT2 gridScale = { GRID_WIDTH_SIZE, GRID_HEIGHT_SIZE };
 
 		// グリッドの背景
@@ -35,7 +36,7 @@ namespace Game2048
 		backGroundRenderer->SetSprite(gridBackgroundSprite);
 		backGroundRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::GRID_BACKGROUND));
 		auto backGroundTransform = gridBackground->GetComponent<Transform2D>();
-		backGroundTransform->position = gridPosition;
+		backGroundTransform->position = windowCenter;
 		backGroundTransform->scale = gridScale;
 		m_owner->AddChild(gridBackground);
 
@@ -46,42 +47,56 @@ namespace Game2048
 		gridLineRenderer->SetSprite(gridLineSprite);
 		gridLineRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::GRID_LINE));
 		auto gridLineTransform = gridLine->GetComponent<Transform2D>();
-		gridLineTransform->position = gridPosition;
+		gridLineTransform->position = windowCenter;
 		gridLineTransform->scale = gridScale;
 		m_owner->AddChild(gridLine);
 
 		// グリッドの左上座標取得
-		m_gridLeft = gridPosition.x - GRID_WIDTH_SIZE / 2.f;
-		m_gridTop = gridPosition.y - GRID_HEIGHT_SIZE / 2.f;
+		m_gridLeft = windowCenter.x - GRID_WIDTH_SIZE / 2.f;
+		m_gridTop = windowCenter.y - GRID_HEIGHT_SIZE / 2.f;
 
 		// グリッドの初期化
 		m_grid.resize(GRID_HEIGHT);
 		std::for_each(m_grid.begin(), m_grid.end(), [](auto& row) { row.resize(GRID_WIDTH); });
+
+		// ゲームクリアテキスト
+		m_gameClearText = std::make_unique<GameObject>();
+		m_gameClearText->SetActive(false);
+		auto spriteRenderer = m_gameClearText->AddComponent<SpriteRenderer>(m_gameClearText.get());
+		spriteRenderer->SetSprite(new Sprite(L"res/GameClearText.png", SPRITE_PIVOT::TOP_LEFT));
+		spriteRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::UI));
+		spriteRenderer->SetDrawMode(SPRITE_DRAW_MODE::GUI);
+		auto transform = m_gameClearText->GetComponent<Transform2D>();
+		transform->scale = { windowSize.cx * 1.f, windowSize.cy * 1.f };
+
+		// ゲームオーバーテキスト
+		m_gameOverText = std::make_unique<GameObject>();
+		m_gameOverText->SetActive(false);
+		spriteRenderer = m_gameOverText->AddComponent<SpriteRenderer>(m_gameOverText.get());
+		spriteRenderer->SetSprite(new Sprite(L"res/GameOverText.png", SPRITE_PIVOT::TOP_LEFT));
+		spriteRenderer->SetLayer(static_cast<UINT>(GameScene::DRAW_LAYER::UI));
+		spriteRenderer->SetDrawMode(SPRITE_DRAW_MODE::GUI);
+		transform = m_gameOverText->GetComponent<Transform2D>();
+		transform->scale = { windowSize.cx * 1.f, windowSize.cy * 1.f };
 
 		// パネルの初期化
 		int tileWidth = GRID_WIDTH_SIZE / GRID_WIDTH;
 		int tileHeight = GRID_HEIGHT_SIZE / GRID_HEIGHT;
 
 		// テストタイル初期化
-		m_testTiles.resize(GRID_HEIGHT);
-		std::for_each(m_testTiles.begin(), m_testTiles.end(), [](auto& row) { row.resize(GRID_WIDTH); });
+		m_tiles.resize(GRID_HEIGHT);
+		std::for_each(m_tiles.begin(), m_tiles.end(), [](auto& row) { row.resize(GRID_WIDTH); });
 
 		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
 			for (int x = 0; x < GRID_WIDTH; x++)
 			{
-				m_testTiles[y][x] = std::make_unique<GameObject>();
-				auto tile = m_testTiles[y][x]->AddComponent<Tile>(m_testTiles[y][x].get());
+				m_tiles[y][x] = std::make_unique<GameObject>();
+				auto tile = m_tiles[y][x]->AddComponent<Tile>(m_tiles[y][x].get());
 				tile->SetScale(tileWidth, tileHeight);
 				tile->SetGridPosition(x, y, m_gridLeft, m_gridTop);
 			}
 		}
-
-		//// 2段階合成のテスト
-		//m_grid[0][0] = 4;
-		//m_grid[0][1] = 4;
-		//m_grid[0][2] = 8;
-		//m_grid[0][3] = 16;
 
 		// 現在時刻(ms)をシード値として乱数生成器を初期化
 		auto now = std::chrono::system_clock::now();
@@ -99,43 +114,66 @@ namespace Game2048
 
 	void Grid::Update(float deltaTime)
 	{
-		INPUT_DIRECTION direction = CheckInputDirection();
-
-		// TODO: ゲームオーバー判定
-		// TODO: ゲームクリア判定
-
-		UnionAndCheckGameClear(direction);
-		MoveAndCheckGameOver(direction);
-		SpawnTile(direction);
-
-		for (int y = 0; y < GRID_HEIGHT; y++)
+		switch (m_gameState)
 		{
-			for (int x = 0; x < GRID_WIDTH; x++)
-			{
-				m_testTiles[y][x]->Update(deltaTime);
-				if (m_grid[y][x] != 0)
-				{
-					m_testTiles[y][x]->GetComponent<Tile>()->SetNumber(m_grid[y][x]);
-					m_testTiles[y][x]->GetComponent<Tile>()->SetGridPosition(x, y, m_gridLeft, m_gridTop);
-				}
-			}
+		case Game2048::Grid::GAME_STATE::PLAYING:
+			Playing(deltaTime);
+			break;
+		case Game2048::Grid::GAME_STATE::GAME_OVER:
+			GameOver(deltaTime);
+			break;
+		case Game2048::Grid::GAME_STATE::GAME_CLEAR:
+			GameClear(deltaTime);
+			break;
+		default:
+			break;
 		}
 	}
 
 	void Grid::Draw()
 	{
-		TestTileDraw();
+		TileDraw();
+	}
 
-		//Utility::DebugLog("---------------------\n");
-		////出力
-		//for (int y = 0; y < GRID_HEIGHT; y++)
-		//{
-		//	for (int x = 0; x < GRID_WIDTH; x++)
-		//	{
-		//		Utility::DebugLog("%4d ", m_grid[y][x]);
-		//	}
-		//	Utility::DebugLog("\n");
-		//}
+	void Grid::Playing(float deltaTime)
+	{
+		INPUT_DIRECTION direction = CheckInputDirection();
+
+		Union(direction);
+		Move(direction);
+
+		UpdateTile(deltaTime);
+
+		if (CheckGameClear())
+		{
+			m_gameState = GAME_STATE::GAME_CLEAR;
+		}
+		else if (CheckGameOver())
+		{
+			m_gameState = GAME_STATE::GAME_OVER;
+		}
+	}
+
+	void Grid::GameClear(float deltaTime)
+	{
+		// 本当はCanvasに書きたい
+		//ゲームクリア文字を表示
+		if (m_gameClearText != nullptr)
+		{
+			m_gameClearText->SetActive(true);
+			m_owner->AddChild(m_gameClearText);
+		}
+	}
+
+	void Grid::GameOver(float deltaTime)
+	{
+		// 本当はCanvasに書きたい
+		// ゲームオーバー文字を表示
+		if (m_gameOverText != nullptr)
+		{
+			m_gameOverText->SetActive(true);
+			m_owner->AddChild(m_gameOverText);
+		}
 	}
 
 	Grid::INPUT_DIRECTION Grid::CheckInputDirection()
@@ -167,11 +205,11 @@ namespace Game2048
 	}
 
 	// 合体処理
-	bool Grid::UnionAndCheckGameClear(INPUT_DIRECTION direction)
+	void Grid::Union(INPUT_DIRECTION direction)
 	{
 		if (direction == INPUT_DIRECTION::NONE)
 		{
-			return false;
+			return;
 		}
 
 		switch (direction)
@@ -312,17 +350,15 @@ namespace Game2048
 		default:
 			break;
 		}
-
-		return false;
 	}
-
 	// 移動処理
-	bool Grid::MoveAndCheckGameOver(INPUT_DIRECTION direction)
+	void Grid::Move(INPUT_DIRECTION direction)
 	{
 		if (direction == INPUT_DIRECTION::NONE)
 		{
-			return false;
+			return;
 		}
+		bool canMove = false;
 
 		switch (direction)
 		{
@@ -338,6 +374,7 @@ namespace Game2048
 						{
 							m_grid[y][x] = m_grid[y + 1][x];
 							m_grid[y + 1][x] = 0;
+							canMove = true;
 						}
 					}
 				}
@@ -356,6 +393,7 @@ namespace Game2048
 						{
 							m_grid[y][x] = m_grid[y - 1][x];
 							m_grid[y - 1][x] = 0;
+							canMove = true;
 						}
 					}
 				}
@@ -374,6 +412,7 @@ namespace Game2048
 						{
 							m_grid[y][x] = m_grid[y][x + 1];
 							m_grid[y][x + 1] = 0;
+							canMove = true;
 						}
 					}
 				}
@@ -392,6 +431,7 @@ namespace Game2048
 						{
 							m_grid[y][x] = m_grid[y][x - 1];
 							m_grid[y][x - 1] = 0;
+							canMove = true;
 						}
 					}
 				}
@@ -402,14 +442,17 @@ namespace Game2048
 			break;
 		}
 
-		return false;
+		// 入力方向にタイルが移動できた場合は新しいタイルをスポーン
+		if (canMove)
+		{
+			SpawnTile(direction);
+		}
 	}
 	void Grid::SpawnTile(INPUT_DIRECTION direction)
 	{
 		// 入力方向によってスポーン位置が変わる
 		// 移動後に移動方向の逆側が3or2マス空いている場合は端もしくは端から2マス目にスポーン
 		// それ以外は端にスポーン
-
 		if (direction == INPUT_DIRECTION::NONE)
 		{
 			return;
@@ -436,7 +479,78 @@ namespace Game2048
 			}
 		}
 	}
-	void Grid::TestTileDraw()
+	void Grid::UpdateTile(float deltaTime)
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			for (int x = 0; x < GRID_WIDTH; x++)
+			{
+				m_tiles[y][x]->Update(deltaTime);
+				if (m_grid[y][x] != 0)
+				{
+					m_tiles[y][x]->GetComponent<Tile>()->SetNumber(m_grid[y][x]);
+					m_tiles[y][x]->GetComponent<Tile>()->SetGridPosition(x, y, m_gridLeft, m_gridTop);
+				}
+			}
+		}
+	}
+	bool Grid::CheckGameClear()
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			for (int x = 0; x < GRID_WIDTH; x++)
+			{
+				if (m_grid[y][x] == GAME_CLEAR_NUMBER)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	// 空白マスが存在せず、合成可能なタイルがない場合はゲームオーバー
+	bool Grid::CheckGameOver()
+	{
+		for (int y = 0; y < GRID_HEIGHT; y++)
+		{
+			for (int x = 0; x < GRID_WIDTH; x++)
+			{
+				const unsigned int currentTile = m_grid[y][x];
+
+				// 空白マスがあるかどうか
+				if (currentTile == 0)
+				{
+					return false;
+				}
+
+				// 合成可能なタイルがあるかどうか
+				// 上側チェック
+				if (y > 0 && m_grid[y - 1][x] == currentTile)
+				{
+					return false;
+				}
+				// 下側チェック
+				if (y < GRID_HEIGHT - 1 && m_grid[y + 1][x] == currentTile)
+				{
+					return false;
+				}
+				// 左側チェック
+				if (x > 0 && m_grid[y][x - 1] == currentTile)
+				{
+					return false;
+				}
+				// 右側チェック
+				if (x < GRID_WIDTH - 1 && m_grid[y][x + 1] == currentTile)
+				{
+					return false;
+				}
+			}
+		}
+
+		// 空白マスがない かつ 合成可能なタイルがない
+		return true;
+	}
+	void Grid::TileDraw()
 	{
 		for (int y = 0; y < GRID_HEIGHT; y++)
 		{
@@ -444,7 +558,7 @@ namespace Game2048
 			{
 				if (m_grid[y][x] != 0)
 				{
-					m_testTiles[y][x]->GetComponent<SpriteRenderer>()->Draw();
+					m_tiles[y][x]->GetComponent<SpriteRenderer>()->Draw();
 				}
 			}
 		}

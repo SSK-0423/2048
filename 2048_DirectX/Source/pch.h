@@ -17,3 +17,4 @@
 #include <functional>
 
 #include "Utility/EngineUtility.h"
+#include "Utility/ISingleton.h"

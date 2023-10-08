@@ -22,9 +22,18 @@ namespace Game2048
 			NONE
 		};
 
+		enum class GAME_STATE
+		{
+			PLAYING,
+			GAME_OVER,
+			GAME_CLEAR
+		};
+		GAME_STATE m_gameState = GAME_STATE::PLAYING;
+
 		std::vector<std::vector<unsigned int>> m_grid;
-		std::unique_ptr<class Framework::Object> m_testTile;
-		std::vector<std::vector<std::unique_ptr<class Framework::Object>>> m_testTiles;
+		std::vector<std::vector<std::unique_ptr<class Framework::Object>>> m_tiles;
+		std::unique_ptr<class Framework::Object> m_gameClearText;
+		std::unique_ptr<class Framework::Object> m_gameOverText;
 
 		float m_gridLeft = 0;
 		float m_gridTop = 0;
@@ -32,11 +41,19 @@ namespace Game2048
 		std::mt19937_64 m_randomEngine;
 		std::uniform_real_distribution<> m_randomGenerator;
 
+		void Playing(float deltaTime);
+		void GameClear(float deltaTime);
+		void GameOver(float deltaTime);
+
 		INPUT_DIRECTION CheckInputDirection();
-		bool UnionAndCheckGameClear(INPUT_DIRECTION direction);
-		bool MoveAndCheckGameOver(INPUT_DIRECTION direction);
+		void Union(INPUT_DIRECTION direction);
+		void Move(INPUT_DIRECTION direction);
 		void SpawnTile(INPUT_DIRECTION direction);
-		
-		void TestTileDraw();
+		void UpdateTile(float deltaTime);
+
+		bool CheckGameClear();
+		bool CheckGameOver();
+
+		void TileDraw();
 	};
 }

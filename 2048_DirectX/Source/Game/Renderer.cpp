@@ -29,7 +29,10 @@ namespace Game2048
 	{
 		for (auto& obj : gameObjects)
 		{
-			obj->Draw();
+			if (obj->GetActive())
+			{
+				obj->Draw();
+			}
 		}
 	}
 	void Renderer::RenderUI(const std::vector<std::unique_ptr<Framework::Canvas>>& canvases)

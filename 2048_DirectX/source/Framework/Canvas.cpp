@@ -7,14 +7,20 @@ namespace Framework
 	{
 		for (auto& child : m_guiObjects)
 		{
-			child->Update(deltaTime);
+			if (child->GetActive())
+			{
+				child->Update(deltaTime);
+			}
 		}
 	}
 	void Canvas::Draw()
 	{
 		for (auto& child : m_guiObjects)
 		{
-			child->Draw();
+			if (child->GetActive())
+			{
+				child->Draw();
+			}
 		}
 	}
 }

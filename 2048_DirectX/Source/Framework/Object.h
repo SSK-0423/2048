@@ -46,11 +46,14 @@ namespace Framework
 		Object* Parent();
 		void SetParent(Object* parent);
 		void AddChild(std::unique_ptr<Object>& child);
+		void SetActive(bool isActive);
+		bool GetActive();
 
 	protected:
 		std::vector<std::unique_ptr<IComponent>> m_components;
 		Object* m_parent = nullptr;
 		std::vector<std::unique_ptr<Object>> m_children;
+		bool m_isActive = true;
 	};
 
 	// Object‚É•Ê–¼‚ð‚Â‚¯‚é

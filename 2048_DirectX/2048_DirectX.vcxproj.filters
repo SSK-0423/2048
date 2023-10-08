@@ -352,6 +352,9 @@
     <ClInclude Include="source\Game\GameTimer.h">
       <Filter>Source\Game\GameScene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="source\Utility\ISingleton.h">
+      <Filter>Source\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shaders\Sprite.hlsl">
