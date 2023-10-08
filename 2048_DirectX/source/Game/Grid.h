@@ -29,6 +29,9 @@ namespace Game2048
 		float m_gridLeft = 0;
 		float m_gridTop = 0;
 
+		std::mt19937_64 m_randomEngine;
+		std::uniform_real_distribution<> m_randomGenerator;
+
 		INPUT_DIRECTION CheckInputDirection();
 		bool UnionAndCheckGameClear(INPUT_DIRECTION direction);
 		bool MoveAndCheckGameOver(INPUT_DIRECTION direction);

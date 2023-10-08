@@ -77,6 +77,18 @@ namespace Game2048
 			}
 		}
 
+		//// 2段階合成のテスト
+		//m_grid[0][0] = 4;
+		//m_grid[0][1] = 4;
+		//m_grid[0][2] = 8;
+		//m_grid[0][3] = 16;
+
+		// 現在時刻(ms)をシード値として乱数生成器を初期化
+		auto now = std::chrono::system_clock::now();
+		auto nowMs = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
+		m_randomEngine = std::mt19937_64(nowMs);
+		m_randomGenerator = std::uniform_real_distribution<>(0, 1);
+
 		// 初期タイル生成
 		for (int i = 0; i < 2; i++)
 		{
@@ -88,6 +100,9 @@ namespace Game2048
 	void Grid::Update(float deltaTime)
 	{
 		INPUT_DIRECTION direction = CheckInputDirection();
+
+		// TODO: ゲームオーバー判定
+		// TODO: ゲームクリア判定
 
 		UnionAndCheckGameClear(direction);
 		MoveAndCheckGameOver(direction);
@@ -403,12 +418,13 @@ namespace Game2048
 		// 空いてるマスにランダムスポーン
 		while (true)
 		{
-			int x = rand() % GRID_WIDTH;
-			int y = rand() % GRID_HEIGHT;
+			// [0～1)の乱数にグリッドのサイズをかけて0～グリッドのサイズの乱数を生成
+			int x = floor(m_randomGenerator(m_randomEngine) * GRID_WIDTH);
+			int y = floor(m_randomGenerator(m_randomEngine) * GRID_HEIGHT);
 			if (m_grid[y][x] == 0)
 			{
-				int random = rand();
-				if (random % 100 <= 75)
+				int random = m_randomGenerator(m_randomEngine);
+				if (random < 0.75f)
 				{
 					m_grid[y][x] = 2;
 				}
