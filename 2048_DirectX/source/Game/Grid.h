@@ -1,6 +1,11 @@
 #pragma once
 #include "Framework/IComponent.h"
 
+
+/// 
+/// Grid内にゲーム全体を管理する機能が入ってしまっている
+/// 
+/// 
 namespace Game2048
 {
 	class Grid : public Framework::IComponent

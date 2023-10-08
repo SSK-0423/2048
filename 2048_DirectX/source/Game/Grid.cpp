@@ -288,8 +288,9 @@ namespace Game2048
 				// 左端から順にチェック
 				for (int x = 0; x < GRID_WIDTH - 1; x++)
 				{
+					unsigned int& currentTile = m_grid[y][x];
 					// 空白マスはスキップ
-					if (m_grid[y][x] == 0)
+					if (currentTile == 0)
 					{
 						continue;
 					}
@@ -370,10 +371,18 @@ namespace Game2048
 				{
 					for (int x = 0; x < GRID_WIDTH; x++)
 					{
-						if (m_grid[y][x] == 0)
+						unsigned int& downTile = m_grid[y + 1][x];
+						// 空白マスの場合はスキップ
+						if (downTile == 0)
 						{
-							m_grid[y][x] = m_grid[y + 1][x];
-							m_grid[y + 1][x] = 0;
+							continue;
+						}
+
+						unsigned int& currentTile = m_grid[y][x];
+						if (currentTile == 0)
+						{
+							currentTile = downTile;
+							downTile = 0;
 							canMove = true;
 						}
 					}
@@ -389,10 +398,18 @@ namespace Game2048
 				{
 					for (int x = 0; x < GRID_WIDTH; x++)
 					{
-						if (m_grid[y][x] == 0)
+						unsigned int& upTile = m_grid[y - 1][x];
+						// 空白マスの場合はスキップ
+						if (upTile == 0)
 						{
-							m_grid[y][x] = m_grid[y - 1][x];
-							m_grid[y - 1][x] = 0;
+							continue;
+						}
+
+						unsigned int& currentTile = m_grid[y][x];
+						if (currentTile == 0)
+						{
+							currentTile = upTile;
+							upTile = 0;
 							canMove = true;
 						}
 					}
@@ -408,10 +425,18 @@ namespace Game2048
 				{
 					for (int x = 0; x < GRID_WIDTH - 1; x++)
 					{
-						if (m_grid[y][x] == 0)
+						unsigned int& rightTile = m_grid[y][x + 1];
+						// 空白マスの場合はスキップ
+						if (rightTile == 0)
 						{
-							m_grid[y][x] = m_grid[y][x + 1];
-							m_grid[y][x + 1] = 0;
+							continue;
+						}
+
+						unsigned int& currentTile = m_grid[y][x];
+						if (currentTile == 0)
+						{
+							currentTile = rightTile;
+							rightTile = 0;
 							canMove = true;
 						}
 					}
@@ -427,10 +452,18 @@ namespace Game2048
 				{
 					for (int x = GRID_WIDTH - 1; x > 0; x--)
 					{
-						if (m_grid[y][x] == 0)
+						unsigned int& leftTile = m_grid[y][x - 1];
+						// 空白マスの場合はスキップ
+						if (leftTile == 0)
 						{
-							m_grid[y][x] = m_grid[y][x - 1];
-							m_grid[y][x - 1] = 0;
+							continue;
+						}
+
+						unsigned int& currentTile = m_grid[y][x];
+						if (currentTile == 0)
+						{
+							currentTile = leftTile;
+							leftTile = 0;
 							canMove = true;
 						}
 					}
