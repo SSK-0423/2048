@@ -48,6 +48,9 @@
     <Filter Include="Source\Game\GameScene\UI">
       <UniqueIdentifier>{bf9a654c-c781-4284-80c1-8e02bff30adb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{330db826-2350-4d3c-b3ce-598f160735e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Game\main.cpp">
@@ -361,6 +364,9 @@
     <ClInclude Include="source\Game\QuitButton.h">
       <Filter>Source\Game\GameScene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shaders\Sprite.hlsl">
@@ -369,5 +375,15 @@
     <FxCompile Include="shaders\Button.hlsl">
       <Filter>shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\2048_DirectX.ico">
+      <Filter>resource</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="2048_DirectX.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

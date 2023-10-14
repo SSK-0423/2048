@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "../resource.h"
 
 HWND Framework::Window::m_hwnd;
 
@@ -24,6 +25,8 @@ namespace Framework
 		m_wndClassEx.lpfnWndProc = (WNDPROC)WindowProcedure;		// コールバック関数指定
 		m_wndClassEx.lpszClassName = _T("DirectX12App");
 		m_wndClassEx.hInstance = GetModuleHandle(nullptr);
+		m_wndClassEx.hIcon = LoadIcon(m_wndClassEx.hInstance, MAKEINTRESOURCE(IDI_ICON1));
+		m_wndClassEx.hIconSm = LoadIcon(m_wndClassEx.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
 		RegisterClassEx(&m_wndClassEx);
 
