@@ -1,0 +1,170 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+namespace Game2048 {
+	class Game2048 {
+		+Game2048()
+		+~Game2048()
+		+Final() : void
+		+Init() : void
+	}
+
+	class GameScene {
+		+GameScene()
+		+~GameScene()
+		+Final() : void
+		+Init() : void
+	}
+
+	class GameSceneCanvas {
+		+GameSceneCanvas()
+		+~GameSceneCanvas()
+		+Final() : void
+		+Init() : void
+	}
+
+	class GameTimer {
+		+GameTimer(Framework::Object* owner)
+		+~GameTimer()
+		-m_elapsedTime : float
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Grid {
+		+Grid(Framework::Object* owner)
+		+~Grid()
+		-m_gameState : GAME_STATE
+		-CheckInputDirection() : INPUT_DIRECTION
+		-CheckGameClear() : bool
+		-CheckGameOver() : bool
+		-Move(INPUT_DIRECTION direction) : bool
+		-Union(INPUT_DIRECTION direction) : bool
+		-m_gridLeft : float
+		-m_gridTop : float
+		-m_randomEngine : std::mt19937_64
+		-m_randomGenerator : std::uniform_real_distribution<>
+		-m_gameClearText : std::unique_ptr<class Framework::Object>
+		-m_gameOverText : std::unique_ptr<class Framework::Object>
+		-m_tiles : std::vector<std::vector<std::unique_ptr<class Framework::Object>>>
+		-m_grid : std::vector<std::vector<unsigned int>>
+		+Draw() : void
+		-GameClear(float deltaTime) : void
+		-GameOver(float deltaTime) : void
+		-Playing(float deltaTime) : void
+		-SpawnTile(INPUT_DIRECTION direction) : void
+		-TileDraw() : void
+		+Update(float deltaTime) : void
+		-UpdateTile(float deltaTime) : void
+	}
+
+	class PressEnterText {
+		+PressEnterText(class Framework::Object* owner)
+		+~PressEnterText()
+		-m_elapsedTime : float
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class QuitButton {
+		+QuitButton(class Framework::Object* owner)
+		+~QuitButton()
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Renderer {
+		+Renderer()
+		+~Renderer()
+		+Init() : Utility::RESULT
+		-RenderScene(const std::vector<std::unique_ptr<class Framework::Object>>& gameObjects) : void
+		-RenderUI(const std::vector<std::unique_ptr<class Framework::Canvas>>& canvases) : void
+	}
+
+	class Tile {
+		+Tile(Framework::Object* owner)
+		+~Tile()
+		-m_height : float
+		-m_width : float
+		-{static} m_tileTextures : static std::unordered_map<unsigned int, std::shared_ptr<DX12Wrapper::Texture>>
+		+GetNumber() : unsigned int
+		-m_number : unsigned int
+		+Draw() : void
+		+{static} LoadTileTextures() : void
+		+SetGridPosition(unsigned int x, unsigned int y, float gridLeft, float gridTop) : void
+		+SetNumber(unsigned int number) : void
+		+SetScale(float width, float height) : void
+		+Update(float deltaTime) : void
+	}
+
+	class TitleScene {
+		+TitleScene()
+		+~TitleScene()
+		+Final() : void
+		+Init() : void
+	}
+
+	class TitleSceneCanvas {
+		+TitleSceneCanvas()
+		+~TitleSceneCanvas()
+		+Final() : void
+		+Init() : void
+	}
+
+	enum GameScene::DRAW_LAYER {
+		BACKGROUND
+		GRID_BACKGROUND
+		GRID_LINE
+		TILE
+		UI
+	}
+
+	enum Grid::GAME_STATE {
+		GAME_CLEAR
+		GAME_OVER
+		PLAYING
+	}
+
+	enum Grid::INPUT_DIRECTION {
+		DOWN
+		LEFT
+		NONE
+		RIGHT
+		UP
+	}
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+
+
+
+/' Aggregation relationships '/
+
+
+
+
+
+/' Nested objects '/
+
+Game2048.GameScene +-- Game2048.GameScene::DRAW_LAYER
+
+
+Game2048.Grid +-- Game2048.Grid::GAME_STATE
+
+
+Game2048.Grid +-- Game2048.Grid::INPUT_DIRECTION
+
+
+
+
+@enduml
