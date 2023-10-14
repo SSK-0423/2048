@@ -1,0 +1,1132 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+namespace Game2048 {
+	class Game2048 {
+		+Game2048()
+		+~Game2048()
+		+Final() : void
+		+Init() : void
+	}
+
+	class GameScene {
+		+GameScene()
+		+~GameScene()
+		+Final() : void
+		+Init() : void
+	}
+
+	class GameSceneCanvas {
+		+GameSceneCanvas()
+		+~GameSceneCanvas()
+		+Final() : void
+		+Init() : void
+	}
+
+	class GameTimer {
+		+GameTimer(Framework::Object* owner)
+		+~GameTimer()
+		-m_elapsedTime : float
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Grid {
+		+Grid(Framework::Object* owner)
+		+~Grid()
+		-m_gameState : GAME_STATE
+		-CheckInputDirection() : INPUT_DIRECTION
+		-CheckGameClear() : bool
+		-CheckGameOver() : bool
+		-Move(INPUT_DIRECTION direction) : bool
+		-Union(INPUT_DIRECTION direction) : bool
+		-m_gridLeft : float
+		-m_gridTop : float
+		-m_randomEngine : std::mt19937_64
+		-m_randomGenerator : std::uniform_real_distribution<>
+		-m_gameClearText : std::unique_ptr<class Framework::Object>
+		-m_gameOverText : std::unique_ptr<class Framework::Object>
+		-m_tiles : std::vector<std::vector<std::unique_ptr<class Framework::Object>>>
+		-m_grid : std::vector<std::vector<unsigned int>>
+		+Draw() : void
+		-GameClear(float deltaTime) : void
+		-GameOver(float deltaTime) : void
+		-Playing(float deltaTime) : void
+		-SpawnTile(INPUT_DIRECTION direction) : void
+		-TileDraw() : void
+		+Update(float deltaTime) : void
+		-UpdateTile(float deltaTime) : void
+	}
+
+	class PressEnterText {
+		+PressEnterText(class Framework::Object* owner)
+		+~PressEnterText()
+		-m_elapsedTime : float
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class QuitButton {
+		+QuitButton(class Framework::Object* owner)
+		+~QuitButton()
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Renderer {
+		+Renderer()
+		+~Renderer()
+		+Init() : Utility::RESULT
+		-RenderScene(const std::vector<std::unique_ptr<class Framework::Object>>& gameObjects) : void
+		-RenderUI(const std::vector<std::unique_ptr<class Framework::Canvas>>& canvases) : void
+	}
+
+	class Tile {
+		+Tile(Framework::Object* owner)
+		+~Tile()
+		-m_height : float
+		-m_width : float
+		-{static} m_tileTextures : static std::unordered_map<unsigned int, std::shared_ptr<DX12Wrapper::Texture>>
+		+GetNumber() : unsigned int
+		-m_number : unsigned int
+		+Draw() : void
+		+{static} LoadTileTextures() : void
+		+SetGridPosition(unsigned int x, unsigned int y, float gridLeft, float gridTop) : void
+		+SetNumber(unsigned int number) : void
+		+SetScale(float width, float height) : void
+		+Update(float deltaTime) : void
+	}
+
+	class TitleScene {
+		+TitleScene()
+		+~TitleScene()
+		+Final() : void
+		+Init() : void
+	}
+
+	class TitleSceneCanvas {
+		+TitleSceneCanvas()
+		+~TitleSceneCanvas()
+		+Final() : void
+		+Init() : void
+	}
+
+	enum GameScene::DRAW_LAYER {
+		BACKGROUND
+		GRID_BACKGROUND
+		GRID_LINE
+		TILE
+		UI
+	}
+
+	enum Grid::GAME_STATE {
+		GAME_CLEAR
+		GAME_OVER
+		PLAYING
+	}
+
+	enum Grid::INPUT_DIRECTION {
+		DOWN
+		LEFT
+		NONE
+		RIGHT
+		UP
+	}
+}
+
+
+namespace Framework {
+	class Button {
+		+Button(Object* owner)
+		-function<void()
+		+~Button()
+		-CheckClick() : bool
+		-m_spriteRenderer : std::unique_ptr<class SpriteRenderer>
+		-m_text : std::unique_ptr<class Text>
+		+Draw() : void
+		+SetOnClick(const std::function<void ( )>& onClick) : void
+		+SetPosition(float x, float y) : void
+		+SetScale(float x, float y) : void
+		+SetText(const std::wstring& text) : void
+		+SetTexture(const std::wstring& path) : void
+		+Update(float deltaTime) : void
+	}
+
+	class ButtonRenderer {
+		+ButtonRenderer()
+		+~ButtonRenderer()
+		-CreateGraphicsPipelineState(ID3D12Device& device) : Utility::RESULT
+		-CreateRootSignature(ID3D12Device& device) : Utility::RESULT
+		+Init() : Utility::RESULT
+		-m_pipelineState : std::unique_ptr<DX12Wrapper::GraphicsPipelineState>
+		-m_pipelineState2 : std::unique_ptr<DX12Wrapper::GraphicsPipelineState>
+		-m_rootSignature : std::unique_ptr<DX12Wrapper::RootSignature>
+		-m_rootSignature2 : std::unique_ptr<DX12Wrapper::RootSignature>
+		-Render() : void
+	}
+
+	class Camera {
+		+Camera(Object* owner)
+		+~Camera()
+		-m_bufferData : CameraData
+		+GetConstantBuffer() : DX12Wrapper::ConstantBuffer& {query}
+		+GetProjectionMatrix() : DirectX::XMMATRIX {query}
+		+GetViewMatrix() : DirectX::XMMATRIX {query}
+		+GetFar() : float {query}
+		+GetNear() : float {query}
+		-m_far : float
+		-m_near : float
+		-m_cameraBuffer : std::unique_ptr<DX12Wrapper::ConstantBuffer>
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	abstract class Canvas {
+		+Canvas()
+		+~Canvas()
+		#m_guiObjects : std::vector<std::unique_ptr<Object>>
+		+Draw() : void
+		+{abstract} Final() : void
+		+{abstract} Init() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Game {
+		+Game(GameImpl& gameImpl, IRenderer& renderer)
+		+~Game()
+		-m_gameImpl : GameImpl&
+		-m_renderer : IRenderer&
+		-m_window : Window
+		-m_prevFrameTime : std::chrono::system_clock::time_point
+		+Final() : void
+		+Init() : void
+		+Run() : void
+	}
+
+	abstract class GameImpl {
+		+GameImpl()
+		+~GameImpl()
+		+{abstract} Final() : void
+		+{abstract} Init() : void
+	}
+
+	abstract class IComponent {
+		+IComponent(Object* owner)
+		+~IComponent()
+		#m_owner : Object*
+		+{abstract} Draw() : void
+		+{abstract} Update(float deltaTime) : void
+	}
+
+	abstract class IRenderer {
+		+IRenderer()
+		+~IRenderer()
+		+{abstract} Init() : Utility::RESULT
+		+Render(const class Scene* scene) : void
+		-{abstract} RenderScene(const std::vector<std::unique_ptr<class Object>>& gameObjects) : void
+		-{abstract} RenderUI(const std::vector<std::unique_ptr<class Canvas>>& canvases) : void
+	}
+
+	class InputSystem {
+		+InputSystem()
+		+~InputSystem()
+		-m_keysState : BUTTON_STATE
+		-m_mouseButtonState : BUTTON_STATE
+		-m_currentKeys : BYTE
+		-m_prevKeys : BYTE
+		-m_currentMouse : DIMOUSESTATE
+		-m_prevMouse : DIMOUSESTATE
+		-SetupKeyboard(HWND& hwnd) : HRESULT
+		-SetupMouse(HWND& hwnd) : HRESULT
+		-m_hwnd : HWND
+		+{static} Instance() : InputSystem&
+		-m_directInputInterface : LPDIRECTINPUT8
+		-m_keyboard : LPDIRECTINPUTDEVICE8
+		-m_mouse : LPDIRECTINPUTDEVICE8
+		+GetMousePosition() : POINT
+		+Init(HWND& hwnd) : Utility::RESULT
+		+GetKeyDown(Framework::BYTE keyCode) : bool
+		+GetMouseButtonDown(MOUSECODE mouseCode) : bool
+		-m_mouseWheelMovement : float
+		-m_mouseXMovement : float
+		-m_mouseYMovement : float
+		+Update() : void
+		-UpdateKeyStates() : void
+		-UpdateMouseStates() : void
+		+ViewMouseCursor() : void
+	}
+
+	class Object {
+		+Object()
+		+~Object()
+		+Parent() : Object*
+		#m_parent : Object*
+		+AddComponent(Object* owner) : T*
+		+GetComponent() : T*
+		+GetActive() : bool
+		#m_isActive : bool
+		#m_components : std::vector<std::unique_ptr<IComponent>>
+		#m_children : std::vector<std::unique_ptr<Object>>
+		+AddChild(std::unique_ptr<Object>& child) : void
+		+Draw() : void
+		+SetActive(bool isActive) : void
+		+SetParent(Object* parent) : void
+		+Update(float deltaTime) : void
+	}
+
+	abstract class Scene {
+		+Scene()
+		+~Scene()
+		+{static} GetCamera() : Camera&
+		#m_isActive : bool
+		#{static} m_cameraObject : static std::unique_ptr<GameObject>
+		#m_canvases : std::vector<std::unique_ptr<Canvas>>
+		+GetCanvases() : std::vector<std::unique_ptr<Canvas>>& {query}
+		#m_gameObjects : std::vector<std::unique_ptr<GameObject>>
+		+GetGameObjects() : std::vector<std::unique_ptr<GameObject>>& {query}
+		+{abstract} Final() : void
+		+{abstract} Init() : void
+		+LateUpdate(float deltaTime) : void
+		+SetActive(bool isActive) : void
+		+Update(float deltaTime) : void
+	}
+
+	class SceneManager {
+		-SceneManager()
+		-~SceneManager()
+		+{static} Instance() : SceneManager&
+		-m_isSceneChanged : bool
+		-m_activeSceneName : const char*
+		-m_oldSceneName : const char*
+		-m_scenes : std::unordered_map<const char*, std::unique_ptr<Scene>>
+		+ActiveSceneDraw(class IRenderer& renderer) : void
+		+ActiveSceneFinal() : void
+		+ActiveSceneLateUpdate(float deltaTime) : void
+		+ActiveSceneUpdate(float deltaTime) : void
+		+AddScene(const char* name) : void
+		+LoadScene(const char* name) : void
+	}
+
+	class ShaderLibrary {
+		-ShaderLibrary()
+		-~ShaderLibrary()
+		+GetShader(const std::string& shaderTag) : DX12Wrapper::Shader*
+		+{static} Instance() : ShaderLibrary&
+		-_shaderTypeMap : std::unordered_map<SHADERTYPE, const char*>
+		-_shaderMap : std::unordered_map<std::string, DX12Wrapper::Shader>
+		+RegistShader(const TCHAR* shaderFileName, const std::string& shaderTag, SHADERTYPE shaderType, const char* entryPointName) : void
+	}
+
+	class SoundClip {
+		+SoundClip()
+		+~SoundClip()
+		+PlayLoop() : void
+		+PlayOneShot() : void
+	}
+
+	class SoundManager {
+		-SoundManager()
+		-~SoundManager()
+		+{static} Instance() : SoundManager&
+		-m_soundClips : std::vector<SoundClip>
+		+PlayLoop(const char* name) : void
+		+PlayOneShot(const char* name) : void
+	}
+
+	class Sprite {
+		+Sprite(const std::wstring& path, SPRITE_PIVOT pivot)
+		+~Sprite()
+		+GetDescriptorHeap() : DX12Wrapper::DescriptorHeapCBV_SRV_UAV& {query}
+		+GetIndexBuffer() : DX12Wrapper::IndexBuffer& {query}
+		+GetVertexBuffer() : DX12Wrapper::VertexBuffer& {query}
+		-m_texture : std::shared_ptr<DX12Wrapper::Texture>
+		-m_descriptorHeap : std::unique_ptr<DX12Wrapper::DescriptorHeapCBV_SRV_UAV>
+		-m_indexBuffer : std::unique_ptr<DX12Wrapper::IndexBuffer>
+		-m_vertexBuffer : std::unique_ptr<DX12Wrapper::VertexBuffer>
+		-m_vertex : std::vector<SpriteVertex>
+		+LoadTexture(const std::wstring& path) : void
+		+SetTexture(std::shared_ptr<DX12Wrapper::Texture>& texture) : void
+	}
+
+	class SpriteRenderer {
+		+SpriteRenderer(Framework::Object* owner)
+		+~SpriteRenderer()
+		-m_drawMode : SPRITE_DRAW_MODE
+		+CreateGraphicsPipelineState(ID3D12Device& device) : Utility::RESULT
+		+CreateRootSignature(ID3D12Device& device) : Utility::RESULT
+		-m_drawModeBuffer : std::unique_ptr<DX12Wrapper::ConstantBuffer>
+		-m_pipelineState : std::unique_ptr<DX12Wrapper::GraphicsPipelineState>
+		-m_rootSignature : std::unique_ptr<DX12Wrapper::RootSignature>
+		-m_sprite : std::unique_ptr<class Sprite>
+		+Draw() : void
+		+SetDrawMode(SPRITE_DRAW_MODE drawMode) : void
+		+SetLayer(UINT layer) : void
+		+SetSprite(class Sprite* sprite) : void
+		+Update(float deltaTime) : void
+	}
+
+	class Text {
+		+Text(Object* owner)
+		+~Text()
+		-m_fontRenderer : DX12Wrapper::FontRenderer&
+		-m_color : DirectX::XMVECTORF32
+		-m_text : std::wstring
+		+Draw() : void
+		+SetColor(const DirectX::XMVECTORF32& color) : void
+		+SetPosition(const DirectX::XMFLOAT2& position) : void
+		+SetRotation(float angle) : void
+		+SetScale(const float& scale) : void
+		+SetText(const std::wstring& text) : void
+		+Update(float deltaTime) : void
+	}
+
+	class Transform2D {
+		+Transform2D(Object* owner)
+		+~Transform2D()
+		+GetConstantBuffer() : DX12Wrapper::ConstantBuffer&
+		+position : DirectX::XMFLOAT2
+		+scale : DirectX::XMFLOAT2
+		+GetTransformMatrix() : DirectX::XMMATRIX
+		-m_bufferData : Transform2DData
+		+angle : float
+		+depth : float
+		-m_transformBuffer : std::unique_ptr<DX12Wrapper::ConstantBuffer>
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Window {
+		+Window()
+		+~Window()
+		+{static} GetHwnd() : HWND&
+		+{static} GetWindowSize() : SIZE
+		-m_wndClassEx : WNDCLASSEX
+		+DispatchWindowMessage() : bool
+		-{static} m_hwnd : static HWND
+		+Create(const TCHAR* windowName, LONG width, LONG height) : void
+	}
+
+	enum BUTTON_STATE {
+		DOWN
+		HOLD
+		NONE
+		UP
+	}
+
+	enum MOUSECODE {
+		LEFT
+		RIGHT
+		WHEEL
+	}
+
+	enum SHADERTYPE {
+		PIXEL
+		VERTEX
+	}
+
+	enum SPRITE_DRAW_MODE {
+		GAMEOBJECT
+		GUI
+	}
+
+	enum SPRITE_PIVOT {
+		CENTER
+		TOP_LEFT
+	}
+
+	enum SpriteRenderer::CONSTANT_BUFFER_INDEX {
+		BUFFER_COUNT
+		CAMERA
+		DRAW_MODE
+		TRANSFORM
+	}
+
+	class Camera::CameraData {
+		+projection : DirectX::XMMATRIX
+		+view : DirectX::XMMATRIX
+	}
+
+	class Sprite::SpriteVertex {
+		+uv : DirectX::XMFLOAT2
+		+vertex : DirectX::XMFLOAT3
+	}
+
+	class Transform2D::Transform2DData {
+		+model : DirectX::XMMATRIX
+	}
+}
+
+
+namespace DX12Wrapper {
+	class ConstantBuffer {
+		+ConstantBuffer()
+		+~ConstantBuffer()
+		-_mappedData : BYTE*
+		+GetGPUVirtualAddress() : D3D12_GPU_VIRTUAL_ADDRESS
+		-CreateConstantBuffer(ID3D12Device& device, const UINT& bufferSize) : HRESULT
+		-MapConstantBuffer(void* data, const UINT& bufferSize) : HRESULT
+		+GetBuffer() : ID3D12Resource&
+		-_constantBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		-_bufferSize : UINT
+		+GetBufferSize() : UINT&
+		+Create(ID3D12Device& device, void* data, const UINT& bufferSize) : Utility::RESULT
+		+UpdateData(void* data) : void
+	}
+
+	class CubeRenderTarget {
+		-_renderTargetData : CubeRenderTargetData
+		-_depthStencilBuffer : DepthStencilBuffer
+		-_textureHeap : DescriptorHeapCBV_SRV_UAV
+		-_dsvHeap : DescriptorHeapDSV
+		-_rtvHeap : DescriptorHeapRTV
+		-_renderTargetBuffer : RenderTargetBuffer
+		-_depthStencilTexture : Texture
+		-_renderTargetTexture : Texture
+		+GetDepthStencilTexture() : Texture&
+		+GetRenderTargetTexture() : Texture&
+		+Create(ID3D12Device& device, CubeRenderTargetData& renderTargetData) : Utility::RESULT
+		+{static} BeginMultiRendering(CubeRenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+BeginRendering(RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+{static} EndMultiRendering(CubeRenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext) : void
+		+EndRendering(RenderingContext& renderContext) : void
+	}
+
+	class DepthStencilBuffer {
+		+DepthStencilBuffer()
+		+~DepthStencilBuffer()
+		+GetDepthStencilBufferData() : DepthStencilBufferData
+		-_depthStencilBufferData : DepthStencilBufferData
+		+GetBuffer() : ID3D12Resource&
+		-_dsvBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+Create(ID3D12Device& device, const DepthStencilBufferData& data) : Utility::RESULT
+	}
+
+	class DescriptorHeapCBV_SRV_UAV {
+		+DescriptorHeapCBV_SRV_UAV()
+		+~DescriptorHeapCBV_SRV_UAV()
+		+GetGPUHandle() : CD3DX12_GPU_DESCRIPTOR_HANDLE
+		+GetCPUDescriptorHandleForHeapStart() : D3D12_CPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStart() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStartCBV() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStartSRV() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStartUAV() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetSRVHandle(int index) : D3D12_GPU_DESCRIPTOR_HANDLE
+		-CreateDescriptorHeap(ID3D12Device& device) : HRESULT
+		+GetDescriptorHeapAddress() : ID3D12DescriptorHeap*
+		-_descriptorHeap : Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		+GetHandleIncrimentSize() : SIZE_T
+		-_handleIncrimentSize : SIZE_T
+		-_registedCBVNum : UINT
+		-_registedSRVNum : UINT
+		-_registedUAVNum : UINT
+		+Create(ID3D12Device& device) : Utility::RESULT
+		+IsRegistedConstantBuffer() : bool
+		+IsRegistedShaderResource() : bool
+		+IsRegistedUnorderedAccessResource() : bool
+		-{static} _MAX_CBV_DESCRIPTOR_NUM : static constexpr UINT
+		-{static} _MAX_SRV_DESCRIPTOR_NUM : static constexpr UINT
+		-{static} _MAX_UAV_DESCRIPTOR_NUM : static constexpr UINT
+		+{static} NEXT_REGISTER : static constexpr int
+		+RegistConstantBuffer(ID3D12Device& device, ConstantBuffer& constantBuffer, const int& registerNo) : void
+		+RegistShaderResource(ID3D12Device& device, Texture& texture, ShaderResourceViewDesc& desc, const int& registerNo) : void
+		+RegistUnorderedAccessResource(ID3D12Device& device, UnorderedAccessResource& unorderedAccessResource, const int& registerNo) : void
+	}
+
+	class DescriptorHeapDSV {
+		+DescriptorHeapDSV()
+		+~DescriptorHeapDSV()
+		+GetCPUDescriptorHandleForHeapStart() : D3D12_CPU_DESCRIPTOR_HANDLE
+		-CreateDescriptorHeap(ID3D12Device& device) : HRESULT
+		-_dsvHeap : Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		+GetHandleIncrimentSize() : SIZE_T
+		-_handleIncrimentSize : SIZE_T
+		+GetRegistedDescriptorNum() : UINT
+		-_registedDSVNum : UINT
+		+Create(ID3D12Device& device) : Utility::RESULT
+		+RegistDescriptor(ID3D12Device& device, DepthStencilBuffer& buffer) : void
+	}
+
+	class DescriptorHeapRTV {
+		+DescriptorHeapRTV()
+		+~DescriptorHeapRTV()
+		+GetCPUDescriptorHandleForHeapStart() : D3D12_CPU_DESCRIPTOR_HANDLE
+		+GetNextCPUDescriptorHandle() : D3D12_CPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStart() : D3D12_GPU_DESCRIPTOR_HANDLE
+		-CreateDescriptorHeap(ID3D12Device& device) : HRESULT
+		-_rtvHeap : Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		+GetHandleIncrimentSize() : SIZE_T
+		-_handleIncrimentSize : SIZE_T
+		+GetRegistedDescriptorNum() : UINT
+		-_nextHandleLocation : UINT
+		-_registedRTVNum : UINT
+		+Create(ID3D12Device& device) : Utility::RESULT
+		+{static} MAXDESCRIPTORNUM : static constexpr UINT
+		+RegistDescriptor(ID3D12Device& device, RenderTargetBuffer& buffer, DXGI_FORMAT format, bool isCubeMap) : void
+	}
+
+	class Dx12GraphicsEngine {
+		-Dx12GraphicsEngine()
+		-~Dx12GraphicsEngine()
+		-m_scissorRect : CD3DX12_RECT
+		-m_viewport : CD3DX12_VIEWPORT
+		+GetViewport() : CD3DX12_VIEWPORT&
+		-_depthStencilBuffer : DX12Wrapper::DepthStencilBuffer
+		-depthStencilBufferData : DX12Wrapper::DepthStencilBufferData
+		-m_imguiHeap : DX12Wrapper::DescriptorHeapCBV_SRV_UAV
+		-_dsvHeap : DX12Wrapper::DescriptorHeapDSV
+		-_frameHeap : DX12Wrapper::DescriptorHeapRTV
+		+GetFrameBufferDescriptorHeap() : DX12Wrapper::DescriptorHeapRTV&
+		-_frameBuffers : DX12Wrapper::RenderTargetBuffer
+		-m_renderContext : DX12Wrapper::RenderingContext
+		+GetRenderingContext() : DX12Wrapper::RenderingContext&
+		+{static} Instance() : Dx12GraphicsEngine&
+		-CreateCommandX() : HRESULT
+		-CreateDeviceAndDXGIFactory() : HRESULT
+		-CreateFence() : HRESULT
+		-CreateSwapChain(const HWND& hwnd, const UINT& windowWidth, const UINT& windowHeight, const Microsoft::WRL::ComPtr<IDXGIFactory4>& dxgiFactory) : HRESULT
+		-EnableDebugLayer() : HRESULT
+		-_hwnd : HWND
+		+CmdAllocator() : ID3D12CommandAllocator&
+		+CmdQueue() : ID3D12CommandQueue&
+		+Device() : ID3D12Device&
+		+CmdList() : ID3D12GraphicsCommandList&
+		+SwapChain() : IDXGISwapChain3&
+		-_cmdAllocator : Microsoft::WRL::ComPtr<ID3D12CommandAllocator>
+		-_cmdQueue : Microsoft::WRL::ComPtr<ID3D12CommandQueue>
+		-_device : Microsoft::WRL::ComPtr<ID3D12Device>
+		-_fence : Microsoft::WRL::ComPtr<ID3D12Fence>
+		-_cmdList : Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>
+		-_dxgiFactory : Microsoft::WRL::ComPtr<IDXGIFactory4>
+		-_swapchain : Microsoft::WRL::ComPtr<IDXGISwapChain3>
+		-_fenceVal : UINT
+		-_windowHeight : UINT
+		-_windowWidth : UINT
+		-CreateFrameRenderTarget() : Utility::RESULT
+		+Init(const HWND& hwnd, const UINT& windowWidth, const UINT& windowHeight) : Utility::RESULT
+		-{static} DOUBLE_BUFFER : static constexpr UINT
+		-m_graphicsMemory : std::unique_ptr<DirectX::GraphicsMemory>
+		+BeginDraw() : void
+		+EndDraw() : void
+		+SetFrameRenderTarget(const CD3DX12_VIEWPORT& viewport, const CD3DX12_RECT& scissorRect) : void
+	}
+
+	class FontRenderer {
+		+FontRenderer()
+		+~FontRenderer()
+		+{static} Instance() : FontRenderer&
+		-m_fence : Microsoft::WRL::ComPtr<ID3D12Fence>
+		-m_fenceVal : UINT64
+		+Init(const std::wstring& fontPath) : Utility::RESULT
+		-m_spriteBatch : std::unique_ptr<DirectX::SpriteBatch>
+		-m_spriteFont : std::unique_ptr<DirectX::SpriteFont>
+		-m_fontHeap : std::unique_ptr<class DescriptorHeapCBV_SRV_UAV>
+		+DrawString(const std::wstring& text, const DirectX::XMFLOAT2& pos, const float& scale, const DirectX::XMVECTORF32& color) : void
+	}
+
+	class GraphicsPipelineState {
+		+GraphicsPipelineState()
+		+~GraphicsPipelineState()
+		-_pipelineStateDesc : D3D12_GRAPHICS_PIPELINE_STATE_DESC
+		-CreateGraphicsPipelineState(ID3D12Device& device, const D3D12_GRAPHICS_PIPELINE_STATE_DESC& piplineStateDesc) : HRESULT
+		+GetPipelineState() : ID3D12PipelineState&
+		-_pipelineState : Microsoft::WRL::ComPtr<ID3D12PipelineState>
+		+Create(ID3D12Device& device, const D3D12_GRAPHICS_PIPELINE_STATE_DESC& piplineStateDesc) : Utility::RESULT
+	}
+
+	class IndexBuffer {
+		+IndexBuffer()
+		+~IndexBuffer()
+		-_indexBufferView : D3D12_INDEX_BUFFER_VIEW
+		+GetView() : D3D12_INDEX_BUFFER_VIEW& {query}
+		-CreateIndexBufferAndView(ID3D12Device& device, const std::vector<UINT>& index) : HRESULT
+		-MapIndexBuffer(const std::vector<UINT>& index) : HRESULT
+		-_indexBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+GetIndexNum() : UINT {query}
+		-_indexNum : UINT
+		-_indexMap : UINT*
+		+Create(ID3D12Device& device, const std::vector<UINT>& index) : Utility::RESULT
+	}
+
+	class RenderTarget {
+		-_depthStencilBuffer : DepthStencilBuffer
+		-_textureHeap : DescriptorHeapCBV_SRV_UAV
+		-_dsvHeap : DescriptorHeapDSV
+		-_rtvHeap : DescriptorHeapRTV
+		-_renderTargetBuffer : RenderTargetBuffer
+		-_renderTargetData : RenderTargetData
+		-_depthStencilTexture : Texture
+		-_renderTargetTexture : Texture
+		+GetDepthStencilTexture() : Texture&
+		+GetRenderTargetTexture() : Texture&
+		+Create(ID3D12Device& device, RenderTargetData& renderTargetData) : Utility::RESULT
+		+{static} BeginMultiRendering(RenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+BeginRendering(RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+{static} EndMultiRendering(RenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext) : void
+		+EndRendering(RenderingContext& renderContext) : void
+	}
+
+	class RenderTargetBuffer {
+		+RenderTargetBuffer()
+		+~RenderTargetBuffer()
+		+GetBuffer() : ID3D12Resource&
+		-_rtvBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+Create(ID3D12Device& device, const RenderTargetBufferData& data) : Utility::RESULT
+		+Create(ID3D12Device& device, IDXGISwapChain3& swapchain, const size_t& index) : Utility::RESULT
+	}
+
+	class RenderingContext {
+		+RenderingContext()
+		+~RenderingContext()
+		-_cmdList : ID3D12GraphicsCommandList*
+		+ClearDepthStencilView(D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle, D3D12_CLEAR_FLAGS clearFlags, const FLOAT& clearDepth, const UINT8& clearStencil, const UINT& numRects, const D3D12_RECT* rects) : void
+		+ClearRenderTarget(D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle, const DirectX::XMFLOAT4& color, const UINT& numRects, const D3D12_RECT* rects) : void
+		+ClearRenderTarget(D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle, const float* color, const UINT& numRects, const D3D12_RECT* rects) : void
+		+Close() : void
+		+CopyTextureRegion(const D3D12_TEXTURE_COPY_LOCATION& src, const D3D12_TEXTURE_COPY_LOCATION& dst, const UINT& dstX, const UINT& dstY, const UINT& dstZ, D3D12_BOX* srcBox) : void
+		+DrawIndexedInstanced(const UINT& indexNumPerInstance, const UINT& instanceNum, const UINT startIndexLocation, const INT& baseVertexLocation, const UINT& startInstanceLocation) : void
+		+DrawInstanced(const UINT& vertexNumPerInstance, const UINT& instanceNum, const UINT& startVertexLocation, const UINT& startInstanceLocation) : void
+		+Init(ID3D12GraphicsCommandList& cmdList) : void
+		+Reset(ID3D12CommandAllocator& cmdAlloc) : void
+		+SetDescriptorHeap(ID3D12DescriptorHeap* const* descriptorHeap) : void
+		+SetDescriptorHeap(DescriptorHeapCBV_SRV_UAV& descriptorHeap) : void
+		+SetDescriptorHeaps(const UINT& descriptorHeapNum, ID3D12DescriptorHeap* const* descriptorHeaps) : void
+		+SetGraphicsRootDescriptorTable(const UINT& rootPrameterIndex, D3D12_GPU_DESCRIPTOR_HANDLE handle) : void
+		+SetGraphicsRootSignature(RootSignature& rootSignature) : void
+		+SetIndexBuffer(const IndexBuffer& indexBuffer) : void
+		+SetPipelineState(GraphicsPipelineState& pipelineState) : void
+		+SetPrimitiveTopology(const D3D12_PRIMITIVE_TOPOLOGY& primitiveTopology) : void
+		+SetRenderTarget(const D3D12_CPU_DESCRIPTOR_HANDLE* rtvHandle, const D3D12_CPU_DESCRIPTOR_HANDLE* dsvHandle) : void
+		+SetRenderTargets(const UINT& rtvNum, const D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles, const D3D12_CPU_DESCRIPTOR_HANDLE* dsvHandle) : void
+		+SetScissorRect(const D3D12_RECT& scissorRect) : void
+		+SetScissorRects(const UINT& scissorRectNum, const D3D12_RECT& scissorRect) : void
+		+SetVertexBuffer(const UINT& startSlot, const VertexBuffer& vertexBuffer) : void
+		+SetViewport(const D3D12_VIEWPORT& viewport) : void
+		+SetViewports(const UINT& viewportNum, const D3D12_VIEWPORT& viewports) : void
+		+TransitionResourceState(ID3D12Resource& resource, D3D12_RESOURCE_STATES presentState, D3D12_RESOURCE_STATES afterState) : void
+	}
+
+	class RootSignature {
+		+RootSignature()
+		+~RootSignature()
+		-CreateRootSignature(ID3D12Device& device, const DescriptorRangeData& descRangeData, const D3D12_STATIC_SAMPLER_DESC& samplerDescs, UINT samplerNum) : HRESULT
+		+GetRootSignature() : ID3D12RootSignature& {query}
+		-_rootSignature : Microsoft::WRL::ComPtr<ID3D12RootSignature>
+		+Create(ID3D12Device& device, const RootSignatureData& data) : Utility::RESULT
+		+Create(ID3D12Device& device, const DescriptorRangeData& descRangeData, const D3D12_STATIC_SAMPLER_DESC& samplerDescs, UINT samplerNum) : Utility::RESULT
+	}
+
+	class Shader {
+		+Shader()
+		+~Shader()
+		-CompileShader(const TCHAR* shaderFilePass, const char* entoryPointName, const char* shaderTypeAndVersion) : HRESULT
+		+GetShader() : ID3DBlob& {query}
+		-_errorBlob : Microsoft::WRL::ComPtr<ID3DBlob>
+		-_shaderBlob : Microsoft::WRL::ComPtr<ID3DBlob>
+		+Create(const TCHAR* shaderFilePass, const char* entoryPointName, const char* shaderType) : Utility::RESULT
+		+Create(const ShaderData& shaderData) : Utility::RESULT
+	}
+
+	class Texture {
+		+Texture()
+		+~Texture()
+		+GetImage() : DirectX::Image&
+		-_scratchImage : DirectX::ScratchImage
+		-_metaData : DirectX::TexMetadata
+		+GetTexMetadata() : DirectX::TexMetadata&
+		-CopyCubeTexture(Dx12GraphicsEngine& graphicsEngine) : HRESULT
+		-CopyTexture(ID3D12Device& device, Dx12GraphicsEngine& graphicsEngine) : HRESULT
+		-CreateUploadAndCubeTextureBuffer(ID3D12Device& device) : HRESULT
+		-CreateUploadAndTextureBuffer(ID3D12Device& device) : HRESULT
+		-LoadTextureFromDDSFile(const std::wstring& texturePath) : HRESULT
+		-LoadTextureFromWICFile(const std::wstring& texturePath) : HRESULT
+		-MapTexture() : HRESULT
+		+GetBuffer() : ID3D12Resource& {query}
+		-_textureBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		-_uploadBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+operator=(const Texture& inst) : Texture&
+		+CreateCubeTextureFromDDS(Dx12GraphicsEngine& graphicsEngine, const std::wstring& texturePath) : Utility::RESULT
+		+CreateTextureFromConstantData(Dx12GraphicsEngine& graphicsEngine, uint8_t* data, const size_t& stride, const size_t& dataNum, const size_t& width, const size_t& height, const DXGI_FORMAT& format) : Utility::RESULT
+		+CreateTextureFromDDS(Dx12GraphicsEngine& graphicsEngine, const std::wstring& texturePath) : Utility::RESULT
+		+CreateTextureFromWIC(Dx12GraphicsEngine& graphicsEngine, const std::wstring& texturePath) : Utility::RESULT
+		-_image : const DirectX::Image*
+		-_subresources : std::vector<D3D12_SUBRESOURCE_DATA>
+		+CreateTextureFromDepthStencil(DepthStencilBuffer& depthStencilBuffer) : void
+		+CreateTextureFromRenderTarget(RenderTargetBuffer& renderTargetBuffer) : void
+		-SetTextureData(uint8_t* data, const size_t& stride, const size_t& dataNum, const size_t& width, const size_t& height, const DXGI_FORMAT& format) : void
+	}
+
+	class VertexBuffer {
+		+VertexBuffer()
+		+~VertexBuffer()
+		-_vertexBufferView : D3D12_VERTEX_BUFFER_VIEW
+		+GetView() : D3D12_VERTEX_BUFFER_VIEW& {query}
+		-CreateVertexBufferAndView(ID3D12Device& device, const UINT& sizeInBytes, const UINT& stribeInBytes) : HRESULT
+		-MapVertexBuffer(void* vertexData, const UINT& sizeInBytes) : HRESULT
+		-_vertexBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+GetVertexNum() : UINT {query}
+		-_vertexNum : UINT
+		+Create(ID3D12Device& device, void* vertexData, const UINT& sizeInBytes, const UINT& stribeInBytes) : Utility::RESULT
+	}
+
+	enum DESCRIPTORTYPE {
+		DESCRIPTORTYPE_CBV
+		DESCRIPTORTYPE_NUM
+		DESCRIPTORTYPE_SRV
+		DESCRIPTORTYPE_UAV
+	}
+
+	class CubeRenderTargetData {
+		+depthStencilBufferData : DepthStencilBufferData
+		+renderTargetBufferData : RenderTargetBufferData
+		+useDepth : bool
+	}
+
+	class DepthStencilBufferData {
+		+DepthStencilBufferData(const DXGI_FORMAT& depthFormat, const UINT& width, const UINT& height, const float& clearDepth, const UINT8& clearStencil)
+		+depthFormat : DXGI_FORMAT
+		+height : UINT
+		+width : UINT
+		+clearStencil : UINT8
+		+clearDepth : float
+	}
+
+	class DescriptorRangeData {
+		+DescriptorRangeData(UINT srvDescriptorNum, UINT cbvDescriptorNum, UINT uavDescriptorNum)
+		+cbvDescriptorNum : UINT
+		+srvDescriptorNum : UINT
+		+uavDescriptorNum : UINT
+	}
+
+	class InputLayout {
+		+GetData() : D3D12_INPUT_ELEMENT_DESC*
+		+{static} DefaultLayout() : InputLayout
+		+GetSize() : UINT
+		+inputElementDescs : std::vector<D3D12_INPUT_ELEMENT_DESC>
+		+Append(const char* semanticName, UINT semanticIndex, DXGI_FORMAT format, UINT inputSlot, UINT alignedByteOffset, D3D12_INPUT_CLASSIFICATION inputSlotClass, UINT instanceDataStepRate) : void
+	}
+
+	class RenderTargetBufferData {
+		+RenderTargetBufferData(const DXGI_FORMAT& colorFormat, const UINT& width, const UINT& height, const float (& clearColor ))
+		+colorFormat : DXGI_FORMAT
+		+height : UINT
+		+width : UINT
+		+clearColor : float
+	}
+
+	class RenderTargetData {
+		+depthStencilBufferData : DepthStencilBufferData
+		+renderTargetBufferData : RenderTargetBufferData
+		+isCubeMap : bool
+		+useDepth : bool
+	}
+
+	class RootSignatureData {
+		+RootSignatureData(D3D12_FILTER samplerFilter, D3D12_TEXTURE_ADDRESS_MODE addressU, D3D12_TEXTURE_ADDRESS_MODE addressV, D3D12_TEXTURE_ADDRESS_MODE addressW, UINT srvDescriptorNum, UINT cbvDescriptorNum, UINT uavDescriptorNum)
+		+RootSignatureData(SamplerData samplerData, DescriptorRangeData descRangeData)
+		+_descRangeData : DescriptorRangeData
+		+_samplerData : SamplerData
+	}
+
+	class SamplerData {
+		+SamplerData(D3D12_FILTER samplerFilter, D3D12_TEXTURE_ADDRESS_MODE addressU, D3D12_TEXTURE_ADDRESS_MODE addressV, D3D12_TEXTURE_ADDRESS_MODE addressW)
+		+samplerFilter : D3D12_FILTER
+		+addressU : D3D12_TEXTURE_ADDRESS_MODE
+		+addressV : D3D12_TEXTURE_ADDRESS_MODE
+		+addressW : D3D12_TEXTURE_ADDRESS_MODE
+	}
+
+	class ShaderData {
+		+ShaderData(const TCHAR* shaderFilePass, const char* entoryPointName, const char* shaderType)
+		+ShaderData()
+		+shaderFilePass : const TCHAR*
+		+entoryPointName : const char*
+		+shaderType : const char*
+	}
+
+	class ShaderResourceViewDesc {
+		+ShaderResourceViewDesc(Texture& texture, bool isCubeTex)
+		+~ShaderResourceViewDesc()
+		+desc : D3D12_SHADER_RESOURCE_VIEW_DESC
+	}
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+Framework.Canvas <|-- Game2048.GameSceneCanvas
+
+
+Framework.Canvas <|-- Game2048.TitleSceneCanvas
+
+
+Framework.GameImpl <|-- Game2048.Game2048
+
+
+Framework.IComponent <|-- Framework.Button
+
+
+Framework.IComponent <|-- Framework.Camera
+
+
+Framework.IComponent <|-- Game2048.GameTimer
+
+
+Framework.IComponent <|-- Game2048.Grid
+
+
+Framework.IComponent <|-- Game2048.PressEnterText
+
+
+Framework.IComponent <|-- Game2048.QuitButton
+
+
+Framework.IComponent <|-- Framework.SpriteRenderer
+
+
+Framework.IComponent <|-- Framework.Text
+
+
+Framework.IComponent <|-- Game2048.Tile
+
+
+Framework.IComponent <|-- Framework.Transform2D
+
+
+Framework.IRenderer <|-- Framework.ButtonRenderer
+
+
+Framework.IRenderer <|-- Game2048.Renderer
+
+
+Framework.Scene <|-- Game2048.GameScene
+
+
+Framework.Scene <|-- Game2048.TitleScene
+
+
+
+
+
+/' Aggregation relationships '/
+
+Framework.Button *-- Framework.SpriteRenderer
+
+
+Framework.Button *-- Framework.Text
+
+
+Framework.ButtonRenderer "2" *-- DX12Wrapper.GraphicsPipelineState
+
+
+Framework.ButtonRenderer "2" *-- DX12Wrapper.RootSignature
+
+
+Framework.Camera *-- DX12Wrapper.ConstantBuffer
+
+
+Framework.Canvas *-- Framework.Object
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.CubeRenderTargetData
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DepthStencilBuffer
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DescriptorHeapDSV
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DescriptorHeapRTV
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.RenderTargetBuffer
+
+
+DX12Wrapper.CubeRenderTarget "2" *-- DX12Wrapper.Texture
+
+
+DX12Wrapper.CubeRenderTargetData *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.CubeRenderTargetData *-- DX12Wrapper.RenderTargetBufferData
+
+
+DX12Wrapper.DepthStencilBuffer *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DepthStencilBuffer
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DescriptorHeapDSV
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DescriptorHeapRTV
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.RenderTargetBuffer
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.RenderingContext
+
+
+DX12Wrapper.FontRenderer *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+Framework.Game *-- Framework.GameImpl
+
+
+Framework.Game *-- Framework.IRenderer
+
+
+Framework.Game *-- Framework.Window
+
+
+Game2048.Grid "3" *-- Framework.Object
+
+
+Framework.IComponent o-- Framework.Object
+
+
+Framework.InputSystem "2" *-- Framework.BUTTON_STATE
+
+
+Framework.Object *-- Framework.IComponent
+
+
+Framework.Object o-- Framework.Object
+
+
+Framework.Object *-- Framework.Object
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DepthStencilBuffer
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DescriptorHeapDSV
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DescriptorHeapRTV
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.RenderTargetBuffer
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.RenderTargetData
+
+
+DX12Wrapper.RenderTarget "2" *-- DX12Wrapper.Texture
+
+
+DX12Wrapper.RenderTargetData *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.RenderTargetData *-- DX12Wrapper.RenderTargetBufferData
+
+
+DX12Wrapper.RootSignatureData *-- DX12Wrapper.DescriptorRangeData
+
+
+DX12Wrapper.RootSignatureData *-- DX12Wrapper.SamplerData
+
+
+Framework.Scene *-- Framework.Canvas
+
+
+Framework.SceneManager *-- Framework.Scene
+
+
+Framework.ShaderLibrary *-- Framework.SHADERTYPE
+
+
+Framework.ShaderLibrary *-- DX12Wrapper.Shader
+
+
+Framework.SoundManager *-- Framework.SoundClip
+
+
+Framework.Sprite *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+Framework.Sprite *-- DX12Wrapper.IndexBuffer
+
+
+Framework.Sprite *-- DX12Wrapper.Texture
+
+
+Framework.Sprite *-- DX12Wrapper.VertexBuffer
+
+
+Framework.SpriteRenderer *-- DX12Wrapper.ConstantBuffer
+
+
+Framework.SpriteRenderer *-- DX12Wrapper.GraphicsPipelineState
+
+
+Framework.SpriteRenderer *-- DX12Wrapper.RootSignature
+
+
+Framework.SpriteRenderer *-- Framework.SPRITE_DRAW_MODE
+
+
+Framework.SpriteRenderer *-- Framework.Sprite
+
+
+Framework.Text *-- DX12Wrapper.FontRenderer
+
+
+Game2048.Tile *-- DX12Wrapper.Texture
+
+
+Framework.Transform2D *-- DX12Wrapper.ConstantBuffer
+
+
+
+
+
+
+/' Nested objects '/
+
+Framework.Camera +-- Framework.Camera::CameraData
+
+
+Game2048.GameScene +-- Game2048.GameScene::DRAW_LAYER
+
+
+Game2048.Grid +-- Game2048.Grid::GAME_STATE
+
+
+Game2048.Grid +-- Game2048.Grid::INPUT_DIRECTION
+
+
+Framework.Sprite +-- Framework.Sprite::SpriteVertex
+
+
+Framework.SpriteRenderer +-- Framework.SpriteRenderer::CONSTANT_BUFFER_INDEX
+
+
+Framework.Transform2D +-- Framework.Transform2D::Transform2DData
+
+
+
+
+@enduml

@@ -1,0 +1,508 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+namespace DX12Wrapper {
+	class ConstantBuffer {
+		+ConstantBuffer()
+		+~ConstantBuffer()
+		-_mappedData : BYTE*
+		+GetGPUVirtualAddress() : D3D12_GPU_VIRTUAL_ADDRESS
+		-CreateConstantBuffer(ID3D12Device& device, const UINT& bufferSize) : HRESULT
+		-MapConstantBuffer(void* data, const UINT& bufferSize) : HRESULT
+		+GetBuffer() : ID3D12Resource&
+		-_constantBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		-_bufferSize : UINT
+		+GetBufferSize() : UINT&
+		+Create(ID3D12Device& device, void* data, const UINT& bufferSize) : Utility::RESULT
+		+UpdateData(void* data) : void
+	}
+
+	class CubeRenderTarget {
+		-_renderTargetData : CubeRenderTargetData
+		-_depthStencilBuffer : DepthStencilBuffer
+		-_textureHeap : DescriptorHeapCBV_SRV_UAV
+		-_dsvHeap : DescriptorHeapDSV
+		-_rtvHeap : DescriptorHeapRTV
+		-_renderTargetBuffer : RenderTargetBuffer
+		-_depthStencilTexture : Texture
+		-_renderTargetTexture : Texture
+		+GetDepthStencilTexture() : Texture&
+		+GetRenderTargetTexture() : Texture&
+		+Create(ID3D12Device& device, CubeRenderTargetData& renderTargetData) : Utility::RESULT
+		+{static} BeginMultiRendering(CubeRenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+BeginRendering(RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+{static} EndMultiRendering(CubeRenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext) : void
+		+EndRendering(RenderingContext& renderContext) : void
+	}
+
+	class DepthStencilBuffer {
+		+DepthStencilBuffer()
+		+~DepthStencilBuffer()
+		+GetDepthStencilBufferData() : DepthStencilBufferData
+		-_depthStencilBufferData : DepthStencilBufferData
+		+GetBuffer() : ID3D12Resource&
+		-_dsvBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+Create(ID3D12Device& device, const DepthStencilBufferData& data) : Utility::RESULT
+	}
+
+	class DescriptorHeapCBV_SRV_UAV {
+		+DescriptorHeapCBV_SRV_UAV()
+		+~DescriptorHeapCBV_SRV_UAV()
+		+GetGPUHandle() : CD3DX12_GPU_DESCRIPTOR_HANDLE
+		+GetCPUDescriptorHandleForHeapStart() : D3D12_CPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStart() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStartCBV() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStartSRV() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStartUAV() : D3D12_GPU_DESCRIPTOR_HANDLE
+		+GetSRVHandle(int index) : D3D12_GPU_DESCRIPTOR_HANDLE
+		-CreateDescriptorHeap(ID3D12Device& device) : HRESULT
+		+GetDescriptorHeapAddress() : ID3D12DescriptorHeap*
+		-_descriptorHeap : Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		+GetHandleIncrimentSize() : SIZE_T
+		-_handleIncrimentSize : SIZE_T
+		-_registedCBVNum : UINT
+		-_registedSRVNum : UINT
+		-_registedUAVNum : UINT
+		+Create(ID3D12Device& device) : Utility::RESULT
+		+IsRegistedConstantBuffer() : bool
+		+IsRegistedShaderResource() : bool
+		+IsRegistedUnorderedAccessResource() : bool
+		-{static} _MAX_CBV_DESCRIPTOR_NUM : static constexpr UINT
+		-{static} _MAX_SRV_DESCRIPTOR_NUM : static constexpr UINT
+		-{static} _MAX_UAV_DESCRIPTOR_NUM : static constexpr UINT
+		+{static} NEXT_REGISTER : static constexpr int
+		+RegistConstantBuffer(ID3D12Device& device, ConstantBuffer& constantBuffer, const int& registerNo) : void
+		+RegistShaderResource(ID3D12Device& device, Texture& texture, ShaderResourceViewDesc& desc, const int& registerNo) : void
+		+RegistUnorderedAccessResource(ID3D12Device& device, UnorderedAccessResource& unorderedAccessResource, const int& registerNo) : void
+	}
+
+	class DescriptorHeapDSV {
+		+DescriptorHeapDSV()
+		+~DescriptorHeapDSV()
+		+GetCPUDescriptorHandleForHeapStart() : D3D12_CPU_DESCRIPTOR_HANDLE
+		-CreateDescriptorHeap(ID3D12Device& device) : HRESULT
+		-_dsvHeap : Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		+GetHandleIncrimentSize() : SIZE_T
+		-_handleIncrimentSize : SIZE_T
+		+GetRegistedDescriptorNum() : UINT
+		-_registedDSVNum : UINT
+		+Create(ID3D12Device& device) : Utility::RESULT
+		+RegistDescriptor(ID3D12Device& device, DepthStencilBuffer& buffer) : void
+	}
+
+	class DescriptorHeapRTV {
+		+DescriptorHeapRTV()
+		+~DescriptorHeapRTV()
+		+GetCPUDescriptorHandleForHeapStart() : D3D12_CPU_DESCRIPTOR_HANDLE
+		+GetNextCPUDescriptorHandle() : D3D12_CPU_DESCRIPTOR_HANDLE
+		+GetGPUDescriptorHandleForHeapStart() : D3D12_GPU_DESCRIPTOR_HANDLE
+		-CreateDescriptorHeap(ID3D12Device& device) : HRESULT
+		-_rtvHeap : Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>
+		+GetHandleIncrimentSize() : SIZE_T
+		-_handleIncrimentSize : SIZE_T
+		+GetRegistedDescriptorNum() : UINT
+		-_nextHandleLocation : UINT
+		-_registedRTVNum : UINT
+		+Create(ID3D12Device& device) : Utility::RESULT
+		+{static} MAXDESCRIPTORNUM : static constexpr UINT
+		+RegistDescriptor(ID3D12Device& device, RenderTargetBuffer& buffer, DXGI_FORMAT format, bool isCubeMap) : void
+	}
+
+	class Dx12GraphicsEngine {
+		-Dx12GraphicsEngine()
+		-~Dx12GraphicsEngine()
+		-m_scissorRect : CD3DX12_RECT
+		-m_viewport : CD3DX12_VIEWPORT
+		+GetViewport() : CD3DX12_VIEWPORT&
+		-_depthStencilBuffer : DX12Wrapper::DepthStencilBuffer
+		-depthStencilBufferData : DX12Wrapper::DepthStencilBufferData
+		-m_imguiHeap : DX12Wrapper::DescriptorHeapCBV_SRV_UAV
+		-_dsvHeap : DX12Wrapper::DescriptorHeapDSV
+		-_frameHeap : DX12Wrapper::DescriptorHeapRTV
+		+GetFrameBufferDescriptorHeap() : DX12Wrapper::DescriptorHeapRTV&
+		-_frameBuffers : DX12Wrapper::RenderTargetBuffer
+		-m_renderContext : DX12Wrapper::RenderingContext
+		+GetRenderingContext() : DX12Wrapper::RenderingContext&
+		+{static} Instance() : Dx12GraphicsEngine&
+		-CreateCommandX() : HRESULT
+		-CreateDeviceAndDXGIFactory() : HRESULT
+		-CreateFence() : HRESULT
+		-CreateSwapChain(const HWND& hwnd, const UINT& windowWidth, const UINT& windowHeight, const Microsoft::WRL::ComPtr<IDXGIFactory4>& dxgiFactory) : HRESULT
+		-EnableDebugLayer() : HRESULT
+		-_hwnd : HWND
+		+CmdAllocator() : ID3D12CommandAllocator&
+		+CmdQueue() : ID3D12CommandQueue&
+		+Device() : ID3D12Device&
+		+CmdList() : ID3D12GraphicsCommandList&
+		+SwapChain() : IDXGISwapChain3&
+		-_cmdAllocator : Microsoft::WRL::ComPtr<ID3D12CommandAllocator>
+		-_cmdQueue : Microsoft::WRL::ComPtr<ID3D12CommandQueue>
+		-_device : Microsoft::WRL::ComPtr<ID3D12Device>
+		-_fence : Microsoft::WRL::ComPtr<ID3D12Fence>
+		-_cmdList : Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>
+		-_dxgiFactory : Microsoft::WRL::ComPtr<IDXGIFactory4>
+		-_swapchain : Microsoft::WRL::ComPtr<IDXGISwapChain3>
+		-_fenceVal : UINT
+		-_windowHeight : UINT
+		-_windowWidth : UINT
+		-CreateFrameRenderTarget() : Utility::RESULT
+		+Init(const HWND& hwnd, const UINT& windowWidth, const UINT& windowHeight) : Utility::RESULT
+		-{static} DOUBLE_BUFFER : static constexpr UINT
+		-m_graphicsMemory : std::unique_ptr<DirectX::GraphicsMemory>
+		+BeginDraw() : void
+		+EndDraw() : void
+		+SetFrameRenderTarget(const CD3DX12_VIEWPORT& viewport, const CD3DX12_RECT& scissorRect) : void
+	}
+
+	class FontRenderer {
+		+FontRenderer()
+		+~FontRenderer()
+		+{static} Instance() : FontRenderer&
+		-m_fence : Microsoft::WRL::ComPtr<ID3D12Fence>
+		-m_fenceVal : UINT64
+		+Init(const std::wstring& fontPath) : Utility::RESULT
+		-m_spriteBatch : std::unique_ptr<DirectX::SpriteBatch>
+		-m_spriteFont : std::unique_ptr<DirectX::SpriteFont>
+		-m_fontHeap : std::unique_ptr<class DescriptorHeapCBV_SRV_UAV>
+		+DrawString(const std::wstring& text, const DirectX::XMFLOAT2& pos, const float& scale, const DirectX::XMVECTORF32& color) : void
+	}
+
+	class GraphicsPipelineState {
+		+GraphicsPipelineState()
+		+~GraphicsPipelineState()
+		-_pipelineStateDesc : D3D12_GRAPHICS_PIPELINE_STATE_DESC
+		-CreateGraphicsPipelineState(ID3D12Device& device, const D3D12_GRAPHICS_PIPELINE_STATE_DESC& piplineStateDesc) : HRESULT
+		+GetPipelineState() : ID3D12PipelineState&
+		-_pipelineState : Microsoft::WRL::ComPtr<ID3D12PipelineState>
+		+Create(ID3D12Device& device, const D3D12_GRAPHICS_PIPELINE_STATE_DESC& piplineStateDesc) : Utility::RESULT
+	}
+
+	class IndexBuffer {
+		+IndexBuffer()
+		+~IndexBuffer()
+		-_indexBufferView : D3D12_INDEX_BUFFER_VIEW
+		+GetView() : D3D12_INDEX_BUFFER_VIEW& {query}
+		-CreateIndexBufferAndView(ID3D12Device& device, const std::vector<UINT>& index) : HRESULT
+		-MapIndexBuffer(const std::vector<UINT>& index) : HRESULT
+		-_indexBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+GetIndexNum() : UINT {query}
+		-_indexNum : UINT
+		-_indexMap : UINT*
+		+Create(ID3D12Device& device, const std::vector<UINT>& index) : Utility::RESULT
+	}
+
+	class RenderTarget {
+		-_depthStencilBuffer : DepthStencilBuffer
+		-_textureHeap : DescriptorHeapCBV_SRV_UAV
+		-_dsvHeap : DescriptorHeapDSV
+		-_rtvHeap : DescriptorHeapRTV
+		-_renderTargetBuffer : RenderTargetBuffer
+		-_renderTargetData : RenderTargetData
+		-_depthStencilTexture : Texture
+		-_renderTargetTexture : Texture
+		+GetDepthStencilTexture() : Texture&
+		+GetRenderTargetTexture() : Texture&
+		+Create(ID3D12Device& device, RenderTargetData& renderTargetData) : Utility::RESULT
+		+{static} BeginMultiRendering(RenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+BeginRendering(RenderingContext& renderContext, CD3DX12_VIEWPORT& viewport, CD3DX12_RECT& scissorRect) : void
+		+{static} EndMultiRendering(RenderTarget* renderTargets, const size_t& length, RenderingContext& renderContext) : void
+		+EndRendering(RenderingContext& renderContext) : void
+	}
+
+	class RenderTargetBuffer {
+		+RenderTargetBuffer()
+		+~RenderTargetBuffer()
+		+GetBuffer() : ID3D12Resource&
+		-_rtvBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+Create(ID3D12Device& device, const RenderTargetBufferData& data) : Utility::RESULT
+		+Create(ID3D12Device& device, IDXGISwapChain3& swapchain, const size_t& index) : Utility::RESULT
+	}
+
+	class RenderingContext {
+		+RenderingContext()
+		+~RenderingContext()
+		-_cmdList : ID3D12GraphicsCommandList*
+		+ClearDepthStencilView(D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle, D3D12_CLEAR_FLAGS clearFlags, const FLOAT& clearDepth, const UINT8& clearStencil, const UINT& numRects, const D3D12_RECT* rects) : void
+		+ClearRenderTarget(D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle, const DirectX::XMFLOAT4& color, const UINT& numRects, const D3D12_RECT* rects) : void
+		+ClearRenderTarget(D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle, const float* color, const UINT& numRects, const D3D12_RECT* rects) : void
+		+Close() : void
+		+CopyTextureRegion(const D3D12_TEXTURE_COPY_LOCATION& src, const D3D12_TEXTURE_COPY_LOCATION& dst, const UINT& dstX, const UINT& dstY, const UINT& dstZ, D3D12_BOX* srcBox) : void
+		+DrawIndexedInstanced(const UINT& indexNumPerInstance, const UINT& instanceNum, const UINT startIndexLocation, const INT& baseVertexLocation, const UINT& startInstanceLocation) : void
+		+DrawInstanced(const UINT& vertexNumPerInstance, const UINT& instanceNum, const UINT& startVertexLocation, const UINT& startInstanceLocation) : void
+		+Init(ID3D12GraphicsCommandList& cmdList) : void
+		+Reset(ID3D12CommandAllocator& cmdAlloc) : void
+		+SetDescriptorHeap(ID3D12DescriptorHeap* const* descriptorHeap) : void
+		+SetDescriptorHeap(DescriptorHeapCBV_SRV_UAV& descriptorHeap) : void
+		+SetDescriptorHeaps(const UINT& descriptorHeapNum, ID3D12DescriptorHeap* const* descriptorHeaps) : void
+		+SetGraphicsRootDescriptorTable(const UINT& rootPrameterIndex, D3D12_GPU_DESCRIPTOR_HANDLE handle) : void
+		+SetGraphicsRootSignature(RootSignature& rootSignature) : void
+		+SetIndexBuffer(const IndexBuffer& indexBuffer) : void
+		+SetPipelineState(GraphicsPipelineState& pipelineState) : void
+		+SetPrimitiveTopology(const D3D12_PRIMITIVE_TOPOLOGY& primitiveTopology) : void
+		+SetRenderTarget(const D3D12_CPU_DESCRIPTOR_HANDLE* rtvHandle, const D3D12_CPU_DESCRIPTOR_HANDLE* dsvHandle) : void
+		+SetRenderTargets(const UINT& rtvNum, const D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles, const D3D12_CPU_DESCRIPTOR_HANDLE* dsvHandle) : void
+		+SetScissorRect(const D3D12_RECT& scissorRect) : void
+		+SetScissorRects(const UINT& scissorRectNum, const D3D12_RECT& scissorRect) : void
+		+SetVertexBuffer(const UINT& startSlot, const VertexBuffer& vertexBuffer) : void
+		+SetViewport(const D3D12_VIEWPORT& viewport) : void
+		+SetViewports(const UINT& viewportNum, const D3D12_VIEWPORT& viewports) : void
+		+TransitionResourceState(ID3D12Resource& resource, D3D12_RESOURCE_STATES presentState, D3D12_RESOURCE_STATES afterState) : void
+	}
+
+	class RootSignature {
+		+RootSignature()
+		+~RootSignature()
+		-CreateRootSignature(ID3D12Device& device, const DescriptorRangeData& descRangeData, const D3D12_STATIC_SAMPLER_DESC& samplerDescs, UINT samplerNum) : HRESULT
+		+GetRootSignature() : ID3D12RootSignature& {query}
+		-_rootSignature : Microsoft::WRL::ComPtr<ID3D12RootSignature>
+		+Create(ID3D12Device& device, const RootSignatureData& data) : Utility::RESULT
+		+Create(ID3D12Device& device, const DescriptorRangeData& descRangeData, const D3D12_STATIC_SAMPLER_DESC& samplerDescs, UINT samplerNum) : Utility::RESULT
+	}
+
+	class Shader {
+		+Shader()
+		+~Shader()
+		-CompileShader(const TCHAR* shaderFilePass, const char* entoryPointName, const char* shaderTypeAndVersion) : HRESULT
+		+GetShader() : ID3DBlob& {query}
+		-_errorBlob : Microsoft::WRL::ComPtr<ID3DBlob>
+		-_shaderBlob : Microsoft::WRL::ComPtr<ID3DBlob>
+		+Create(const TCHAR* shaderFilePass, const char* entoryPointName, const char* shaderType) : Utility::RESULT
+		+Create(const ShaderData& shaderData) : Utility::RESULT
+	}
+
+	class Texture {
+		+Texture()
+		+~Texture()
+		+GetImage() : DirectX::Image&
+		-_scratchImage : DirectX::ScratchImage
+		-_metaData : DirectX::TexMetadata
+		+GetTexMetadata() : DirectX::TexMetadata&
+		-CopyCubeTexture(Dx12GraphicsEngine& graphicsEngine) : HRESULT
+		-CopyTexture(ID3D12Device& device, Dx12GraphicsEngine& graphicsEngine) : HRESULT
+		-CreateUploadAndCubeTextureBuffer(ID3D12Device& device) : HRESULT
+		-CreateUploadAndTextureBuffer(ID3D12Device& device) : HRESULT
+		-LoadTextureFromDDSFile(const std::wstring& texturePath) : HRESULT
+		-LoadTextureFromWICFile(const std::wstring& texturePath) : HRESULT
+		-MapTexture() : HRESULT
+		+GetBuffer() : ID3D12Resource& {query}
+		-_textureBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		-_uploadBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+operator=(const Texture& inst) : Texture&
+		+CreateCubeTextureFromDDS(Dx12GraphicsEngine& graphicsEngine, const std::wstring& texturePath) : Utility::RESULT
+		+CreateTextureFromConstantData(Dx12GraphicsEngine& graphicsEngine, uint8_t* data, const size_t& stride, const size_t& dataNum, const size_t& width, const size_t& height, const DXGI_FORMAT& format) : Utility::RESULT
+		+CreateTextureFromDDS(Dx12GraphicsEngine& graphicsEngine, const std::wstring& texturePath) : Utility::RESULT
+		+CreateTextureFromWIC(Dx12GraphicsEngine& graphicsEngine, const std::wstring& texturePath) : Utility::RESULT
+		-_image : const DirectX::Image*
+		-_subresources : std::vector<D3D12_SUBRESOURCE_DATA>
+		+CreateTextureFromDepthStencil(DepthStencilBuffer& depthStencilBuffer) : void
+		+CreateTextureFromRenderTarget(RenderTargetBuffer& renderTargetBuffer) : void
+		-SetTextureData(uint8_t* data, const size_t& stride, const size_t& dataNum, const size_t& width, const size_t& height, const DXGI_FORMAT& format) : void
+	}
+
+	class VertexBuffer {
+		+VertexBuffer()
+		+~VertexBuffer()
+		-_vertexBufferView : D3D12_VERTEX_BUFFER_VIEW
+		+GetView() : D3D12_VERTEX_BUFFER_VIEW& {query}
+		-CreateVertexBufferAndView(ID3D12Device& device, const UINT& sizeInBytes, const UINT& stribeInBytes) : HRESULT
+		-MapVertexBuffer(void* vertexData, const UINT& sizeInBytes) : HRESULT
+		-_vertexBuffer : Microsoft::WRL::ComPtr<ID3D12Resource>
+		+GetVertexNum() : UINT {query}
+		-_vertexNum : UINT
+		+Create(ID3D12Device& device, void* vertexData, const UINT& sizeInBytes, const UINT& stribeInBytes) : Utility::RESULT
+	}
+
+	enum DESCRIPTORTYPE {
+		DESCRIPTORTYPE_CBV
+		DESCRIPTORTYPE_NUM
+		DESCRIPTORTYPE_SRV
+		DESCRIPTORTYPE_UAV
+	}
+
+	class CubeRenderTargetData {
+		+depthStencilBufferData : DepthStencilBufferData
+		+renderTargetBufferData : RenderTargetBufferData
+		+useDepth : bool
+	}
+
+	class DepthStencilBufferData {
+		+DepthStencilBufferData(const DXGI_FORMAT& depthFormat, const UINT& width, const UINT& height, const float& clearDepth, const UINT8& clearStencil)
+		+depthFormat : DXGI_FORMAT
+		+height : UINT
+		+width : UINT
+		+clearStencil : UINT8
+		+clearDepth : float
+	}
+
+	class DescriptorRangeData {
+		+DescriptorRangeData(UINT srvDescriptorNum, UINT cbvDescriptorNum, UINT uavDescriptorNum)
+		+cbvDescriptorNum : UINT
+		+srvDescriptorNum : UINT
+		+uavDescriptorNum : UINT
+	}
+
+	class InputLayout {
+		+GetData() : D3D12_INPUT_ELEMENT_DESC*
+		+{static} DefaultLayout() : InputLayout
+		+GetSize() : UINT
+		+inputElementDescs : std::vector<D3D12_INPUT_ELEMENT_DESC>
+		+Append(const char* semanticName, UINT semanticIndex, DXGI_FORMAT format, UINT inputSlot, UINT alignedByteOffset, D3D12_INPUT_CLASSIFICATION inputSlotClass, UINT instanceDataStepRate) : void
+	}
+
+	class RenderTargetBufferData {
+		+RenderTargetBufferData(const DXGI_FORMAT& colorFormat, const UINT& width, const UINT& height, const float (& clearColor ))
+		+colorFormat : DXGI_FORMAT
+		+height : UINT
+		+width : UINT
+		+clearColor : float
+	}
+
+	class RenderTargetData {
+		+depthStencilBufferData : DepthStencilBufferData
+		+renderTargetBufferData : RenderTargetBufferData
+		+isCubeMap : bool
+		+useDepth : bool
+	}
+
+	class RootSignatureData {
+		+RootSignatureData(D3D12_FILTER samplerFilter, D3D12_TEXTURE_ADDRESS_MODE addressU, D3D12_TEXTURE_ADDRESS_MODE addressV, D3D12_TEXTURE_ADDRESS_MODE addressW, UINT srvDescriptorNum, UINT cbvDescriptorNum, UINT uavDescriptorNum)
+		+RootSignatureData(SamplerData samplerData, DescriptorRangeData descRangeData)
+		+_descRangeData : DescriptorRangeData
+		+_samplerData : SamplerData
+	}
+
+	class SamplerData {
+		+SamplerData(D3D12_FILTER samplerFilter, D3D12_TEXTURE_ADDRESS_MODE addressU, D3D12_TEXTURE_ADDRESS_MODE addressV, D3D12_TEXTURE_ADDRESS_MODE addressW)
+		+samplerFilter : D3D12_FILTER
+		+addressU : D3D12_TEXTURE_ADDRESS_MODE
+		+addressV : D3D12_TEXTURE_ADDRESS_MODE
+		+addressW : D3D12_TEXTURE_ADDRESS_MODE
+	}
+
+	class ShaderData {
+		+ShaderData(const TCHAR* shaderFilePass, const char* entoryPointName, const char* shaderType)
+		+ShaderData()
+		+shaderFilePass : const TCHAR*
+		+entoryPointName : const char*
+		+shaderType : const char*
+	}
+
+	class ShaderResourceViewDesc {
+		+ShaderResourceViewDesc(Texture& texture, bool isCubeTex)
+		+~ShaderResourceViewDesc()
+		+desc : D3D12_SHADER_RESOURCE_VIEW_DESC
+	}
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+
+
+
+/' Aggregation relationships '/
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.CubeRenderTargetData
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DepthStencilBuffer
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DescriptorHeapDSV
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.DescriptorHeapRTV
+
+
+DX12Wrapper.CubeRenderTarget *-- DX12Wrapper.RenderTargetBuffer
+
+
+DX12Wrapper.CubeRenderTarget "2" *-- DX12Wrapper.Texture
+
+
+DX12Wrapper.CubeRenderTargetData *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.CubeRenderTargetData *-- DX12Wrapper.RenderTargetBufferData
+
+
+DX12Wrapper.DepthStencilBuffer *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DepthStencilBuffer
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DescriptorHeapDSV
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.DescriptorHeapRTV
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.RenderTargetBuffer
+
+
+DX12Wrapper.Dx12GraphicsEngine *-- DX12Wrapper.RenderingContext
+
+
+DX12Wrapper.FontRenderer *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DepthStencilBuffer
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DescriptorHeapCBV_SRV_UAV
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DescriptorHeapDSV
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.DescriptorHeapRTV
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.RenderTargetBuffer
+
+
+DX12Wrapper.RenderTarget *-- DX12Wrapper.RenderTargetData
+
+
+DX12Wrapper.RenderTarget "2" *-- DX12Wrapper.Texture
+
+
+DX12Wrapper.RenderTargetData *-- DX12Wrapper.DepthStencilBufferData
+
+
+DX12Wrapper.RenderTargetData *-- DX12Wrapper.RenderTargetBufferData
+
+
+DX12Wrapper.RootSignatureData *-- DX12Wrapper.DescriptorRangeData
+
+
+DX12Wrapper.RootSignatureData *-- DX12Wrapper.SamplerData
+
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml

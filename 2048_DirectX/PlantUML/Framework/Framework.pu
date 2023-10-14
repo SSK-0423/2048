@@ -1,0 +1,430 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+namespace Framework {
+	class Button {
+		+Button(Object* owner)
+		-function<void()
+		+~Button()
+		-CheckClick() : bool
+		-m_spriteRenderer : std::unique_ptr<class SpriteRenderer>
+		-m_text : std::unique_ptr<class Text>
+		+Draw() : void
+		+SetOnClick(const std::function<void ( )>& onClick) : void
+		+SetPosition(float x, float y) : void
+		+SetScale(float x, float y) : void
+		+SetText(const std::wstring& text) : void
+		+SetTexture(const std::wstring& path) : void
+		+Update(float deltaTime) : void
+	}
+
+	class ButtonRenderer {
+		+ButtonRenderer()
+		+~ButtonRenderer()
+		-CreateGraphicsPipelineState(ID3D12Device& device) : Utility::RESULT
+		-CreateRootSignature(ID3D12Device& device) : Utility::RESULT
+		+Init() : Utility::RESULT
+		-m_pipelineState : std::unique_ptr<DX12Wrapper::GraphicsPipelineState>
+		-m_pipelineState2 : std::unique_ptr<DX12Wrapper::GraphicsPipelineState>
+		-m_rootSignature : std::unique_ptr<DX12Wrapper::RootSignature>
+		-m_rootSignature2 : std::unique_ptr<DX12Wrapper::RootSignature>
+		-Render() : void
+	}
+
+	class Camera {
+		+Camera(Object* owner)
+		+~Camera()
+		-m_bufferData : CameraData
+		+GetConstantBuffer() : DX12Wrapper::ConstantBuffer& {query}
+		+GetProjectionMatrix() : DirectX::XMMATRIX {query}
+		+GetViewMatrix() : DirectX::XMMATRIX {query}
+		+GetFar() : float {query}
+		+GetNear() : float {query}
+		-m_far : float
+		-m_near : float
+		-m_cameraBuffer : std::unique_ptr<DX12Wrapper::ConstantBuffer>
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	abstract class Canvas {
+		+Canvas()
+		+~Canvas()
+		#m_guiObjects : std::vector<std::unique_ptr<Object>>
+		+Draw() : void
+		+{abstract} Final() : void
+		+{abstract} Init() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Game {
+		+Game(GameImpl& gameImpl, IRenderer& renderer)
+		+~Game()
+		-m_gameImpl : GameImpl&
+		-m_renderer : IRenderer&
+		-m_window : Window
+		-m_prevFrameTime : std::chrono::system_clock::time_point
+		+Final() : void
+		+Init() : void
+		+Run() : void
+	}
+
+	abstract class GameImpl {
+		+GameImpl()
+		+~GameImpl()
+		+{abstract} Final() : void
+		+{abstract} Init() : void
+	}
+
+	abstract class IComponent {
+		+IComponent(Object* owner)
+		+~IComponent()
+		#m_owner : Object*
+		+{abstract} Draw() : void
+		+{abstract} Update(float deltaTime) : void
+	}
+
+	abstract class IRenderer {
+		+IRenderer()
+		+~IRenderer()
+		+{abstract} Init() : Utility::RESULT
+		+Render(const class Scene* scene) : void
+		-{abstract} RenderScene(const std::vector<std::unique_ptr<class Object>>& gameObjects) : void
+		-{abstract} RenderUI(const std::vector<std::unique_ptr<class Canvas>>& canvases) : void
+	}
+
+	class InputSystem {
+		+InputSystem()
+		+~InputSystem()
+		-m_keysState : BUTTON_STATE
+		-m_mouseButtonState : BUTTON_STATE
+		-m_currentKeys : BYTE
+		-m_prevKeys : BYTE
+		-m_currentMouse : DIMOUSESTATE
+		-m_prevMouse : DIMOUSESTATE
+		-SetupKeyboard(HWND& hwnd) : HRESULT
+		-SetupMouse(HWND& hwnd) : HRESULT
+		-m_hwnd : HWND
+		+{static} Instance() : InputSystem&
+		-m_directInputInterface : LPDIRECTINPUT8
+		-m_keyboard : LPDIRECTINPUTDEVICE8
+		-m_mouse : LPDIRECTINPUTDEVICE8
+		+GetMousePosition() : POINT
+		+Init(HWND& hwnd) : Utility::RESULT
+		+GetKeyDown(Framework::BYTE keyCode) : bool
+		+GetMouseButtonDown(MOUSECODE mouseCode) : bool
+		-m_mouseWheelMovement : float
+		-m_mouseXMovement : float
+		-m_mouseYMovement : float
+		+Update() : void
+		-UpdateKeyStates() : void
+		-UpdateMouseStates() : void
+		+ViewMouseCursor() : void
+	}
+
+	class Object {
+		+Object()
+		+~Object()
+		+Parent() : Object*
+		#m_parent : Object*
+		+AddComponent(Object* owner) : T*
+		+GetComponent() : T*
+		+GetActive() : bool
+		#m_isActive : bool
+		#m_components : std::vector<std::unique_ptr<IComponent>>
+		#m_children : std::vector<std::unique_ptr<Object>>
+		+AddChild(std::unique_ptr<Object>& child) : void
+		+Draw() : void
+		+SetActive(bool isActive) : void
+		+SetParent(Object* parent) : void
+		+Update(float deltaTime) : void
+	}
+
+	abstract class Scene {
+		+Scene()
+		+~Scene()
+		+{static} GetCamera() : Camera&
+		#m_isActive : bool
+		#{static} m_cameraObject : static std::unique_ptr<GameObject>
+		#m_canvases : std::vector<std::unique_ptr<Canvas>>
+		+GetCanvases() : std::vector<std::unique_ptr<Canvas>>& {query}
+		#m_gameObjects : std::vector<std::unique_ptr<GameObject>>
+		+GetGameObjects() : std::vector<std::unique_ptr<GameObject>>& {query}
+		+{abstract} Final() : void
+		+{abstract} Init() : void
+		+LateUpdate(float deltaTime) : void
+		+SetActive(bool isActive) : void
+		+Update(float deltaTime) : void
+	}
+
+	class SceneManager {
+		-SceneManager()
+		-~SceneManager()
+		+{static} Instance() : SceneManager&
+		-m_isSceneChanged : bool
+		-m_activeSceneName : const char*
+		-m_oldSceneName : const char*
+		-m_scenes : std::unordered_map<const char*, std::unique_ptr<Scene>>
+		+ActiveSceneDraw(class IRenderer& renderer) : void
+		+ActiveSceneFinal() : void
+		+ActiveSceneLateUpdate(float deltaTime) : void
+		+ActiveSceneUpdate(float deltaTime) : void
+		+AddScene(const char* name) : void
+		+LoadScene(const char* name) : void
+	}
+
+	class ShaderLibrary {
+		-ShaderLibrary()
+		-~ShaderLibrary()
+		+GetShader(const std::string& shaderTag) : DX12Wrapper::Shader*
+		+{static} Instance() : ShaderLibrary&
+		-_shaderTypeMap : std::unordered_map<SHADERTYPE, const char*>
+		-_shaderMap : std::unordered_map<std::string, DX12Wrapper::Shader>
+		+RegistShader(const TCHAR* shaderFileName, const std::string& shaderTag, SHADERTYPE shaderType, const char* entryPointName) : void
+	}
+
+	class SoundClip {
+		+SoundClip()
+		+~SoundClip()
+		+PlayLoop() : void
+		+PlayOneShot() : void
+	}
+
+	class SoundManager {
+		-SoundManager()
+		-~SoundManager()
+		+{static} Instance() : SoundManager&
+		-m_soundClips : std::vector<SoundClip>
+		+PlayLoop(const char* name) : void
+		+PlayOneShot(const char* name) : void
+	}
+
+	class Sprite {
+		+Sprite(const std::wstring& path, SPRITE_PIVOT pivot)
+		+~Sprite()
+		+GetDescriptorHeap() : DX12Wrapper::DescriptorHeapCBV_SRV_UAV& {query}
+		+GetIndexBuffer() : DX12Wrapper::IndexBuffer& {query}
+		+GetVertexBuffer() : DX12Wrapper::VertexBuffer& {query}
+		-m_texture : std::shared_ptr<DX12Wrapper::Texture>
+		-m_descriptorHeap : std::unique_ptr<DX12Wrapper::DescriptorHeapCBV_SRV_UAV>
+		-m_indexBuffer : std::unique_ptr<DX12Wrapper::IndexBuffer>
+		-m_vertexBuffer : std::unique_ptr<DX12Wrapper::VertexBuffer>
+		-m_vertex : std::vector<SpriteVertex>
+		+LoadTexture(const std::wstring& path) : void
+		+SetTexture(std::shared_ptr<DX12Wrapper::Texture>& texture) : void
+	}
+
+	class SpriteRenderer {
+		+SpriteRenderer(Framework::Object* owner)
+		+~SpriteRenderer()
+		-m_drawMode : SPRITE_DRAW_MODE
+		+CreateGraphicsPipelineState(ID3D12Device& device) : Utility::RESULT
+		+CreateRootSignature(ID3D12Device& device) : Utility::RESULT
+		-m_drawModeBuffer : std::unique_ptr<DX12Wrapper::ConstantBuffer>
+		-m_pipelineState : std::unique_ptr<DX12Wrapper::GraphicsPipelineState>
+		-m_rootSignature : std::unique_ptr<DX12Wrapper::RootSignature>
+		-m_sprite : std::unique_ptr<class Sprite>
+		+Draw() : void
+		+SetDrawMode(SPRITE_DRAW_MODE drawMode) : void
+		+SetLayer(UINT layer) : void
+		+SetSprite(class Sprite* sprite) : void
+		+Update(float deltaTime) : void
+	}
+
+	class Text {
+		+Text(Object* owner)
+		+~Text()
+		-m_fontRenderer : DX12Wrapper::FontRenderer&
+		-m_color : DirectX::XMVECTORF32
+		-m_text : std::wstring
+		+Draw() : void
+		+SetColor(const DirectX::XMVECTORF32& color) : void
+		+SetPosition(const DirectX::XMFLOAT2& position) : void
+		+SetRotation(float angle) : void
+		+SetScale(const float& scale) : void
+		+SetText(const std::wstring& text) : void
+		+Update(float deltaTime) : void
+	}
+
+	class Transform2D {
+		+Transform2D(Object* owner)
+		+~Transform2D()
+		+GetConstantBuffer() : DX12Wrapper::ConstantBuffer&
+		+position : DirectX::XMFLOAT2
+		+scale : DirectX::XMFLOAT2
+		+GetTransformMatrix() : DirectX::XMMATRIX
+		-m_bufferData : Transform2DData
+		+angle : float
+		+depth : float
+		-m_transformBuffer : std::unique_ptr<DX12Wrapper::ConstantBuffer>
+		+Draw() : void
+		+Update(float deltaTime) : void
+	}
+
+	class Window {
+		+Window()
+		+~Window()
+		+{static} GetHwnd() : HWND&
+		+{static} GetWindowSize() : SIZE
+		-m_wndClassEx : WNDCLASSEX
+		+DispatchWindowMessage() : bool
+		-{static} m_hwnd : static HWND
+		+Create(const TCHAR* windowName, LONG width, LONG height) : void
+	}
+
+	enum BUTTON_STATE {
+		DOWN
+		HOLD
+		NONE
+		UP
+	}
+
+	enum MOUSECODE {
+		LEFT
+		RIGHT
+		WHEEL
+	}
+
+	enum SHADERTYPE {
+		PIXEL
+		VERTEX
+	}
+
+	enum SPRITE_DRAW_MODE {
+		GAMEOBJECT
+		GUI
+	}
+
+	enum SPRITE_PIVOT {
+		CENTER
+		TOP_LEFT
+	}
+
+	enum SpriteRenderer::CONSTANT_BUFFER_INDEX {
+		BUFFER_COUNT
+		CAMERA
+		DRAW_MODE
+		TRANSFORM
+	}
+
+	class Camera::CameraData {
+		+projection : DirectX::XMMATRIX
+		+view : DirectX::XMMATRIX
+	}
+
+	class Sprite::SpriteVertex {
+		+uv : DirectX::XMFLOAT2
+		+vertex : DirectX::XMFLOAT3
+	}
+
+	class Transform2D::Transform2DData {
+		+model : DirectX::XMMATRIX
+	}
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+Framework.IComponent <|-- Framework.Button
+
+
+Framework.IComponent <|-- Framework.Camera
+
+
+Framework.IComponent <|-- Framework.SpriteRenderer
+
+
+Framework.IComponent <|-- Framework.Text
+
+
+Framework.IComponent <|-- Framework.Transform2D
+
+
+Framework.IRenderer <|-- Framework.ButtonRenderer
+
+
+
+
+
+/' Aggregation relationships '/
+
+Framework.Button *-- Framework.SpriteRenderer
+
+
+Framework.Button *-- Framework.Text
+
+
+Framework.Canvas *-- Framework.Object
+
+
+Framework.Game *-- Framework.GameImpl
+
+
+Framework.Game *-- Framework.IRenderer
+
+
+Framework.Game *-- Framework.Window
+
+
+Framework.IComponent o-- Framework.Object
+
+
+Framework.InputSystem "2" *-- Framework.BUTTON_STATE
+
+
+Framework.Object *-- Framework.IComponent
+
+
+Framework.Object o-- Framework.Object
+
+
+Framework.Object *-- Framework.Object
+
+
+Framework.Scene *-- Framework.Canvas
+
+
+Framework.SceneManager *-- Framework.Scene
+
+
+Framework.ShaderLibrary *-- Framework.SHADERTYPE
+
+
+Framework.SoundManager *-- Framework.SoundClip
+
+
+Framework.SpriteRenderer *-- Framework.SPRITE_DRAW_MODE
+
+
+Framework.SpriteRenderer *-- Framework.Sprite
+
+
+
+
+
+
+/' Nested objects '/
+
+Framework.Camera +-- Framework.Camera::CameraData
+
+
+Framework.Sprite +-- Framework.Sprite::SpriteVertex
+
+
+Framework.SpriteRenderer +-- Framework.SpriteRenderer::CONSTANT_BUFFER_INDEX
+
+
+Framework.Transform2D +-- Framework.Transform2D::Transform2DData
+
+
+
+
+@enduml
